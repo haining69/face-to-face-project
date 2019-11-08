@@ -85,7 +85,7 @@ public class UserController {
     //根据用户名进行查找
     @RequestMapping("/findByUsername")
     public Boolean findByUsername(Users user){
-        return !userService.findByUsername(user);
+        return userService.findByUsername(user);
     }
 
     @RequestMapping("/update")
