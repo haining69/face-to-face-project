@@ -18,6 +18,7 @@ import java.util.List;
 @ResponseBody
 @RequestMapping("/view")
 public class UserController {
+
     @Autowired
     private UserServiceImpl userService;
 
@@ -28,13 +29,19 @@ public class UserController {
         return "login2";
     }
 
+    /**
+     * 登录以及注册
+     * @param user
+     * @return
+     */
+
     //登录
     @RequestMapping("/login")
     public Boolean login(Users user) {
         System.out.println(user);
-        Boolean a = userService.login(user);
-        System.out.println(a);
-        return a;
+        return userService.login(user);
+//        System.out.println(a);
+//        return a;
     }
 
     //注册
@@ -47,16 +54,10 @@ public class UserController {
 
 
 
-    //根据用户名进行查找
-    @RequestMapping("/findByUsername")
-    public Boolean findByUsername(Users user){
-        return userService.findByUsername(user);
-    }
-
-    //进行验证码
+    //进行验证码  验证
     @RequestMapping("/verify")
     public void verify(Users user, HttpServletResponse response) throws IOException, MessagingException {
-        if (userService.findByUsername(user)&&userService.findByEmail(user)){
+        if (!userService.findByUsername(user)&&!userService.findByEmail(user)){
             String verify = userService.verify(user.getUserEmail());
             response.getWriter().write(verify);
         }else{
@@ -69,11 +70,30 @@ public class UserController {
      * 找回密码
      * @return
      */
-
-    @RequestMapping("/forget")
-    public void forgetpaw(Users user){
-
+    //发送验证码
+    @RequestMapping("/sendVerify")
+    public Boolean sendVerify(Users user, HttpServletResponse response) throws MessagingException, IOException {
+        if (userService.findByEmail(user) != null){
+            String verify = userService.verify(user.getUserEmail());
+            response.getWriter().write(verify);
+            return true;
+        }else{
+            return false;
+        }
     }
+
+    //根据用户名进行查找
+    @RequestMapping("/findByUsername")
+    public Boolean findByUsername(Users user){
+        return !userService.findByUsername(user);
+    }
+
+    @RequestMapping("/update")
+    public void update(Users user){
+        userService.update(user);
+    }
+
+
 
 
     @RequestMapping("user")

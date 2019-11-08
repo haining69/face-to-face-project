@@ -38,12 +38,8 @@ public interface UserMapper {
     @Delete("delete from users where user_id=#{userId}")
     void deleteUser(Users user);
 
-    //修改用户信息
-    @Update("update users set user_nikename=#{userNikename} " +
-            "and user_sex=#{userSex}" +
-            "and user_birthday=#{userBirthday}" +
-            "and user_Img=#{userImg}" +
-            "where user_id=#{userId}")
+    //找回密码  修改自己账户密码和账户
+    @Update("update users set user_nikename=#{userNikename} and user_password=#{userPassword}")
     void updateUser(Users user);
 
 
