@@ -45,6 +45,8 @@ public class UserController {
         userService.register(user);
     }
 
+
+
     //根据用户名进行查找
     @RequestMapping("/findByUsername")
     public Boolean findByUsername(Users user){
@@ -60,6 +62,17 @@ public class UserController {
         }else{
             response.getWriter().print("用户名已存在");
         }
+    }
+
+
+    /**
+     * 找回密码
+     * @return
+     */
+
+    @RequestMapping("/forget")
+    public void forgetpaw(Users user){
+
     }
 
 
