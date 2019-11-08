@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Letter - Simple Sign Up Form</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
+    <!-- Google web font "Open Sans" -->
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="css/demo.css"/>
+    <link rel="stylesheet" href="css/templatemo-style.css">
+
+    <script type="text/javascript" src="js/modernizr.custom.86080.js"></script>
+    <script src="js/jquery.min.js"></script>
+
+
+</head>
+
+<body>
+
+<div id="particles-js"></div>
+
+<ul class="cb-slideshow">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+
+<div class="container-fluid">
+    <div class="row cb-slideshow-text-container ">
+        <div class="tm-content col-xl-6 col-sm-8 col-xs-8 ml-auto section">
+            <header class="mb-5"><h1>Regist</h1></header>
+            <form action="/user" method="get" class="subscribe-form">
+                <div class="row form-section">
+                    <div class="col-md-7 col-sm-7 col-xs-7">
+                        <input name="userNikename" type="text" class="form-control" id="username" placeholder="用户名"
+                               required/>
+                        <input name="userPassword" type="password" class="form-control" id="password" placeholder="密码"
+                               required/>
+                        <input name="userEmail" type="email" class="form-control" id="email" placeholder="邮箱地址"
+                               required/>
+                        <input type="text" placeholder="请输入验证码" class="form-control" id="checkcode" required><span
+                            id="tip"></span>
+                        <input type="button" class="form-control" id="sendcheckcode" value="点击发送验证码" required>
+                        <br>
+                        <button type="button" class="tm-btn-subscribe" name="regist" id="regist">注册</button>
+                    </div>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+    <div class="footer-link">
+        <p>Copyright © 2018 Your Company</p>
+    </div>
+</div>
+</body>
+<script src="js/jquery-3.4.1.min.js"></script>
+<script>
+    var result = "";
+    $("#sendcheckcode").click(function () {
+        var uemail = $("#email").val();
+        var uname = $("#username").val();
+        var upass = $("#password").val();
+
+        $.ajax({
+            url: "view/verify",
+            data: {userEmail: uemail, userNikename: uname, userPassword: upass},
+            dataType: "text",
+            success: function (data) {
+                if (data=="用户名已存在")
+                    alert("用户名已存在或邮已经注册过")
+                else
+                    result = data;
+            },
+            error: function () {
+                alert("验证码发送失败");
+            }
+        });
+    })
+    $("#regist").click(function () {
+        var uemail = $("#email").val();
+        var uname = $("#username").val();
+        var upass = $("#password").val();
+        var code = $("#checkcode").val();
+        if (code != result||code=="") {
+            alert("请正确输入验证码");
+            return;
+        }
+
+        if (uemail != null && uemail != null && upass != null)
+            $.ajax({
+                url: "view/register",
+                data:{userEmail: uemail, userNikename: uname, userPassword: upass},
+                dataType: "text",
+                success: function (data) {
+                    alert("注册成功");
+                    window.location="login.html";
+                },
+                error: function (data) {
+                    alert("注册失败");
+                },
+            });
+        else alert("表单不完整")
+    });
+
+    // $("#username").blur(function () {
+    //     var reg=/^[a-zA-Z0-9]{6,16}$/;
+    //     if (!(($("#username").val()).match(reg)))
+    //     {
+    //         $("#username").val("用户名格式错误");
+    //         $("#username").focus();
+    //     }
+    // });
+    $("#email").blur(function () {
+        var reg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
+        if (!(($("#email").val()).match(reg)))
+        {
+
+            $("#email").val("邮箱格式错误请重新填写");
+            $("#email").focus();
+            $("#email").val("");
+
+        }
+    });
+
+</script>
+<script type="text/javascript" src="js/particles.js"></script>
+<script type="text/javascript" src="js/app.js"></script>
+</html>
