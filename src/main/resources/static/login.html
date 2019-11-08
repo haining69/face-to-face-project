@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -14,79 +14,64 @@
     <link rel="stylesheet" href="css/templatemo-style.css">
 
     <script type="text/javascript" src="js/modernizr.custom.86080.js"></script>
-    <script src="js/jquery.min.js"></script>
-
 </head>
-
 <body>
 
 <div id="particles-js"></div>
 
 <ul class="cb-slideshow">
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
+    <li><>
+    <li><>
+    <li><>
+    <li><>
+    <li><>
+    <li><>
 </ul>
+
 
 <div class="container-fluid">
     <div class="row cb-slideshow-text-container ">
         <div class= "tm-content col-xl-6 col-sm-8 col-xs-8 ml-auto section">
 
-            <form action="#" method="get" class="subscribe-form">
-                <div class="row form-section">
-                    <div class="container-fluid">
-                        <div class="row cb-slideshow-text-container ">
-                            <div class= "tm-content col-xl-6 col-sm-8 col-xs-8 ml-auto section">
-                                <header class="mb-5"><h1>face to face</h1></header>
-                                <P class="mb-5">如果希望成为善于谈话的人</P>
-                                <P class="mb-5">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    那就先做一个致意倾听的人</P>
+            <header class="mb-5"><h1>face to face</h1></header>
+            <P class="mb-5">如果希望成为善于谈话的人</P>
+            <P class="mb-5">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
+                那就先做一个致意倾听的人</P>
 
-                                <div class="row form-section">
+            <header class="mb-5"><h1>登陆页面</h1></header>
+            <div class="row form-section">
 
-                                    <div class="col-md-7 col-sm-7 col-xs-7">
-                                        <input type="text" class="form-control" name="userNikename" id = "contact_username" placeholder="username" required/>
-                                        <input type="password" class="form-control" name="userPassword" id = "contact_password" placeholder="password" required/>
-                                        <br>
+                <div class="col-md-7 col-sm-7 col-xs-7">
+                    <input type="text" class="form-control" name="userNikename" id = "contact_username" placeholder="username" required/>
+                    <input type="password" class="form-control" name="userPassword" id = "contact_password" placeholder="password" required/>
+                    <br>
 
-                                        <button class="tm-btn-subscribe" type="button"  onclick="window.location.href='forget-password.html'">忘记密码？</button>
-
-
-                                    </div>
-                                    <div class="col-md-5 col-sm-5 col-xs-5 in-btn-location">
-                                        <!--								<br><br><br>-->
-                                        <!--                                            onclick="window.location.href='home.html'"-->
-                                        <button type="button" class="tm-btn-subscribe" id="login">登  录</button>
-                                        <!--                                            onclick="window.location.href='regist.html'"-->
-                                        <button type="button" class="tm-btn-subscribe" id="register" onclick="window.location.href='regist.html'">注  册</button>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-
-
+                    <button class="tm-btn-subscribe" type="button"  onclick="window.location.href='forget-password.html'">忘记密码？</button>
+                    <button type="button" class="tm-btn-subscribe" id="register" onclick="window.location.href='regist.html'">注  册</button>
 
                 </div>
-            </form>
+                <div class="col-md-5 col-sm-5 col-xs-5 in-btn-location">
+                    <!--								<br><br><br>-->
+                    <!--                                            onclick="window.location.href='home.html'"-->
+                    <button type="button" class="tm-btn-subscribe" id="login">登  录</button>
+                    <!--                                            onclick="window.location.href='regist.html'"-->
 
-
+                </div>
+            </div>
 
         </div>
     </div>
+
     <div class="footer-link">
-        <p>Copyright © 2019 软件1701</p>
+        <p>Copyright  2019 软件1701</p>
     </div>
 </div>
+
 </body>
+
+
 <script>
     $("#contact_username").blur(function () {
         var reg=/^[a-zA-Z0-9]{6,16}$/;
