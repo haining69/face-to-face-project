@@ -1,4 +1,4 @@
-package com.ftf.ftfProject.controller;
+package com.ftf.ftfProject.latercontroller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ftf.ftfProject.Tools.EmailUtil;

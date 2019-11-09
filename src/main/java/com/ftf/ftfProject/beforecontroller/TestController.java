@@ -1,4 +1,4 @@
-package com.ftf.ftfProject.view;
+package com.ftf.ftfProject.beforecontroller;
 
 import com.ftf.ftfProject.entity.*;
 import com.ftf.ftfProject.service.impl.*;

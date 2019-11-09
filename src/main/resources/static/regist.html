@@ -72,7 +72,7 @@
         var upass = $("#password").val();
 
         $.ajax({
-            url: "view/verify",
+            url: "beforeuser/verify",
             data: {userEmail: uemail, userNikename: uname, userPassword: upass},
             dataType: "text",
             success: function (data) {
@@ -98,7 +98,7 @@
 
         if (uemail != null && uemail != null && upass != null)
             $.ajax({
-                url: "view/register",
+                url: "beforeuser/register",
                 data:{userEmail: uemail, userNikename: uname, userPassword: upass},
                 dataType: "text",
                 success: function (data) {

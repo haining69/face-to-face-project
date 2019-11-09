@@ -93,12 +93,12 @@
         }
     });
     $("#login").click(function () {
-        alert("helloworld");
+        // alert("helloworld");
         var uname = $("#contact_username").val();
         var upass = $("#contact_password").val();
         if (upass!=""&&uname!="")
             $.ajax({
-                url:"view/login",
+                url:"beforeuser/login",
                 data:{userNikename: uname, userPassword: upass},
 
                 dataType: "text",
