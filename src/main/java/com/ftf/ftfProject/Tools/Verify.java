@@ -63,7 +63,7 @@ public class Verify {
             if (x == 61)
                 x = x - 1;
             check.append(source.substring(x, x + 1));
-//            System.out.println(source.substring(x, x + 1));
+            System.out.println(source.substring(x, x + 1));
         }
         return check.toString();
     }

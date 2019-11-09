@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
 
@@ -48,7 +49,7 @@ public class UserController {
     @RequestMapping("/register")
     public void register(Users user){
         user.setUserTime(new Date());
-        System.out.println(user.getUserTime());
+//        System.out.println(user.getUserTime());
         userService.register(user);
     }
 
@@ -56,12 +57,12 @@ public class UserController {
 
     //进行验证码  验证
     @RequestMapping("/verify")
-    public void verify(Users user, HttpServletResponse response) throws IOException, MessagingException {
+    public String verify(Users user, HttpServletResponse response) throws IOException, MessagingException {
         if (!userService.findByUsername(user)&&!userService.findByEmail(user)){
             String verify = userService.verify(user.getUserEmail());
-            response.getWriter().write(verify);
+            return verify;
         }else{
-            response.getWriter().print("用户名已存在");
+            return "用户名已存在";
         }
     }
 
@@ -72,13 +73,12 @@ public class UserController {
      */
     //发送验证码
     @RequestMapping("/sendVerify")
-    public Boolean sendVerify(Users user, HttpServletResponse response) throws MessagingException, IOException {
+    public String sendVerify(Users user, HttpServletResponse response) throws MessagingException, IOException {
         if (userService.findByEmail(user) != null){
             String verify = userService.verify(user.getUserEmail());
-            response.getWriter().write(verify);
-            return true;
+                return verify;
         }else{
-            return false;
+            return null;
         }
     }
 
@@ -88,9 +88,12 @@ public class UserController {
         return userService.findByUsername(user);
     }
 
+
+    //找回密码并且更新密码与用户名
     @RequestMapping("/update")
-    public void update(Users user){
-        userService.update(user);
+    public Boolean update(Users user){
+//        System.out.println(user);
+        return userService.update(user);
     }
 
 

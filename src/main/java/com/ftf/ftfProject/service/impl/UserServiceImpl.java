@@ -72,8 +72,12 @@ public class UserServiceImpl implements UserService {
 
     //更新用户  修改密码和账户名
     @Override
-    public void update(Users user) {
-        userMapper.updateUser(user);
+    public Boolean update(Users user) {
+        if (userMapper.updateUser(user) > 0){
+            return true;
+        }else {
+            return false;
+        }
     }
 
     @Override

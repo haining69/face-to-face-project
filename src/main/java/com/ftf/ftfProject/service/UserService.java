@@ -24,7 +24,7 @@ public interface UserService {
     Boolean findByEmail(Users user);
 
     //根据用户名与密码修改用户并让用户找回密码
-    void update(Users user);
+    Boolean update(Users user);
 
 
 

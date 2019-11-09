@@ -39,8 +39,8 @@ public interface UserMapper {
     void deleteUser(Users user);
 
     //找回密码  修改自己账户密码和账户
-    @Update("update users set user_nikename=#{userNikename} and user_password=#{userPassword}")
-    void updateUser(Users user);
+    @Update("update users set user_nikename=#{userNikename} , user_password=#{userPassword} where user_email=#{userEmail}")
+    int updateUser(Users user);
 
 
     /**
