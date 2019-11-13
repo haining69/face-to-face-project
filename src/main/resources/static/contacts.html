@@ -36,6 +36,17 @@
     <!--[if lt IE 9]>
     <script src="js/html5.js"></script>
     <script src="js/css3-mediaqueries.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.cookie.js"></script>
+    <script type="text/javascript">
+        var name;
+        onload=function () {
+            name=$.cookie("userNikename");
+            alert(name);
+
+            }
+        }
+    </script>
     <![endif]-->
 </head>
 <body>
@@ -44,7 +55,7 @@
         <div class="zerogrid">
             <div class="t-center">
                 <a class="site-branding" href="../test/index.html">
-                    <img src="images/logo.png" width="250px"/>
+                    <img src="images/logo.png" id="userImg" width="250px" />
                 </a><!-- .site-branding -->
             </div>
             <div class="row">

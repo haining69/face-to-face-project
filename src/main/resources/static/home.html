@@ -23,20 +23,17 @@
 
     <!-- Owl Carousel Assets -->
     <link href="owl-carousel/owl.carousel.css" rel="stylesheet">
-
-    <!--[if lt IE 8]>
-    <div style=' clear: both; text-align:center; position: relative;'>
-        <a href="http://windows.microsoft.com/en-US/internet-explorer/Items/ie/home?ocid=ie6_countdown_bannercode">
-            <img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today." />
-        </a>
-    </div>
-    <![endif]-->
-    <!--[if lt IE 9]>
     <script src="js/html5.js"></script>
     <script src="js/css3-mediaqueries.js"></script>
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/jquery.cookie.js"></script>
-    <![endif]-->
+    <script type="text/javascript">
+      var name;
+      onload=function () {
+        name=$.cookie("userNikename");
+        alert(name);
+      }
+    </script>
 </head>
 <body>
 <div class="wrap-body">
@@ -340,7 +337,7 @@
                                     <br>
                                     东区
                                     <br>
-                                    我的名字 王勇翔
+                                    我的名字 <span>王勇翔</span>
                                     <br>
                                     欢迎来访
                                 </address>
@@ -377,9 +374,5 @@
 <script  type="text/javascript" src="js/jquery1111.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="js/jquery.cookie.js"></script>
 
-<script type="text/javascript">
-   var name=$.cookie("userNikename");
-   alert(name);
-</script>
 </body>
 </html>
