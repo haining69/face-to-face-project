@@ -221,13 +221,15 @@
         var userNikename=$.cookie("userNikename");
         var time=new Date();
         var messageData={
+
             "userNikename":userNikename,
-            "message":message,
-            "time":time,
+            "info":message,
+
         }
         $.ajax(
             {
-                url:"saveMessage",
+                url:"message/savemessage",
+                type:"POST",
                 data:JSON.stringify(messageData),
                 dataType:Boolean,
                 success:function (data) {
