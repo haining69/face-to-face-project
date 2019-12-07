@@ -6,6 +6,8 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
+import java.util.UUID;
+
 @SpringBootApplication
 @MapperScan(basePackages = {"com.ftf.ftfProject.mapper", "com.ftf.ftfProject.Tools"})
 public class MainApplication {
