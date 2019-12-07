@@ -16,6 +16,7 @@ public class Message implements Serializable {
     private String messagesType;
     private String messagesInfo;
     private Date messagesTime;
+    private Integer messagestate;
     private Integer messagesCollectnum;
     private Integer messagesCommentnum;
     private Integer messagesTranspondnum;
@@ -54,6 +55,14 @@ public class Message implements Serializable {
 
     public void setMessagesTime(Date messagesTime) {
         this.messagesTime = messagesTime;
+    }
+
+    public Integer getMessagestate() {
+        return messagestate;
+    }
+
+    public void setMessagestate(Integer messagestate) {
+        this.messagestate = messagestate;
     }
 
     public Integer getMessagesCollectnum() {
@@ -119,6 +128,7 @@ public class Message implements Serializable {
                 ", messagesType='" + messagesType + '\'' +
                 ", messagesInfo='" + messagesInfo + '\'' +
                 ", messagesTime=" + messagesTime +
+                ", messagestate=" + messagestate +
                 ", messagesCollectnum=" + messagesCollectnum +
                 ", messagesCommentnum=" + messagesCommentnum +
                 ", messagesTranspondnum=" + messagesTranspondnum +

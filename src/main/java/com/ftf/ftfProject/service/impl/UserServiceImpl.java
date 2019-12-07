@@ -48,6 +48,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public int findByUsername1(String userNikename) {
+        return userMapper.findByUsername1(userNikename);
+    }
+
+    @Override
     public void register(Users user) {
         userMapper.register(user);
     }
