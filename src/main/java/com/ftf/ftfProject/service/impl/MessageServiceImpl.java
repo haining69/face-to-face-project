@@ -18,4 +18,53 @@ public class MessageServiceImpl implements MessageService {
     public List<Message> getAllMessage() {
         return messageMapper.getAllMessage();
     }
+
+    @Override
+    public List<Message> getMessage(String userNikename, int number) {
+        int number1 = (number-1)*10;   //根据页数进行查询条数
+        return messageMapper.getMessage(userNikename, number1);
+    }
+
+    @Override
+    public int getpages(String userNikename) {
+        System.out.println(userNikename);
+        int total =  messageMapper.getTotal(userNikename);
+        System.out.println("total=" + total);
+        return  (total+9)/10;
+    }
+
+    @Override
+    public int getMessageTotal() {
+        return messageMapper.getMessageTotal();
+    }
+
+    @Override
+    public Boolean saveMessage(Message message) {
+        int i = messageMapper.saveMessage(message);
+        if (i == 1){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    @Override
+    public void incAgreenum(String messagesId) {
+        messageMapper.incAgreenum(Integer.parseInt(messagesId));
+    }
+
+    @Override
+    public void decreAgreenum(String messagesId) {
+        messageMapper.decreaAgreenum(Integer.parseInt(messagesId));
+    }
+
+    @Override
+    public void incReadnum(String messagesId) {
+        messageMapper.incReadnum(Integer.parseInt(messagesId));
+    }
+
+    @Override
+    public void deletemessage(String messageId) {
+        messageMapper.deleteMessage(Integer.parseInt(messageId));
+    }
 }

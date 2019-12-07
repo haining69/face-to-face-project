@@ -26,6 +26,10 @@ public interface UserMapper {
     @Select("select * from users where user_nikename=#{userNikename}")
     Users findByUsername(Users user);
 
+    //根据用户名进行查询id
+    @Select("select user_id from users where user_nikename=${userNikename}")
+    int findByUsername1(String userNikename);
+
     //注册 (name, money) values(#{name},#{money})
     @Insert("insert into users(user_nikename, user_password, user_email, user_time) values(#{userNikename}, #{userPassword}, #{userEmail}, #{userTime})")
     void register(Users user);

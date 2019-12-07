@@ -31,4 +31,5 @@ public interface CollectionsMapper {
     //删除收藏
     @Delete("delete from collections where collections_id=#{CollectionsId}")
     void deleteCollection(Collections collection);
+
 }

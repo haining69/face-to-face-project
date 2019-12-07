@@ -13,6 +13,8 @@ public interface UserService {
 
     //注册用户名查重并且找回密码时候进行用户名进行查重
     Boolean findByUsername(Users user);
+    //根据用户名进行查询用户id
+    int findByUsername1(String userNikename);
 
     //注册
     void register(Users user);
