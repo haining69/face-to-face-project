@@ -33,10 +33,9 @@ public class MessageController {
      */
     @RequestMapping("/getmessage")
     @ResponseBody
-    public List<Message> getmessage(String userNikename, int number, HttpServletResponse response) throws IOException {  //
+    public List<Message> getmessage(String userNikename, int page){  //String userNikename, int number
         int pages = messageService.getpages(userNikename);
-        response.getWriter().write(pages);
-        return messageService.getMessage(userNikename, number);
+        return messageService.getMessage(userNikename, page);
     }
 
     /**
@@ -46,12 +45,11 @@ public class MessageController {
      */
     @RequestMapping("/savemessage")
     @ResponseBody
-    public Boolean saveMessage(HttpServletRequest request){
+    public String saveMessage(HttpServletRequest request){
 //        JSONObject jo = new JSONObject();
 //        Map<String, String> map = (Map<String, String>)jo.parse(data);
-       String info = request.getParameter("info");
+        String info = request.getParameter("info");
         String userNikename = request.getParameter("userNikename");
-        System.out.println(info+"    "+userNikename);
         Message message = new Message();
         message.setMessagesInfo(info);
         message.setMessagesAgreenum(0);  //赞同数
@@ -62,12 +60,11 @@ public class MessageController {
         message.setMessagesTranspondnum(0);  //转发数
         message.setMessagesReadnum(0);    //阅读数
         message.setUserId(String.valueOf(userService.findByUsername1(userNikename)));
-        if (messageService.saveMessage(message) ){
-            System.out.println("zdfnjkghslkdfhgkljhsdlkfgs");
-            return true;
-
+        if (messageService.saveMessage(message) ){  //如果存储成功则进行返回消息id
+            String messageid = messageService.getMessageId(userNikename,info);
+            return messageid;
         }else {
-            return false;
+            return "false";
         }
     }
 
@@ -76,7 +73,7 @@ public class MessageController {
      */
     @RequestMapping("/deletemessage")
     public void deleteMessage(String messageId){
-
+        messageService.deletemessage(messageId);
     }
 
     /**

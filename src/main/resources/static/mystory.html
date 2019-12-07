@@ -32,19 +32,22 @@
             var userNikename=$.cookie("userNikename");
 
             $.ajax({
-                url: "findallMessage",
-                data:JSON.stringify({"userNikeName":userNikename}),
+                url: "message/getmessage",
+                type:"POST",
+                data:{userNikename:userNikename,page:1},
                 dataType:"JSON",
                 success:function (data) {
                    for (var i=0;i<data.length;i++){
                        var article = document.createElement("article");
+                     var id= data[i]["messagesId"];
+                     article.id=id;
                        article.className = "single-post zerogrid";
                        article.innerHTML = " <div class=\"row wrap-post\">" +
                            "\n" +
                            "            <div class=\"entry-content\">\n" +
                            "\n" +
-                           "                <p>" +
-                           "<h3>"+data[i].toString()+"</h3>" +
+                           " <p style='word-break:break-all;'>" +
+                           data[i]["messagesInfo"]+
                            "</p>\n" +
                            " <p class=\"infoOperation\">\n" +
                            "                <span class=\"time\">2019.1.29</span>\n" +
@@ -59,7 +62,7 @@
                            "        </div>"
 
                        var ele = document.getElementsByClassName("MessageList")[0];
-                       ele.prepend(article);
+                       ele.append(article);
 
                    }
                 }
@@ -221,28 +224,29 @@
         var userNikename=$.cookie("userNikename");
         var time=new Date();
         var messageData={
-
             "userNikename":userNikename,
             "info":message,
-
         }
+        if(message!="")
         $.ajax(
             {
                 url:"message/savemessage",
                 type:"POST",
                 data:{userNikename:userNikename,info:message},
-                dataType:Boolean,
+                dataType:"text",
                 success:function (data) {
-                    if (data.equals("true")){
+                    if ("false" != data){
+                        alert(message);
                         alert(data);
                         var article = document.createElement("article");
+                         article.id=data;
                         article.className = "single-post zerogrid";
                         article.innerHTML = " <div class=\"row wrap-post\">" +
                             "\n" +
                             "            <div class=\"entry-content\">\n" +
                             "\n" +
-                            "                <p>" +
-                            "<h3>"+message+"</h3>" +
+                            "                <p style='word-break:break-all;'>"
+                            +message+
                             "</p>\n" +
                             " <p class=\"infoOperation\">\n" +
                             "                <span class=\"time\">2019.1.29</span>\n" +
@@ -258,7 +262,10 @@
 
                         var ele = document.getElementsByClassName("MessageList")[0];
                         ele.prepend(article);
+
                     }
+
+                    $("#message").val("");
                 },
             }
         )

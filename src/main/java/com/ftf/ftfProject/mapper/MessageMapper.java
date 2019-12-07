@@ -24,8 +24,12 @@ public interface MessageMapper {
     int getMessageTotal();
 
     //根据用户名进行分页查询动态消息，并按时间进行降序排序（时间在前面的
-    @Select("select * from message where user_id in (select user_id from users where user_nikename=#{userNikename}) and messages_state=1 ORDER BY messages_time DESC limit #{number},10")
+    @Select("select * from message where user_id in (select user_id from users where user_nikename=#{userNikename}) ORDER BY messages_time DESC limit #{number},5")
     List<Message> getMessage(String userNikename,int number);
+
+    //根据用户名和内容进行查询消息ID
+    @Select("select messages_id from message where user_id = (select user_id from users where user_nikename=#{userNikename}) and messages_info = #{info}")
+    int getMessageId(String userNikename,String info);
 
     //根据传入的message_id进行增加点赞数
     @Update("update message set messages_readnum=messages_readnum+1 where messages_id=${messagesId}")
@@ -49,7 +53,7 @@ public interface MessageMapper {
 
     //增加用户动态
     @Insert("insert into message(messages_info, messages_time, messages_state," +
-            "messages_collectnum, messages_commentnum, messages_transpondnum, " +
+            "messages_collectnum, messages_commentnum, messages_transpondnum," +
             "messages_agreenum, messages_readnum, user_id)" +
             "values (#{messagesInfo},#{messagesTime}, #{messagestate}," +
             "#{messagesCollectnum},#{messagesCommentnum},#{messagesTranspondnum}," +

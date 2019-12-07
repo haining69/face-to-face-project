@@ -21,7 +21,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public List<Message> getMessage(String userNikename, int number) {
-        int number1 = (number-1)*10;   //根据页数进行查询条数
+        int number1 = (number-1)*5;   //根据页数进行查询条数
         return messageMapper.getMessage(userNikename, number1);
     }
 
@@ -31,6 +31,12 @@ public class MessageServiceImpl implements MessageService {
         int total =  messageMapper.getTotal(userNikename);
 //        System.out.println("total=" + total);
         return  (total+4)/5;
+    }
+
+    @Override
+    public String getMessageId(String userNikename, String info) {
+        int messageid = messageMapper.getMessageId(userNikename, info);
+        return String.valueOf(messageid);
     }
 
     @Override

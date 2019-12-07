@@ -2,6 +2,7 @@ package com.ftf.ftfProject.service;
 
 import com.ftf.ftfProject.entity.Message;
 
+import java.io.StreamTokenizer;
 import java.util.List;
 
 public interface MessageService {
@@ -19,6 +20,14 @@ public interface MessageService {
      * @return
      */
     int getpages(String userNikename);
+
+    /**
+     * 根据用户名以及动态内容进行查询动态ID
+     * @param userNikename
+     * @param info
+     * @return
+     */
+    String getMessageId(String userNikename, String info);
 
     /**
      * 返回总动态条数
