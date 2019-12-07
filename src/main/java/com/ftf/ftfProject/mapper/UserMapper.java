@@ -27,7 +27,7 @@ public interface UserMapper {
     Users findByUsername(Users user);
 
     //根据用户名进行查询id
-    @Select("select user_id from users where user_nikename=${userNikename}")
+    @Select("select user_id from users where user_nikename=#{userNikename}")
     int findByUsername1(String userNikename);
 
     //注册 (name, money) values(#{name},#{money})

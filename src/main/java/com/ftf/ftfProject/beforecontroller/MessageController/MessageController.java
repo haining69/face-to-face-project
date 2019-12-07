@@ -1,6 +1,7 @@
 package com.ftf.ftfProject.beforecontroller.MessageController;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.ftf.ftfProject.entity.Message;
 import com.ftf.ftfProject.service.impl.MessageServiceImpl;
 import com.ftf.ftfProject.service.impl.UserServiceImpl;
@@ -9,10 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/message")
@@ -37,12 +41,17 @@ public class MessageController {
 
     /**
      * 保存动态
-     * @param info
-     * @param userNikename
+     * @param
+     * @return
      */
     @RequestMapping("/savemessage")
     @ResponseBody
-    public Boolean saveMessage(String info, String userNikename){
+    public Boolean saveMessage(HttpServletRequest request){
+//        JSONObject jo = new JSONObject();
+//        Map<String, String> map = (Map<String, String>)jo.parse(data);
+       String info = request.getParameter("info");
+        String userNikename = request.getParameter("userNikename");
+        System.out.println(info+"    "+userNikename);
         Message message = new Message();
         message.setMessagesInfo(info);
         message.setMessagesAgreenum(0);  //赞同数
@@ -54,7 +63,9 @@ public class MessageController {
         message.setMessagesReadnum(0);    //阅读数
         message.setUserId(String.valueOf(userService.findByUsername1(userNikename)));
         if (messageService.saveMessage(message) ){
+            System.out.println("zdfnjkghslkdfhgkljhsdlkfgs");
             return true;
+
         }else {
             return false;
         }

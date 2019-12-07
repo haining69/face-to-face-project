@@ -230,11 +230,11 @@
             {
                 url:"message/savemessage",
                 type:"POST",
-                data:JSON.stringify(messageData),
+                data:{userNikename:userNikename,info:message},
                 dataType:Boolean,
                 success:function (data) {
-                    if (data==true){
-
+                    if (data.equals("true")){
+                        alert(data);
                         var article = document.createElement("article");
                         article.className = "single-post zerogrid";
                         article.innerHTML = " <div class=\"row wrap-post\">" +

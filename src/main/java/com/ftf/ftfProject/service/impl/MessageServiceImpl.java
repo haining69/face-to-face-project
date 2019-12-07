@@ -29,8 +29,8 @@ public class MessageServiceImpl implements MessageService {
     public int getpages(String userNikename) {
         System.out.println(userNikename);
         int total =  messageMapper.getTotal(userNikename);
-        System.out.println("total=" + total);
-        return  (total+9)/10;
+//        System.out.println("total=" + total);
+        return  (total+4)/5;
     }
 
     @Override

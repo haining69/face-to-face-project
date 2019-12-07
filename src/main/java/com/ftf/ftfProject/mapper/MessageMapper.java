@@ -48,10 +48,10 @@ public interface MessageMapper {
     List<Message> selectByUserId();
 
     //增加用户动态
-    @Insert("insert into message(messages_info, messages_time, messages_state" +
+    @Insert("insert into message(messages_info, messages_time, messages_state," +
             "messages_collectnum, messages_commentnum, messages_transpondnum, " +
             "messages_agreenum, messages_readnum, user_id)" +
-            "values (#{messagesInfo},#{messagesTime}, #{messagestate}" +
+            "values (#{messagesInfo},#{messagesTime}, #{messagestate}," +
             "#{messagesCollectnum},#{messagesCommentnum},#{messagesTranspondnum}," +
             "#{messagesAgreenum},#{messagesReadnum},#{userId})")
     int saveMessage(Message message);
