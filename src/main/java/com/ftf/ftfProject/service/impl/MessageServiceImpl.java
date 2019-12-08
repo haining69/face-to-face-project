@@ -6,6 +6,7 @@ import com.ftf.ftfProject.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -70,7 +71,20 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public void deletemessage(String messageId) {
-        messageMapper.deleteMessage(Integer.parseInt(messageId));
+    public Boolean deletemessage(String messageId) {
+        int i = messageMapper.deleteMessage(Integer.parseInt(messageId));
+        if (i == 1){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    @Override
+    public String getnameandinfo(String messageId) {
+        String info = messageMapper.getinfo(Integer.parseInt(messageId));
+        String username = messageMapper.getusername(Integer.parseInt(messageId));
+        System.out.println(username+":\n"+info);
+        return username+":\n"+info;
     }
 }

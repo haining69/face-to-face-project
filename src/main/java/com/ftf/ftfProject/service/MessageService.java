@@ -1,8 +1,10 @@
 package com.ftf.ftfProject.service;
 
 import com.ftf.ftfProject.entity.Message;
+import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
 import java.io.StreamTokenizer;
+import java.util.ArrayList;
 import java.util.List;
 
 public interface MessageService {
@@ -61,8 +63,15 @@ public interface MessageService {
     void incReadnum(String messagesId);
 
     /**
-     *
+     *删除动态，如果删除成功返回true，否则反之
      * @param messageId
      */
-    void deletemessage(String messageId);
+    Boolean deletemessage(String messageId);
+
+    /**
+     * 根据传入的messageId进行查询usernikename和messageinfo,并返回字符串
+     * @param messageId
+     * @return
+     */
+    String getnameandinfo(String messageId);
 }

@@ -31,6 +31,14 @@ public interface MessageMapper {
     @Select("select messages_id from message where user_id = (select user_id from users where user_nikename=#{userNikename}) and messages_info = #{info}")
     int getMessageId(String userNikename,String info);
 
+    //根据传入的messageId进行查询，返回message内容
+    @Select("select messages_info from message where messages_id = #{messageId}")
+    String getinfo(int messageId);
+
+    //根据传入的messageId进行查询，返回用户名
+    @Select("select user_nikename from users where user_id = (select user_id from message where messages_id = #{messageId})")
+    String getusername(int messageId);
+
     //根据传入的message_id进行增加点赞数
     @Update("update message set messages_readnum=messages_readnum+1 where messages_id=${messagesId}")
     int incAgreenum(int messagesId);
@@ -75,5 +83,5 @@ public interface MessageMapper {
 
     //删除用户动态
     @Delete("delete from message where messages_id=#{messagesId}")
-    void deleteMessage(int messagesId);
+    int deleteMessage(int messagesId);
 }

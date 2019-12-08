@@ -1,7 +1,7 @@
 package com.ftf.ftfProject.beforecontroller.MessageController;
 
 
-import com.alibaba.fastjson.JSONObject;
+import com.ftf.ftfProject.Tools.Pack;
 import com.ftf.ftfProject.entity.Message;
 import com.ftf.ftfProject.service.impl.MessageServiceImpl;
 import com.ftf.ftfProject.service.impl.UserServiceImpl;
@@ -11,12 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/message")
@@ -26,6 +22,8 @@ public class MessageController {
     private MessageServiceImpl messageService;
     @Autowired
     private UserServiceImpl userService;
+    @Autowired
+    private Pack PackMessage;
 
     /**
      * 根据用户名进行查询该用户的动态信息，并进行分页处理
@@ -34,8 +32,8 @@ public class MessageController {
     @RequestMapping("/getmessage")
     @ResponseBody
     public List<Message> getmessage(String userNikename, int page){  //String userNikename, int number
-        int pages = messageService.getpages(userNikename);
-        return messageService.getMessage(userNikename, page);
+        int pages = messageService.getpages(userNikename); // 返回的页数
+        return messageService.getMessage(userNikename, page);   //返回查找的动态，每次返回5条记录
     }
 
     /**
@@ -46,19 +44,9 @@ public class MessageController {
     @RequestMapping("/savemessage")
     @ResponseBody
     public String saveMessage(HttpServletRequest request){
-//        JSONObject jo = new JSONObject();
-//        Map<String, String> map = (Map<String, String>)jo.parse(data);
         String info = request.getParameter("info");
         String userNikename = request.getParameter("userNikename");
-        Message message = new Message();
-        message.setMessagesInfo(info);
-        message.setMessagesAgreenum(0);  //赞同数
-        message.setMessagesCollectnum(0);  //收藏数
-        message.setMessagesCommentnum(0);  //评论数
-        message.setMessagestate(0);    //状态
-        message.setMessagesTime(new Date());  //时间戳
-        message.setMessagesTranspondnum(0);  //转发数
-        message.setMessagesReadnum(0);    //阅读数
+        Message message = PackMessage.PackMessage(info);
         message.setUserId(String.valueOf(userService.findByUsername1(userNikename)));
         if (messageService.saveMessage(message) ){  //如果存储成功则进行返回消息id
             String messageid = messageService.getMessageId(userNikename,info);
@@ -69,11 +57,38 @@ public class MessageController {
     }
 
     /**
-     * 删除动态
+     * 删除动态,如果成功则返回true，否则，反之
      */
     @RequestMapping("/deletemessage")
-    public void deleteMessage(String messageId){
-        messageService.deletemessage(messageId);
+    @ResponseBody
+    public String deleteMessage(String messageId){
+        if (messageService.deletemessage(messageId)){
+            return "true";
+        }else {
+            return "false";
+        }
+    }
+
+
+    /**
+     * 进行转发
+     * @param userNikename
+     * @param messageId
+     * @return
+     */
+    @RequestMapping("/transpondmessage")
+    public String TranspondMessage(String userNikename, String messageId){  //
+//        String userNikename = "tcp666";
+//        String messageId = "53";
+        String info = messageService.getnameandinfo(messageId);
+        Message message = PackMessage.PackMessage(info);
+        message.setUserId(String.valueOf(userService.findByUsername1(userNikename)));
+        if (messageService.saveMessage(message) ){  //如果存储成功则进行返回消息id
+            String messageid = messageService.getMessageId(userNikename,info);
+            return messageid;
+        }else {
+            return "false";
+        }
     }
 
     /**
