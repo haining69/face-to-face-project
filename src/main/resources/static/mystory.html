@@ -28,52 +28,155 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery.cookie.js"></script>
     <script>
-        onload=function () {
-            var userNikename=$.cookie("userNikename");
 
+        // 删除
+        function userDel(obj) {
+            var userNikename = $.cookie("userNikename");
+            var article = obj.parentNode.parentNode.parentNode.parentNode.parentNode;
+            var id = article.id;
             $.ajax({
-                url: "message/getmessage",
-                type:"POST",
-                data:{userNikename:userNikename,page:1},
-                dataType:"JSON",
-                success:function (data) {
-                   for (var i=0;i<data.length;i++){
-                       var article = document.createElement("article");
-                     var id= data[i]["messagesId"];
-                     article.id=id;
-                       article.className = "single-post zerogrid";
-                       article.innerHTML = " <div class=\"row wrap-post\">" +
-                           "\n" +
-                           "            <div class=\"entry-content\">\n" +
-                           "\n" +
-                           " <p style='word-break:break-all;'>" +
-                           data[i]["messagesInfo"]+
-                           "</p>\n" +
-                           " <p class=\"infoOperation\">\n" +
-                           "                <span class=\"time\">2019.1.29</span>\n" +
-                           "                <span class=\"infoHandle\">\n" +
-                           "                    <a href=\"javascript:;\">点赞</a>\n" +
-                           "                    <a href=\"javascript:;\">转发</a>\n" +
-                           "                    <a href=\"javascript:;\">删除</a>\n" +
-                           "                </span>\n" +
-                           "            </p>" +
-                           "            </div>\n" +
-                           "\n" +
-                           "        </div>"
-
-                       var ele = document.getElementsByClassName("MessageList")[0];
-                       ele.append(article);
-
-                   }
+                url: "deletemessage",
+                typ: "POST",
+                data: {id: id, userNikename: userNikename},
+                dataType: "text",
+                success: function (data) {
+                    if ("true" == data) {
+                        var articlePar = article.parentNode;
+                        articlePar.removeChild(article);
+                    }
+                },
+                error: function () {
+                    alert("网络错误");
                 }
             })
         }
+
+        // 评论
+
+        function remark(obj) {
+            var id = obj.parentNode.parentNode.parentNode.parentNode.parentNode.id;
+
+            obj.onclick = null;
+            var parent = obj.parentNode.parentNode;
+            var div = document.createElement("div");
+                 div.style.width = 100 + "%";
+            var text = document.createElement("textarea");
+                text.style.width = 80 + "%";
+                text.style.height = 45 + "px";
+                text.style.resize = "none";
+                text.style.border = "none";
+                text.style.outline = "none";
+                text.style.cssFloat = "left";
+                text.style.margin = 0;
+                text.style.padding = 0;
+            var input = document.createElement("input");
+                input.type = "button";
+                input.value = "发表评论";
+                input.style.width = 20 + "%";
+                input.style.height = 50 + "px";
+                input.style.display = "block";
+                input.style.cssFloat = "right";
+                input.style.lineHeight = 45 + "px";
+                input.style.margin = 0;
+                input.style.padding = 0;
+
+            var remarkList = document.createElement("div");
+                remarkList.style.width=100+"%";
+                remarkList.style.cssFloat="left";
+                div.appendChild(text);
+                div.appendChild(input);
+                parent.appendChild(div);
+                parent.appendChild(remarkList);
+
+            input.onclick=function () {
+
+                var userNikename = $.cookie("userNikename");
+                var text1=text.value;
+                $.ajax({
+                    url:"saveRemark",
+                    type:"POST",
+                    data:{remark:text1,userNikename:userNikename,id:id},
+                    dataType:"text",
+                    sucess:function (data) {
+                        if ("true"==data){
+                            var span=document.createElement("span");
+                            span.style.width=100+"%";
+                            span.style.display="inline-block";
+                            input.style.lineHeight = 50 + "px";
+                            input.style.margin = 0;
+                            input.style.padding = 0;
+                            span.style.wordBreak="break-all";
+                            span.innerText=userNikename+":"+text1;
+                            span.style.padding=0;
+                            span.style.margin=0;
+                            remarkList.appendChild(span);
+                            text.value="";
+                        }
+                    },
+                    error:function (data) {
+                        alert(data);
+                    }
+                })
+
+            }
+
+
+        }
+
+
+        onload = function () {
+            var userNikename = $.cookie("userNikename");
+
+
+            $.ajax({
+                url: "message/getmessage",
+                type: "POST",
+                data: {userNikename: userNikename, page: 1},
+                dataType: "JSON",
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        var article = document.createElement("article");
+                        var id = data[i]["messagesId"];
+                        var time=data[i]["messagesTime"];
+                        var messagesTranspondnum=data[i]["messagesTranspondnum"];
+                        var messagesCommentnum=data[i]["messagesCommentnum"];
+                        article.id = id;
+                        article.className = "single-post zerogrid";
+                        article.innerHTML = " <div class=\"row wrap-post\">" +
+                            "\n" +
+                            "            <div class=\"entry-content\">\n" +
+                            "\n" +
+                            " <p style='word-break:break-all;'>" +
+                            data[i]["messagesInfo"] +
+                            "</p>\n" +
+                            " <p class=\"infoOperation\">\n" +
+                            "                <span class=\"time\" style='display: block;float: left;'>"+time+"</span>\n" +
+                            "                <span class=\"infoHandle\" style='display: block;float: right'>\n" +
+                            "                    <a href=\"javascript:;\">点赞0</a>\n" +
+                            "                    <a href=\"javascript:;\"onclick='resend(this);'>转发"+messagesTranspondnum+"</a>\n" +
+                            "                    <a href=\"javascript:;\" onclick='remark(this);'>评论"+messagesCommentnum+"</a>\n" +
+                            "                    <a href=\"javascript:;\" onclick='userDel(this);'>删除</a>\n" +
+                            "                </span>\n" +
+                            "            </p>" +
+                            "            </div>\n" +
+                            "\n" +
+                            "        </div>"
+
+                        var ele = document.getElementsByClassName("MessageList")[0];
+                        ele.append(article);
+
+                    }
+                }
+            })
+        }
+
 
     </script>
 
 
 </head>
 <body>
+
 <div class="wrap-body">
     <header class="main-header">
         <div class="zerogrid">
@@ -110,7 +213,6 @@
                 </div>
             </div>
         </div>
-
     </header>
 
     <section id="container">
@@ -139,7 +241,7 @@
                             <span>日志内容</span>
                             <textarea name="message" id="message" style="resize: none"></textarea>
                         </label>
-                        <input class="button button-skin " id="send" value="发送">
+                        <input class="button button-skin " type="button" id="send" value="发表" >
                     </div>
                 </div>
             </div>
@@ -148,7 +250,7 @@
             <div class="MessageList">
 
             </div>
-    </div>
+        </div>
     </section>
 
     <footer>
@@ -219,59 +321,67 @@
 </div>
 
 <script>
+
+    function udelete(obj) {
+        var id = obj.parentNode.parentNode.parentNode.id;
+        alert(id);
+    }
+
     $("#send").click(function () {
-        var message=$("#message").val();
-        var userNikename=$.cookie("userNikename");
-        var time=new Date();
-        var messageData={
-            "userNikename":userNikename,
-            "info":message,
+        var message = $("#message").val();
+        var userNikename = $.cookie("userNikename");
+        var time = new Date();
+        var messageData = {
+            "userNikename": userNikename,
+            "info": message,
         }
-        if(message!="")
-        $.ajax(
-            {
-                url:"message/savemessage",
-                type:"POST",
-                data:{userNikename:userNikename,info:message},
-                dataType:"text",
-                success:function (data) {
-                    if ("false" != data){
-                        alert(message);
-                        alert(data);
-                        var article = document.createElement("article");
-                         article.id=data;
-                        article.className = "single-post zerogrid";
-                        article.innerHTML = " <div class=\"row wrap-post\">" +
-                            "\n" +
-                            "            <div class=\"entry-content\">\n" +
-                            "\n" +
-                            "                <p style='word-break:break-all;'>"
-                            +message+
-                            "</p>\n" +
-                            " <p class=\"infoOperation\">\n" +
-                            "                <span class=\"time\">2019.1.29</span>\n" +
-                            "                <span class=\"infoHandle\">\n" +
-                            "                    <a href=\"javascript:;\">点赞</a>\n" +
-                            "                    <a href=\"javascript:;\">转发</a>\n" +
-                            "                    <a href=\"javascript:;\">删除</a>\n" +
-                            "                </span>\n" +
-                            "            </p>" +
-                            "            </div>\n" +
-                            "\n" +
-                            "        </div>"
+        if (message != "")
+            $.ajax(
+                {
+                    url: "message/savemessage",
+                    type: "POST",
+                    data: {userNikename: userNikename, info: message},
+                    dataType: "text",
+                    success: function (data) {
+                        if ("false" != data) {
+                            alert(message);
+                            alert(data);
+                            var article = document.createElement("article");
+                            article.id = data;
+                            article.className = "single-post zerogrid";
+                            article.innerHTML = " <div class=\"row wrap-post\">" +
+                                "\n" +
+                                "            <div class=\"entry-content\">\n" +
+                                "\n" +
+                                "                <p style='word-break:break-all;'>"
+                                + message +
+                                "</p>\n" +
+                                " <p class=\"infoOperation\">\n" +
+                                "                <span class=\"time\" style='display: block;float: left;'>2019.1.29</span>\n" +
+                                "                <span class=\"infoHandle\" style='display: block;float: right;'>\n" +
+                                "                    <a href=\"javascript:;\" onclick='up(this)'>点赞</a>\n" +
+                                "                    <a href=\"javascript:;\" class='delete'>转发</a>\n" +
+                                "                    <a onclick=udelete()>删除</a>\n" +
+                                "                </span>\n" +
+                                "            </p>" +
+                                "            </div>\n" +
+                                "\n" +
+                                "        </div>"
 
-                        var ele = document.getElementsByClassName("MessageList")[0];
-                        ele.prepend(article);
+                            var ele = document.getElementsByClassName("MessageList")[0];
+                            ele.prepend(article);
 
-                    }
+                        }
 
-                    $("#message").val("");
-                },
-            }
-        )
+                        $("#message").val("");
+                    },
+                }
+            )
 
 
-    })
+    });
+
+
 </script>
 </body>
 </html>
