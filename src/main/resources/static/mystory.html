@@ -28,8 +28,26 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery.cookie.js"></script>
     <script>
+
+
+        function userDel(obj){
+            var userNikename=$.cookie("userNikename");
+            var article=obj.parentNode.parentNode.parentNode.parentNode.parentNode;
+            var id=article.id;
+          $.ajax({
+              url:"deletemessage",
+              typ:"POST",
+              data:{id:id,userNikename:userNikename},
+              dataType:"text",
+              success:function () {
+                var  articlePar=article.parentNode;
+                articlePar.removeChild(article);
+              }
+          })
+        }
         onload=function () {
             var userNikename=$.cookie("userNikename");
+
 
             $.ajax({
                 url: "message/getmessage",
@@ -50,11 +68,11 @@
                            data[i]["messagesInfo"]+
                            "</p>\n" +
                            " <p class=\"infoOperation\">\n" +
-                           "                <span class=\"time\">2019.1.29</span>\n" +
-                           "                <span class=\"infoHandle\">\n" +
+                           "                <span class=\"time\" style='display: block;float: left;'>2019.1.29</span>\n" +
+                           "                <span class=\"infoHandle\" style='display: block;float: right'>\n" +
                            "                    <a href=\"javascript:;\">点赞</a>\n" +
                            "                    <a href=\"javascript:;\">转发</a>\n" +
-                           "                    <a href=\"javascript:;\">删除</a>\n" +
+                           "                    <a href=\"javascript:;\" onclick='userDel(this);'>删除</a>\n" +
                            "                </span>\n" +
                            "            </p>" +
                            "            </div>\n" +
@@ -68,6 +86,7 @@
                 }
             })
         }
+
 
     </script>
 
@@ -110,7 +129,6 @@
                 </div>
             </div>
         </div>
-
     </header>
 
     <section id="container">
@@ -219,6 +237,11 @@
 </div>
 
 <script>
+    function udelete(obj){
+        var id=obj.parentNode.parentNode.parentNode.id;
+        alert(id);
+    }
+
     $("#send").click(function () {
         var message=$("#message").val();
         var userNikename=$.cookie("userNikename");
@@ -249,11 +272,11 @@
                             +message+
                             "</p>\n" +
                             " <p class=\"infoOperation\">\n" +
-                            "                <span class=\"time\">2019.1.29</span>\n" +
-                            "                <span class=\"infoHandle\">\n" +
-                            "                    <a href=\"javascript:;\">点赞</a>\n" +
-                            "                    <a href=\"javascript:;\">转发</a>\n" +
-                            "                    <a href=\"javascript:;\">删除</a>\n" +
+                            "                <span class=\"time\" style='display: block;float: left;'>2019.1.29</span>\n" +
+                            "                <span class=\"infoHandle\" style='display: block;float: right;'>\n" +
+                            "                    <a href=\"javascript:;\" onclick='up(this)'>点赞</a>\n" +
+                            "                    <a href=\"javascript:;\" class='delete'>转发</a>\n" +
+                            "                    <a onclick=udelete()>删除</a>\n" +
                             "                </span>\n" +
                             "            </p>" +
                             "            </div>\n" +
@@ -271,7 +294,17 @@
         )
 
 
-    })
+    });
+
+
+
+
+
+
+
+
+
+
 </script>
 </body>
 </html>
