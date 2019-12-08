@@ -35,9 +35,9 @@
             var article = obj.parentNode.parentNode.parentNode.parentNode.parentNode;
             var id = article.id;
             $.ajax({
-                url: "deletemessage",
+                url: "message/deletemessage",
                 typ: "POST",
-                data: {id: id, userNikename: userNikename},
+                data: {id: id},
                 dataType: "text",
                 success: function (data) {
                     if ("true" == data) {
@@ -93,12 +93,14 @@
                 var userNikename = $.cookie("userNikename");
                 var text1=text.value;
                 $.ajax({
-                    url:"saveRemark",
+                    url:"comment/savecomment",
                     type:"POST",
                     data:{remark:text1,userId:userId,messageId:messageId},
                     dataType:"text",
-                    sucess:function (data) {
+                    success:function (data) {
+                        alert(data);
                         if ("true"==data){
+
                             var span=document.createElement("span");
                             span.style.width=100+"%";
                             span.style.display="inline-block";
@@ -138,8 +140,11 @@
                         var article = document.createElement("article");
                         var id = data[i]["messagesId"];
                         var time=data[i]["messagesTime"];
+                        var index = time.indexOf('.');
+                        time = time.substr(0,index);
                         var messagesTranspondnum=data[i]["messagesTranspondnum"];
                         var messagesCommentnum=data[i]["messagesCommentnum"];
+                        var messagesAgreenum=data[i]["messagesAgreenum"];
                         article.id = id;
                         article.className = "single-post zerogrid";
                         article.innerHTML = " <div class=\"row wrap-post\">" +
@@ -152,7 +157,7 @@
                             " <p class=\"infoOperation\">\n" +
                             "                <span class=\"time\" style='display: block;float: left;'>"+time+"</span>\n" +
                             "                <span class=\"infoHandle\" style='display: block;float: right'>\n" +
-                            "                    <a href=\"javascript:;\">点赞0</a>\n" +
+                            "                    <a href=\"javascript:;\">点赞"+messagesAgreenum+"</a>\n" +
                             "                    <a href=\"javascript:;\"onclick='resend(this);'>转发"+messagesTranspondnum+"</a>\n" +
                             "                    <a href=\"javascript:;\" onclick='remark(this);'>评论"+messagesCommentnum+"</a>\n" +
                             "                    <a href=\"javascript:;\" onclick='userDel(this);'>删除</a>\n" +

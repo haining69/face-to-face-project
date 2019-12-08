@@ -61,8 +61,8 @@ public class MessageController {
      */
     @RequestMapping("/deletemessage")
     @ResponseBody
-    public String deleteMessage(String messageId){
-        if (messageService.deletemessage(messageId)){
+    public String deleteMessage(Integer id){
+        if (messageService.deletemessage(id)){
             return "true";
         }else {
             return "false";

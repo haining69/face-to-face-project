@@ -23,9 +23,9 @@ public interface CommentsMapper {
     List<Comments> selectByMessagesid(Message message);
 
     //增加当前说说的评论
-    @Insert("insert into comments(comments_info, comments_time, message_id, user_id)" +
-            "values(#{commentsInfo}, #{commentsTime}, #{messageId}, #{userId})")
-    void saveComment(Comments comments);
+    @Insert("insert into comments(comments_info, comments_time, message_id, userparent_id)" +
+            "values(#{commentsInfo}, #{commentsTime}, #{messageId}, #{userParentId})")
+    int saveComment(Comments comments);
 
     //评论不能修改
 

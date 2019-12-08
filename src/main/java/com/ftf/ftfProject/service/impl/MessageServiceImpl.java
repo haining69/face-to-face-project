@@ -71,8 +71,8 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public Boolean deletemessage(String messageId) {
-        int i = messageMapper.deleteMessage(Integer.parseInt(messageId));
+    public Boolean deletemessage(Integer messageId) {
+        int i = messageMapper.deleteMessage(messageId);
         if (i == 1){
             return true;
         }else {

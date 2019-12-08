@@ -66,7 +66,7 @@ public interface MessageService {
      *删除动态，如果删除成功返回true，否则反之
      * @param messageId
      */
-    Boolean deletemessage(String messageId);
+    Boolean deletemessage(Integer messageId);
 
     /**
      * 根据传入的messageId进行查询usernikename和messageinfo,并返回字符串

@@ -41,7 +41,7 @@ public class TestController {
 
     //登录
     @RequestMapping("login")
-    public Boolean login(Users user) {
+    public String login(Users user) {
         return userService.login(user);
     }
 

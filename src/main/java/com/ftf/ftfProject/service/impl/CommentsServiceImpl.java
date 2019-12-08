@@ -18,4 +18,15 @@ public class CommentsServiceImpl implements CommentsService {
     public List<Comments> getAllComments() {
         return commentsMapper.getAllComments();
     }
+
+    @Override
+    public Boolean saveComments(Comments comments) {
+        int i = commentsMapper.saveComment(comments);
+        if (i == 1){
+            System.out.println("zhanghaining");
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

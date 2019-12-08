@@ -1,5 +1,6 @@
 package com.ftf.ftfProject.Tools;
 
+import com.ftf.ftfProject.entity.Comments;
 import com.ftf.ftfProject.entity.Message;
 import org.springframework.stereotype.Component;
 
@@ -7,6 +8,11 @@ import java.util.Date;
 
 @Component
 public class Pack {
+    /**
+     * 创建一个message对象
+     * @param info
+     * @return
+     */
     public Message PackMessage(String info){
         Message message = new Message();
         message.setMessagesInfo(info);
@@ -18,5 +24,19 @@ public class Pack {
         message.setMessagesTranspondnum(0);  //转发数
         message.setMessagesReadnum(0);    //阅读数
         return message;
+    }
+
+    /**
+     * 创建
+     * @return
+     */
+    public Comments PackComment(String remark,Integer userId,Integer messageId){
+        Comments comments = new Comments();
+        comments.setCommentsInfo(remark);
+        comments.setCommentsTime(new Date());
+//        comments.setUserChildId(null);
+        comments.setUserParentId(String.valueOf(userId));
+        comments.setMessageId(String.valueOf(messageId));
+        return comments;
     }
 }

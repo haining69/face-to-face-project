@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -13,9 +14,10 @@ public class Comments implements Serializable {
 
     private String commentsId;
     private String commentsInfo;
-    private String commentsTime;
+    private Date commentsTime;
     private String messageId;
-    private String userId;
+    private String userChildId;
+    private  String userParentId;
 
     public String getCommentsId() {
         return commentsId;
@@ -33,11 +35,11 @@ public class Comments implements Serializable {
         this.commentsInfo = commentsInfo;
     }
 
-    public String getCommentsTime() {
+    public Date getCommentsTime() {
         return commentsTime;
     }
 
-    public void setCommentsTime(String commentsTime) {
+    public void setCommentsTime(Date commentsTime) {
         this.commentsTime = commentsTime;
     }
 
@@ -49,12 +51,20 @@ public class Comments implements Serializable {
         this.messageId = messageId;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getUserChildId() {
+        return userChildId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserChildId(String userChildId) {
+        this.userChildId = userChildId;
+    }
+
+    public String getUserParentId() {
+        return userParentId;
+    }
+
+    public void setUserParentId(String userParentId) {
+        this.userParentId = userParentId;
     }
 
     @Override
@@ -62,9 +72,10 @@ public class Comments implements Serializable {
         return "Comments{" +
                 "commentsId='" + commentsId + '\'' +
                 ", commentsInfo='" + commentsInfo + '\'' +
-                ", commentsTime='" + commentsTime + '\'' +
+                ", commentsTime=" + commentsTime +
                 ", messageId='" + messageId + '\'' +
-                ", userId='" + userId + '\'' +
+                ", userChildId='" + userChildId + '\'' +
+                ", userParentId='" + userParentId + '\'' +
                 '}';
     }
 }

@@ -26,12 +26,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean login(Users user) {
+    public String login(Users user) {
 //        System.out.println(user);
-        if (userMapper.login(user) != null) {
-            return true;
+        Users users = userMapper.login(user);
+        if (users != null) {
+            return users.getUserId();
         } else {
-            return false;
+            return "false";
         }
     }
 
