@@ -3,11 +3,14 @@ package com.ftf.ftfProject.beforecontroller.CommentsController;
 
 import com.ftf.ftfProject.Tools.Pack;
 import com.ftf.ftfProject.entity.Comments;
+import com.ftf.ftfProject.metaclass.UserComment;
 import com.ftf.ftfProject.service.impl.CommentsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 @Repository
 @RequestMapping("/comment")
@@ -30,5 +33,11 @@ public class CommentsController {
         }else {
             return "false";
         }
+    }
+
+    @RequestMapping("/getcomments")
+    @ResponseBody
+    public List<UserComment> getComments(String messageId){
+        return commentsService.selectByMessagesid(messageId);
     }
 }

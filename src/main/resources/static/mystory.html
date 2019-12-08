@@ -91,15 +91,15 @@
 
 
                 $.ajax({
-                    url:"getcomments",
+                    url:"comment/getcomments",
                     type:"POST",
                     data:{messageId:messageId},
                     dataType:"JSON",
                     success:function (data) {
 
                       for (var i=0;i<data.length;i++){
-                          var   userName=data[i]["userName"];
-                         var commentsInfo=data[i]["commentsInfo"];
+                          var   userName=data[i]["userNikename"];
+                         var commentsInfo=data[i]["commentInfo"];
                           var span=document.createElement("span");
                           span.style.width=100+"%";
                           span.style.display="inline-block";
@@ -111,7 +111,7 @@
                           span.style.padding=0;
                           span.style.margin=0;
                           remarkList.appendChild(span);
-                          text.value="";
+
                       }
 
                     }

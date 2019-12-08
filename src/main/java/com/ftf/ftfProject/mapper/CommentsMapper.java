@@ -2,6 +2,7 @@ package com.ftf.ftfProject.mapper;
 
 import com.ftf.ftfProject.entity.Comments;
 import com.ftf.ftfProject.entity.Message;
+import com.ftf.ftfProject.metaclass.UserComment;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
@@ -19,8 +20,8 @@ public interface CommentsMapper {
     List<Comments> getAllComments();
 
     //根据messages_id查找当前评论表数据
-    @Select("select * from comments where message_id=#{messageId}")
-    List<Comments> selectByMessagesid(Message message);
+    @Select("select user_nikename as userNikename,comments_info as commentInfo from users,comments where users.user_id = comments.userparent_id and message_id=#{messageId}")
+    List<UserComment> selectByMessagesid(int messageId);
 
     //增加当前说说的评论
     @Insert("insert into comments(comments_info, comments_time, message_id, userparent_id)" +

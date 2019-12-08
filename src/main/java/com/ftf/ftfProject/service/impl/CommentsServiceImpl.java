@@ -2,6 +2,7 @@ package com.ftf.ftfProject.service.impl;
 
 import com.ftf.ftfProject.entity.Comments;
 import com.ftf.ftfProject.mapper.CommentsMapper;
+import com.ftf.ftfProject.metaclass.UserComment;
 import com.ftf.ftfProject.service.CommentsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,5 +29,10 @@ public class CommentsServiceImpl implements CommentsService {
         }else{
             return false;
         }
+    }
+
+    @Override
+    public List<UserComment> selectByMessagesid(String messageId) {
+        return commentsMapper.selectByMessagesid(Integer.parseInt(messageId));
     }
 }

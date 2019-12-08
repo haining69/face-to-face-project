@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 import java.util.UUID;
 
 @SpringBootApplication
-@MapperScan(basePackages = {"com.ftf.ftfProject.mapper", "com.ftf.ftfProject.Tools"})
+@MapperScan(basePackages = {"com.ftf.ftfProject.mapper", "com.ftf.ftfProject.Tools", "com.ftf.ftfProject.metaclass"})
 public class MainApplication {
 
     public static void main(String[] args) {
