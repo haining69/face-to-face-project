@@ -54,8 +54,8 @@
         // 评论
 
         function remark(obj) {
-            var id = obj.parentNode.parentNode.parentNode.parentNode.parentNode.id;
-
+            var messageId = obj.parentNode.parentNode.parentNode.parentNode.parentNode.id;
+           var  userId=$.cookie("userId");
             obj.onclick = null;
             var parent = obj.parentNode.parentNode;
             var div = document.createElement("div");
@@ -95,7 +95,7 @@
                 $.ajax({
                     url:"saveRemark",
                     type:"POST",
-                    data:{remark:text1,userNikename:userNikename,id:id},
+                    data:{remark:text1,userId:userId,messageId:messageId},
                     dataType:"text",
                     sucess:function (data) {
                         if ("true"==data){
