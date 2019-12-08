@@ -54,8 +54,9 @@
         // 评论
 
         function remark(obj) {
+
             var messageId = obj.parentNode.parentNode.parentNode.parentNode.parentNode.id;
-           var  userId=$.cookie("userId");
+             var  userId=$.cookie("userId");
             obj.onclick = null;
             var parent = obj.parentNode.parentNode;
             var div = document.createElement("div");
@@ -88,8 +89,34 @@
                 parent.appendChild(div);
                 parent.appendChild(remarkList);
 
-            input.onclick=function () {
 
+                $.ajax({
+                    url:"getcomments",
+                    type:"POST",
+                    data:{messageId:messageId},
+                    dataType:"JSON",
+                    success:function (data) {
+
+                      for (var i=0;i<data.length;i++){
+                          var   userName=data[i]["userName"];
+                         var commentsInfo=data[i]["commentsInfo"];
+                          var span=document.createElement("span");
+                          span.style.width=100+"%";
+                          span.style.display="inline-block";
+                          input.style.lineHeight = 50 + "px";
+                          input.style.margin = 0;
+                          input.style.padding = 0;
+                          span.style.wordBreak="break-all";
+                          span.innerText=userName+":"+commentsInfo;
+                          span.style.padding=0;
+                          span.style.margin=0;
+                          remarkList.appendChild(span);
+                          text.value="";
+                      }
+
+                    }
+                })
+                input.onclick=function () {
                 var userNikename = $.cookie("userNikename");
                 var text1=text.value;
                 $.ajax({
