@@ -1,5 +1,6 @@
 package com.ftf.ftfProject.Tools;
 
+import com.ftf.ftfProject.entity.Collections;
 import com.ftf.ftfProject.entity.Comments;
 import com.ftf.ftfProject.entity.Message;
 import org.springframework.stereotype.Component;
@@ -27,7 +28,7 @@ public class Pack {
     }
 
     /**
-     * 创建
+     * 创建Comments,并初始化返回对象
      * @return
      */
     public Comments PackComment(String remark,Integer userId,Integer messageId){
@@ -38,5 +39,20 @@ public class Pack {
         comments.setUserParentId(String.valueOf(userId));
         comments.setMessageId(String.valueOf(messageId));
         return comments;
+    }
+
+    /**
+     * 创建Collections对象，初始化并返回对象
+     * @param messageId
+     * @param userId
+     * @return
+     */
+    public Collections PackCollection(Integer messageId, Integer userId){
+        Collections collections = new Collections();
+        collections.setCollectionsTime(new Date());
+        collections.setCollectionsStatus("无");
+        collections.setMessageId(String.valueOf(messageId));
+        collections.setUserId(String.valueOf(userId));
+        return collections;
     }
 }

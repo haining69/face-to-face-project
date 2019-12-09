@@ -18,4 +18,14 @@ public class CollectionsServiceImpl implements CollectionsService {
     public List<Collections> getCollections() {
         return collectionsMapper.getCollections();
     }
+
+    @Override
+    public String  saveCollection(Collections collections) {
+        int i = collectionsMapper.saveCollection(collections);
+        if (i == 1){
+            return "true";
+        }else {
+            return "false";
+        }
+    }
 }

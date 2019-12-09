@@ -23,9 +23,9 @@ public interface CollectionsMapper {
     List<Collections> selectByUserId();
 
     //增加Collections表数据
-    @Insert("insert into collections(collections_time, collections_status, user_id) " +
-            "values(#{CollectionsTime}, #{CollectionsStatus}, #{userId})")
-    void saveCollection(Collections collection);
+    @Insert("insert into collections(collections_time, collections_status, message_id, user_id) " +
+            "values(#{CollectionsTime}, #{CollectionsStatus}, #{messageId}, #{userId})")
+    int saveCollection(Collections collection);
 
 
     //删除收藏

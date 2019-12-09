@@ -22,6 +22,13 @@ public class CommentsController {
     private CommentsServiceImpl commentsService;
 
 
+    /**
+     * 保存评论
+     * @param remark
+     * @param userId
+     * @param messageId
+     * @return
+     */
     @RequestMapping("/savecomment")
     @ResponseBody
     public String SaveComment(String remark,Integer userId,Integer messageId){
@@ -35,6 +42,11 @@ public class CommentsController {
         }
     }
 
+    /**
+     * 获取当前说说的评论
+     * @param messageId
+     * @return
+     */
     @RequestMapping("/getcomments")
     @ResponseBody
     public List<UserComment> getComments(String messageId){

@@ -10,8 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -43,9 +41,7 @@ public class MessageController {
      */
     @RequestMapping("/savemessage")
     @ResponseBody
-    public String saveMessage(HttpServletRequest request){
-        String info = request.getParameter("info");
-        String userNikename = request.getParameter("userNikename");
+    public String saveMessage(String userNikename,String info){
         Message message = PackMessage.PackMessage(info);
         message.setUserId(String.valueOf(userService.findByUsername1(userNikename)));
         if (messageService.saveMessage(message) ){  //如果存储成功则进行返回消息id
@@ -78,8 +74,6 @@ public class MessageController {
      */
     @RequestMapping("/transpondmessage")
     public String TranspondMessage(String userNikename, String messageId){  //
-//        String userNikename = "tcp666";
-//        String messageId = "53";
         String info = messageService.getnameandinfo(messageId);
         Message message = PackMessage.PackMessage(info);
         message.setUserId(String.valueOf(userService.findByUsername1(userNikename)));
@@ -110,11 +104,13 @@ public class MessageController {
     }
 
     /**
-     * 增加当前动态的
+     * 增加当前动态的阅读量
      * @param messageId
      */
     @RequestMapping("/increadnum")
     public void incReadnum(String messageId){
         messageService.incAgreenum(messageId);
     }
+
+
 }

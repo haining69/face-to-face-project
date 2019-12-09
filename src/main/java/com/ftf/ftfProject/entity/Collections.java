@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -12,7 +13,7 @@ import java.io.Serializable;
 public class Collections implements Serializable {
 
     private String CollectionsId;
-    private String CollectionsTime;
+    private Date CollectionsTime;
     private String CollectionsStatus;
     private String messageId;
     private String userId;
@@ -25,13 +26,10 @@ public class Collections implements Serializable {
         CollectionsId = collectionsId;
     }
 
-    public String getCollectionsTime() {
-        return CollectionsTime;
-    }
-
-    public void setCollectionsTime(String collectionsTime) {
+    public void setCollectionsTime(Date collectionsTime) {
         CollectionsTime = collectionsTime;
     }
+
 
     public String getCollectionsStatus() {
         return CollectionsStatus;
