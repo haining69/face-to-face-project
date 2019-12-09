@@ -16,6 +16,9 @@ public interface UserService {
     //根据用户名进行查询用户id
     int findByUsername1(String userNikename);
 
+    //根据传入的userId返回user对象数据
+    Users getUser(Integer userId);
+
     //注册
     void register(Users user);
 

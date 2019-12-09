@@ -22,4 +22,13 @@ public class LoginController {
 //        System.out.println(user);
         return userService.login(user);
     }
+
+    @RequestMapping("/getuser")
+    @ResponseBody
+    public Users getUser(Integer userId){
+        System.out.println(userId);
+        Users users = userService.getUser(userId);
+        System.out.println(users);
+        return users;
+    }
 }

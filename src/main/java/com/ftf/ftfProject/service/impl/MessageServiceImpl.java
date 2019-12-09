@@ -56,6 +56,11 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    public List<Message> getMessagehome() {
+        return messageMapper.getMessagehome();
+    }
+
+    @Override
     public void incAgreenum(String messagesId) {
         messageMapper.incAgreenum(Integer.parseInt(messagesId));
     }

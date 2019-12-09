@@ -38,10 +38,16 @@ public interface MessageService {
     int getMessageTotal();
 
     /**
-     * 保存动态，并初始化状态为0
+     * 保存动态，并初始化状态为0  我的故事页面
      * @param message
      */
     Boolean saveMessage(Message message);
+
+    /**
+     * 给主页返回数据，动态信息
+     * @return
+     */
+    List<Message> getMessagehome();
 
     /**
      * 根据messageId进行赞数量加1操作

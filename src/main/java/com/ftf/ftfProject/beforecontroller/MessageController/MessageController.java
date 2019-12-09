@@ -24,6 +24,7 @@ public class MessageController {
     private Pack PackMessage;
 
     /**
+     * 我的故事
      * 根据用户名进行查询该用户的动态信息，并进行分页处理
      * @return
      */
@@ -34,7 +35,11 @@ public class MessageController {
         return messageService.getMessage(userNikename, page);   //返回查找的动态，每次返回5条记录
     }
 
+
+
+
     /**
+     * 我的故事
      * 保存动态
      * @param
      * @return
@@ -53,6 +58,7 @@ public class MessageController {
     }
 
     /**
+     * 我的故事
      * 删除动态,如果成功则返回true，否则，反之
      */
     @RequestMapping("/deletemessage")
@@ -66,7 +72,14 @@ public class MessageController {
     }
 
 
+    @RequestMapping("/getmessagehome")
+    @ResponseBody
+    public List<Message> getmessagehome(){
+        return messageService.getMessagehome();
+    }
+
     /**
+     * 主页
      * 进行转发
      * @param userNikename
      * @param messageId
@@ -86,6 +99,7 @@ public class MessageController {
     }
 
     /**
+     * 主页
      * 增加该动态的点赞数
      * @param messageId
      */
@@ -95,6 +109,7 @@ public class MessageController {
     }
 
     /**
+     * 主页
      * 减少该动态的点赞数
      * @param messageId
      */
@@ -104,6 +119,7 @@ public class MessageController {
     }
 
     /**
+     * 主页
      * 增加当前动态的阅读量
      * @param messageId
      */

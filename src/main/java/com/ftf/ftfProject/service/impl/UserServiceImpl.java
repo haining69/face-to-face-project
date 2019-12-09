@@ -54,6 +54,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Users getUser(Integer userId) {
+        return userMapper.getUser(userId);
+    }
+
+    @Override
     public void register(Users user) {
         userMapper.register(user);
     }

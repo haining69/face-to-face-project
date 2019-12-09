@@ -46,6 +46,9 @@ public interface UserMapper {
     @Update("update users set user_nikename=#{userNikename} , user_password=#{userPassword} where user_email=#{userEmail}")
     int updateUser(Users user);
 
+    //根据传入的userId，返回user对象
+    @Select("select * from users where user_id=#{userId}")
+    Users getUser(Integer userId);
 
     /**
      * 后台数据查询
