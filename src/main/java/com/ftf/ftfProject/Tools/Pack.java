@@ -1,5 +1,6 @@
 package com.ftf.ftfProject.Tools;
 
+import com.ftf.ftfProject.entity.Agree;
 import com.ftf.ftfProject.entity.Collections;
 import com.ftf.ftfProject.entity.Comments;
 import com.ftf.ftfProject.entity.Message;
@@ -54,5 +55,19 @@ public class Pack {
         collections.setMessageId(String.valueOf(messageId));
         collections.setUserId(String.valueOf(userId));
         return collections;
+    }
+
+
+    /**
+     * 创建Agree对象，初始化并返回
+     * @param messageId
+     * @param userId
+     * @return
+     */
+    public Agree PackAgree(Integer messageId, Integer userId){
+        Agree agree = new Agree();
+        agree.setMessageId(messageId);
+        agree.setUserId(userId);
+        return agree;
     }
 }

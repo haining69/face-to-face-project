@@ -3,6 +3,7 @@ package com.ftf.ftfProject.beforecontroller.MessageController;
 
 import com.ftf.ftfProject.Tools.Pack;
 import com.ftf.ftfProject.entity.Message;
+import com.ftf.ftfProject.service.impl.AgreeServiceImpl;
 import com.ftf.ftfProject.service.impl.MessageServiceImpl;
 import com.ftf.ftfProject.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
+/**
+ * 动态Controller
+ */
 @Controller
 @RequestMapping("/message")
 public class MessageController {
@@ -98,25 +102,6 @@ public class MessageController {
         }
     }
 
-    /**
-     * 主页
-     * 增加该动态的点赞数
-     * @param messageId
-     */
-    @RequestMapping("/incagreenum")
-    public void incAgreenum(String messageId){
-        messageService.incAgreenum(messageId);
-    }
-
-    /**
-     * 主页
-     * 减少该动态的点赞数
-     * @param messageId
-     */
-    @RequestMapping("/decreagreenum")
-    public void decreAgreenum(String messageId){
-        messageService.decreAgreenum(messageId);
-    }
 
     /**
      * 主页

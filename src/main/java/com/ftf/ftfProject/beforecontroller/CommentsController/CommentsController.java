@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
+/**
+ * 评论Controller
+ */
 @Repository
 @RequestMapping("/comment")
 public class CommentsController {
