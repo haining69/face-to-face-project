@@ -17,18 +17,18 @@
     <script>
         // 关注
         function follow(obj) {
-            var messageId = obj.parentNode.parentNode.parentNode.id;
-            var userId = $.cookie("userId");
-            var UserMessage={
-                messageId:messageId,
-                userId:userId
-            };
+            var messageId = obj.parentNode.parentNode.parentNode.parentNode.parentNode.id;
+            // var userId = $.cookie("userId");
             $.ajax({
-                url:"follow",
-                data:JSON.stringify(UserMessage),
+                url:"relation/saverelation",
+                data:{
+                    messageId:messageId,
+                    userId:userId
+                },
                 type:"POST",
                 dataType:"text",
                 success:function (data) {
+                    alert(data);
                     if(data=="true")
                     {
                         alert("关注成功");
@@ -38,23 +38,23 @@
             });
         }
 
+        //点赞
         function appreciate(obj) {
-            var messageId = obj.parentNode.parentNode.parentNode.id;
+            var messageId = obj.parentNode.parentNode.parentNode.parentNode.parentNode.id;
             var userId = $.cookie("userId");
-            var UserMessage={
-                messageId:messageId,
-                userId:userId
-            };
             $.ajax({
-                url:"appreciate",
-                data:JSON.stringify(UserMessage),
+                url:"agree/incagreenum",
+                data:{
+                    messageId:messageId,
+                    userId:userId
+                },
                 type:"POST",
                 dataType:"text",
                 success:function (data) {
                     if(data=="true")
                     {
                         var text=obj.innerText;
-                        var num =  1+parseInt(text.match(/\d+/g));
+                        var num = text.match(/\d+/g)+1;
                         obj.innerHTML="点赞"+num;
                     }
 
@@ -62,61 +62,50 @@
             })
         }
 
+        //收藏
         function collection(obj) {
-            var messageId = obj.parentNode.parentNode.parentNode.id;
+            var messageId = obj.parentNode.parentNode.parentNode.parentNode.parentNode.id;
             var userId = $.cookie("userId");
-            var UserMessage={
-                messageId:messageId,
-                userId:userId
-            };
             $.ajax({
-                url:"collection",
-                data:JSON.stringify(UserMessage),
+                url:"collection/savecollection",
+                data:{
+                    messageId:messageId,
+                    userId:userId
+                },
                 type:"POST",
                 dataType:"text",
                 success:function (data) {
                     if(data=="true")
                     {
                         var text=obj.innerText;
-                        var num =  1+parseInt(text.match(/\d+/g));
-                        obj.innerText="收藏"+num;
+                        var num = text.match(/\d+/g)+1;
+                        obj.innerHTML="收藏"+num;
                     }
-
-                },
-                error:function (e) {
-                   //  var text=obj.innerText;
-                   // var  num=0;
-                   //  alert(text);
-                   //  alert(num);
-                  // num = 1+ parseInt(text.match(/\d+/g));
-                   //  alert(num);
-                   //
-                   //  obj.innerText="收藏"+num;
-                   //  alert(obj.innerText);
-
 
                 }
             })
         }
 
+        //转发
         function forward(obj) {
-            var messageId = obj.parentNode.parentNode.parentNode.id;
+            console.log("hello,world");
+
+            var messageId = obj.parentNode.parentNode.parentNode.parentNode.parentNode.id;
             var userId = $.cookie("userId");
-            var UserMessage={
-                messageId:messageId,
-                userId:userId
-            };
+            alert(messageId);
             $.ajax({
-                url:"forward",
-                data:JSON.stringify(UserMessage),
+                url:"message/transpondmessage",
+                data:{
+                    messageId:messageId,
+                    userId:userId
+                },
                 type:"POST",
                 dataType:"text",
-                async: false,
                 success:function (data) {
                     if(data=="true")
                     {
                         var text=obj.innerText;
-                        var num = parseInt(text.match(/\d+/g))+1;
+                        var num = text.match(/\d+/g)+1;
                         obj.innerHTML="转发"+num;
                         alert("转发成功");
                     }
@@ -126,7 +115,6 @@
         }
 
         onload = function () {
-            alert("asdjgajsdkjfja")
             $.ajax({
                 url: "message/getmessagehome",
                 type: "POST",
@@ -170,13 +158,14 @@
                             "                <div class=\"main_imgs\" id=" + imgid + ">\n" +
                             "                </div>\n" +
                             "                <div class=\"footer\">\n" +
-                            "               <span>\n" +
-                            "                   <a href=\"javascript:;\" onclick='follow(this)'>关注</a>\n" +
-                            "                   <a href=\"javascript:;\" onclick='appreciate(this)'>点赞1</a>\n" +
-                            "                   <a href=\"javascript:;\" onclick='forward(this)'>转发1</a>\n" +
-                            "                   <a href=\"javascript:;\">评论</a>\n" +
-                            "                   <a href=\"javascript:;\" onclick='collection(this)'>收藏1</a>\n" +
-                            "              </span>\n" +
+                            "                   <span>\n" +
+                            "                   <a href=\"\" onclick='follow(this)'>关注</a>\n" +
+                            "                   <a href=\"\" onclick='appreciate(this)'>点赞</a>\n" +
+                            "                   <a href=\"\" onclick='forward(this)'>转发</a>\n" +
+                            "                   <a href=\"\">评论</a>\n" +
+                            "                   <a href=\"\" onclick='collection(this)'>收藏</a>\n" +
+
+                            "                </span>\n" +
                             "                </div>\n" +
                             "            </div>\n" +
                             "        </article>";
@@ -218,7 +207,7 @@
             /*background-color: chartreuse;*/
         }
 
-        .MessageList >.article {
+        .MessageList > .article {
             width: 100%;
 
         }

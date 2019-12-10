@@ -5,6 +5,7 @@ import com.ftf.ftfProject.Tools.Pack;
 import com.ftf.ftfProject.entity.Comments;
 import com.ftf.ftfProject.metaclass.UserComment;
 import com.ftf.ftfProject.service.impl.CommentsServiceImpl;
+import com.ftf.ftfProject.service.impl.MessageServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,8 @@ public class CommentsController {
     private Pack PackComment;
     @Autowired
     private CommentsServiceImpl commentsService;
+    @Autowired
+    private MessageServiceImpl messageService;
 
 
     /**
@@ -36,9 +39,8 @@ public class CommentsController {
     @ResponseBody
     public String SaveComment(String remark,Integer userId,Integer messageId){
         Comments comments = PackComment.PackComment(remark, userId, messageId);
-        System.out.println(comments);
-        if (commentsService.saveComments(comments)){
-            System.out.println("tangcaiping");
+        if (commentsService.saveComments(comments)){  //保存成功
+            messageService.incComment(messageId);  //评论数加一
             return "true";
         }else {
             return "false";

@@ -13,4 +13,12 @@ public interface CollectionsService {
      * @return
      */
     String saveCollection(Collections collections);
+
+    /**
+     * 根据messageId和userId查询收藏表
+     * @param messageId
+     * @param userId
+     * @return
+     */
+    Boolean selectByUserIdAndMessageId(Integer messageId,Integer userId);
 }

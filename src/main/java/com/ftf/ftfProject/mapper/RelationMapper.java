@@ -21,12 +21,12 @@ public interface RelationMapper {
 
     //根据UserId查询关系表数据
     @Select("select * from users where user_id=#{userId}")
-    List<Relation> selectByUserId(Users user);
+    Relation selectByUserIdAndUserById(Integer userId, Integer userbyId);
 
     //增加用户关系
-    @Insert("insert into relation(relation_time, relation_type, user_id, user_byid)" +
-            "values(#{relationTime},#{relationType},#{userId},#{userById})")
-    void saveRelation(Relation relation);
+    @Insert("insert into relation(relation_time, user_id, user_byid)" +
+            "values(#{relationTime}, #{userId}, #{userById})")
+    int saveRelation(Relation relation);
 
     //修改用户关系
     @Update("update relation set relation_time=#{relationTime}" +

@@ -28,4 +28,14 @@ public class CollectionsServiceImpl implements CollectionsService {
             return "false";
         }
     }
+
+    @Override
+    public Boolean selectByUserIdAndMessageId(Integer messageId, Integer userId) {
+        Collections collections =  collectionsMapper.selectByUserId(messageId, userId);
+        if (collections != null){
+            return true;
+        }else {
+            return false;
+        }
+    }
 }

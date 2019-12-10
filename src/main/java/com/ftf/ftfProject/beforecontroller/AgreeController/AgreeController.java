@@ -4,11 +4,11 @@ import com.ftf.ftfProject.Tools.Pack;
 import com.ftf.ftfProject.entity.Agree;
 import com.ftf.ftfProject.service.impl.AgreeServiceImpl;
 import com.ftf.ftfProject.service.impl.MessageServiceImpl;
-import org.junit.After;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+@RequestMapping("/agree")
 @Controller
 public class AgreeController {
     @Autowired
@@ -20,7 +20,7 @@ public class AgreeController {
 
     /**
      * 主页
-     * 增加该动态的点赞数
+     * 增加该动态的点赞数  如果点过赞不能重复点赞
      * @param messageId
      */
     @RequestMapping("/incagreenum")
@@ -29,8 +29,9 @@ public class AgreeController {
             return "false";
         }else {
             Agree agree = PackAgree.PackAgree(messageId, userId);
-            agreeService.saveAgree(agree);
-            messageService.incAgreenum(String.valueOf(messageId));
+            if ("true".equals(agreeService.saveAgree(agree))){
+                messageService.incAgreenum(String.valueOf(messageId));
+            }
             return "true";
         }
 

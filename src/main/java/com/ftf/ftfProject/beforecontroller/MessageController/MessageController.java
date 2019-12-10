@@ -3,7 +3,6 @@ package com.ftf.ftfProject.beforecontroller.MessageController;
 
 import com.ftf.ftfProject.Tools.Pack;
 import com.ftf.ftfProject.entity.Message;
-import com.ftf.ftfProject.service.impl.AgreeServiceImpl;
 import com.ftf.ftfProject.service.impl.MessageServiceImpl;
 import com.ftf.ftfProject.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,11 +49,10 @@ public class MessageController {
      */
     @RequestMapping("/savemessage")
     @ResponseBody
-    public String saveMessage(String userNikename,String info){
-        Message message = PackMessage.PackMessage(info);
-        message.setUserId(String.valueOf(userService.findByUsername1(userNikename)));
+    public String saveMessage(String info,String userId){
+        Message message = PackMessage.PackMessage(info,userId);
         if (messageService.saveMessage(message) ){  //如果存储成功则进行返回消息id
-            String messageid = messageService.getMessageId(userNikename,info);
+            String messageid = messageService.getMessageId(userId,info);
             return messageid;
         }else {
             return "false";
@@ -85,32 +83,22 @@ public class MessageController {
     /**
      * 主页
      * 进行转发
-     * @param userNikename
+     * @param  messageId,userId
      * @param messageId
      * @return
      */
     @RequestMapping("/transpondmessage")
-    public String TranspondMessage(String userNikename, String messageId){  //
+    public String TranspondMessage(String messageId, String userId){
+        System.out.println(messageId+": "+userId);
         String info = messageService.getnameandinfo(messageId);
-        Message message = PackMessage.PackMessage(info);
-        message.setUserId(String.valueOf(userService.findByUsername1(userNikename)));
+        Message message = PackMessage.PackMessage(info,userId);
         if (messageService.saveMessage(message) ){  //如果存储成功则进行返回消息id
-            String messageid = messageService.getMessageId(userNikename,info);
-            return messageid;
+            messageService.incTranspond(Integer.parseInt(messageId));
+
+            return "true";
         }else {
             return "false";
         }
-    }
-
-
-    /**
-     * 主页
-     * 增加当前动态的阅读量
-     * @param messageId
-     */
-    @RequestMapping("/increadnum")
-    public void incReadnum(String messageId){
-        messageService.incAgreenum(messageId);
     }
 
 

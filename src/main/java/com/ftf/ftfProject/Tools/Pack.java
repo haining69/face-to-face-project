@@ -1,9 +1,6 @@
 package com.ftf.ftfProject.Tools;
 
-import com.ftf.ftfProject.entity.Agree;
-import com.ftf.ftfProject.entity.Collections;
-import com.ftf.ftfProject.entity.Comments;
-import com.ftf.ftfProject.entity.Message;
+import com.ftf.ftfProject.entity.*;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -15,7 +12,7 @@ public class Pack {
      * @param info
      * @return
      */
-    public Message PackMessage(String info){
+    public Message PackMessage(String info, String userId){
         Message message = new Message();
         message.setMessagesInfo(info);
         message.setMessagesAgreenum(0);  //赞同数
@@ -25,6 +22,7 @@ public class Pack {
         message.setMessagesTime(new Date());  //时间戳
         message.setMessagesTranspondnum(0);  //转发数
         message.setMessagesReadnum(0);    //阅读数
+        message.setUserId(userId);
         return message;
     }
 
@@ -59,7 +57,7 @@ public class Pack {
 
 
     /**
-     * 创建Agree对象，初始化并返回
+     * 创建Agree对象，初始化并返回对象
      * @param messageId
      * @param userId
      * @return
@@ -69,5 +67,17 @@ public class Pack {
         agree.setMessageId(messageId);
         agree.setUserId(userId);
         return agree;
+    }
+
+    /**
+     * 创建Relation对象，初始化并返回对象
+     * @return
+     */
+    public Relation PackRelation(Integer userId, Integer userbyId){
+        Relation relation = new Relation();
+        relation.setRelationTime(new Date());
+        relation.setUserId(String.valueOf(userId));
+        relation.setUserById(String.valueOf(userbyId));
+        return relation;
     }
 }

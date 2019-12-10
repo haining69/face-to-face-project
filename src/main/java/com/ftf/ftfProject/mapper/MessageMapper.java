@@ -32,12 +32,16 @@ public interface MessageMapper {
     List<Message> getMessagehome();
 
     //根据用户名和内容进行查询消息ID
-    @Select("select messages_id from message where user_id = (select user_id from users where user_nikename=#{userNikename}) and messages_info = #{info}")
-    int getMessageId(String userNikename,String info);
+    @Select("select messages_id from message where user_id = (select user_id from users where user_id=#{userId}) and messages_info = #{info}")
+    int getMessageId(String userId,String info);
 
     //根据传入的messageId进行查询，返回message内容
     @Select("select messages_info from message where messages_id = #{messageId}")
     String getinfo(int messageId);
+
+    //根据传入的messageId进行查询，返回userId
+    @Select("select user_id from message where messages_id = #{messageId}")
+    int getUserId(int messageId);
 
     //根据传入的messageId进行查询，返回用户名
     @Select("select user_nikename from users where user_id = (select user_id from message where messages_id = #{messageId})")
@@ -50,6 +54,19 @@ public interface MessageMapper {
     //根据传入的message_id进行减少点赞数
     @Update("update message set messages_readnum=messages_readnum-1 where messages_id=${messagesId}")
     int decreaAgreenum(int messagesId);
+
+    //根据传入的message_id进行增加收藏数
+    @Update("update message set messages_collectnum=messages_collectnum+1 where messages_id=${messagesId}")
+    int incColection(int messagesId);
+
+    //根据传入的message_id进行增加转发数
+    @Update("update message set messages_transpondnum=messages_transpondnum+1 where messages_id=${messagesId}")
+    int incTranspond(int messagesId);
+
+    //根据传入的message_id进行增加评论数
+    @Update("update message set messages_commentnum=messages_commentnum+1 where messages_id=${messagesId}")
+    int incComment(int messagesId);
+
 
     //根据传入的message_id进行增加浏览数
     @Update("update message set messages_agreenum=messages_agreenum+1 where messages_id=${messagesId}")

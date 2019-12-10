@@ -56,6 +56,26 @@ public interface MessageService {
     void incAgreenum(String messagesId);
 
     /**
+     * 根据messageId进行收藏数加1操作
+     * @param messagesId
+     */
+    void incCollection(Integer messagesId);
+
+
+    /**
+     * 根据messageId进行转发数量加1操作
+     * @param messagesId
+     */
+    void incTranspond(Integer messagesId);
+
+    /**
+     * 根据messageId进行评论数量加1操作
+     * @param messagesId
+     */
+    void incComment(Integer messagesId);
+
+
+    /**
      * 根据messageId进行赞数量减1操作
      * @param messagesId
      */
@@ -80,4 +100,11 @@ public interface MessageService {
      * @return
      */
     String getnameandinfo(String messageId);
+
+    /**
+     * 根据传入的messageId进行查询userId
+     * @param messageId
+     * @return
+     */
+    int getUserId(Integer messageId);
 }

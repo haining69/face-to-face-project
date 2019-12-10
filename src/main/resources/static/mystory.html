@@ -361,10 +361,10 @@
 
     $("#send").click(function () {
         var message = $("#message").val();
-        var userNikename = $.cookie("userNikename");
+        var userId = $.cookie("userId");
         var time = new Date();
         var messageData = {
-            "userNikename": userNikename,
+            userId:userId,
             "info": message,
         }
         if (message != "")

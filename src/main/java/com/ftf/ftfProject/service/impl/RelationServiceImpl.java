@@ -18,4 +18,24 @@ public class RelationServiceImpl implements RelationService {
     public List<Relation> getAllRelation() {
         return relationMapper.getAllRelation();
     }
+
+    @Override
+    public Boolean saveRelation(Relation relation) {
+        int i = relationMapper.saveRelation(relation);
+        if (i == 1){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean selectByUserIdAndUserById(Integer userId, Integer userbyId) {
+        Relation relation = relationMapper.selectByUserIdAndUserById(userId, userbyId);
+        if (relation != null){
+            return true;
+        }else {
+            return false;
+        }
+    }
 }

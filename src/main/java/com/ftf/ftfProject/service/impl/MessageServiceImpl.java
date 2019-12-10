@@ -35,8 +35,8 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public String getMessageId(String userNikename, String info) {
-        int messageid = messageMapper.getMessageId(userNikename, info);
+    public String getMessageId(String userId, String info) {
+        int messageid = messageMapper.getMessageId(userId, info);
         return String.valueOf(messageid);
     }
 
@@ -66,6 +66,21 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    public void incCollection(Integer messagesId) {
+        messageMapper.incColection(messagesId);
+    }
+
+    @Override
+    public void incTranspond(Integer messagesId) {
+        messageMapper.incTranspond(messagesId);
+    }
+
+    @Override
+    public void incComment(Integer messagesId) {
+        messageMapper.incComment(messagesId);
+    }
+
+    @Override
     public void decreAgreenum(String messagesId) {
         messageMapper.decreaAgreenum(Integer.parseInt(messagesId));
     }
@@ -87,9 +102,15 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public String getnameandinfo(String messageId) {
+        System.out.println(messageId);
         String info = messageMapper.getinfo(Integer.parseInt(messageId));
         String username = messageMapper.getusername(Integer.parseInt(messageId));
-        System.out.println(username+":\n"+info);
-        return username+":\n"+info;
+//        System.out.println("转发自："+username+"\n"+info);
+        return "转发自："+username+"\n"+info;
+    }
+
+    @Override
+    public int getUserId(Integer messageId) {
+        return 0;
     }
 }

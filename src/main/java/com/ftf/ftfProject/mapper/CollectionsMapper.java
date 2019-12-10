@@ -18,9 +18,9 @@ public interface CollectionsMapper {
 //    @Select("select * from collections")
 //    List<Collections> getCollections();
 
-    //根据UserId查找收藏表
-    @Select("select * from collections where user_id=#{userId}")
-    List<Collections> selectByUserId();
+    //根据UserId和messageId查找收藏表数据
+    @Select("select * from collections where user_id=#{userId} and message_id = #{messageId}")
+    Collections selectByUserId(Integer userId, Integer messageId);
 
     //添加Collections表数据
     @Insert("insert into collections(collections_time, collections_status, message_id, user_id) " +
