@@ -54,7 +54,7 @@
                     if(data=="true")
                     {
                         var text=obj.innerText;
-                        var num = text.match(/\d+/g)+1;
+                        var num =  1+parseInt(text.match(/\d+/g));
                         obj.innerHTML="点赞"+num;
                     }
 
@@ -78,9 +78,22 @@
                     if(data=="true")
                     {
                         var text=obj.innerText;
-                        var num = text.match(/\d+/g)+1;
-                        obj.innerHTML="收藏"+num;
+                        var num =  1+parseInt(text.match(/\d+/g));
+                        obj.innerText="收藏"+num;
                     }
+
+                },
+                error:function (e) {
+                   //  var text=obj.innerText;
+                   // var  num=0;
+                   //  alert(text);
+                   //  alert(num);
+                  // num = 1+ parseInt(text.match(/\d+/g));
+                   //  alert(num);
+                   //
+                   //  obj.innerText="收藏"+num;
+                   //  alert(obj.innerText);
+
 
                 }
             })
@@ -98,11 +111,12 @@
                 data:JSON.stringify(UserMessage),
                 type:"POST",
                 dataType:"text",
+                async: false,
                 success:function (data) {
                     if(data=="true")
                     {
                         var text=obj.innerText;
-                        var num = text.match(/\d+/g)+1;
+                        var num = parseInt(text.match(/\d+/g))+1;
                         obj.innerHTML="转发"+num;
                         alert("转发成功");
                     }
@@ -156,11 +170,11 @@
                             "                </div>\n" +
                             "                <div class=\"footer\">\n" +
                             "               <span>\n" +
-                            "                   <a href=\"\">关注</a>\n" +
-                            "                   <a href=\"\">点赞</a>\n" +
-                            "                   <a href=\"\">转发</a>\n" +
-                            "                   <a href=\"\">评论</a>\n" +
-                            "                   <a href=\"\">收藏</a>\n" +
+                            "                   <a href=\"javascript:;\" onclick='follow(this)'>关注</a>\n" +
+                            "                   <a href=\"javascript:;\" onclick='appreciate(this)'>点赞1</a>\n" +
+                            "                   <a href=\"javascript:;\" onclick='forward(this)'>转发1</a>\n" +
+                            "                   <a href=\"javascript:;\">评论</a>\n" +
+                            "                   <a href=\"javascript:;\" onclick='collection(this)'>收藏1</a>\n" +
                             "              </span>\n" +
                             "                </div>\n" +
                             "            </div>\n" +
