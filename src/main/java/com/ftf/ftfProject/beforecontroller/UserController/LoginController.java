@@ -26,9 +26,7 @@ public class LoginController {
     @RequestMapping("/getuser")
     @ResponseBody
     public Users getUser(Integer userId){
-        System.out.println(userId);
         Users users = userService.getUser(userId);
-        System.out.println(users);
         return users;
     }
 }
