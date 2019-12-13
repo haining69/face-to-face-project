@@ -80,4 +80,17 @@ public class Pack {
         relation.setUserById(String.valueOf(userbyId));
         return relation;
     }
+
+    /**
+     * 创建Forward对象，初始化并返回对象
+     * @param messageId
+     * @param userId
+     * @return
+     */
+    public Forward PackForward(Integer messageId, Integer userId){
+        Forward forward = new Forward();
+        forward.setMessageId(messageId);
+        forward.setUserId(userId);
+        return forward;
+    }
 }

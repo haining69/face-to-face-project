@@ -20,7 +20,7 @@ public interface CollectionsMapper {
 
     //根据UserId和messageId查找收藏表数据
     @Select("select * from collections where user_id=#{userId} and message_id = #{messageId}")
-    Collections selectByUserId(Integer userId, Integer messageId);
+    Collections selectByUserId(Integer messageId, Integer userId);
 
     //添加Collections表数据
     @Insert("insert into collections(collections_time, collections_status, message_id, user_id) " +

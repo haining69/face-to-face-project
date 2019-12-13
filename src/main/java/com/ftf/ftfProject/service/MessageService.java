@@ -32,6 +32,13 @@ public interface MessageService {
     String getMessageId(String userNikename, String info);
 
     /**
+     * 根据传入的messageId进行查询messageInfo
+     * @param messageId
+     * @return
+     */
+    String getMessageInfo(String messageId);
+
+    /**
      * 返回总动态条数
      * @return
      */
@@ -107,4 +114,12 @@ public interface MessageService {
      * @return
      */
     int getUserId(Integer messageId);
+
+    /**
+     * 根据传入的消息内容与用户Id进行查询消息对象
+     * @param info
+     * @param userId
+     * @return
+     */
+    Boolean selectuserIdAndInfo(String info,String userId);
 }

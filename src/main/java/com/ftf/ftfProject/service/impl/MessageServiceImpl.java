@@ -41,6 +41,11 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    public String getMessageInfo(String messageId) {
+        return messageMapper.getinfo(Integer.parseInt(messageId));
+    }
+
+    @Override
     public int getMessageTotal() {
         return messageMapper.getMessageTotal();
     }
@@ -102,7 +107,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public String getnameandinfo(String messageId) {
-        System.out.println(messageId);
+//        System.out.println(messageId);
         String info = messageMapper.getinfo(Integer.parseInt(messageId));
         String username = messageMapper.getusername(Integer.parseInt(messageId));
 //        System.out.println("转发自："+username+"\n"+info);
@@ -113,4 +118,14 @@ public class MessageServiceImpl implements MessageService {
     public int getUserId(Integer messageId) {
         return 0;
     }
+
+    @Override
+    public Boolean selectuserIdAndInfo(String info, String userId) {
+        if (messageMapper.selectuserIdAndInfo(userId,info) != null){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
 }

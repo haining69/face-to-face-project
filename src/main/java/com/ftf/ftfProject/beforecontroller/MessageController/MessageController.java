@@ -80,26 +80,6 @@ public class MessageController {
         return messageService.getMessagehome();
     }
 
-    /**
-     * 主页
-     * 进行转发
-     * @param  messageId,userId
-     * @param messageId
-     * @return
-     */
-    @RequestMapping("/transpondmessage")
-    public String TranspondMessage(String messageId, String userId){
-        System.out.println(messageId+": "+userId);
-        String info = messageService.getnameandinfo(messageId);
-        Message message = PackMessage.PackMessage(info,userId);
-        if (messageService.saveMessage(message) ){  //如果存储成功则进行返回消息id
-            messageService.incTranspond(Integer.parseInt(messageId));
-
-            return "true";
-        }else {
-            return "false";
-        }
-    }
 
 
 }

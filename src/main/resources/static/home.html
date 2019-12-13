@@ -19,13 +19,12 @@
         function follow(obj) {
             var messageId = obj.parentNode.parentNode.parentNode.parentNode.parentNode.id;
             var userId = $.cookie("userId");
-            var UserMessage={
-                messageId:messageId,
-                userId:userId
-            };
             $.ajax({
-                url:"follow",
-                data:JSON.stringify(UserMessage),
+                url:"relation/saverelation",
+                data:{
+                    messageId:messageId,
+                    userId:userId
+                },
                 type:"POST",
                 dataType:"text",
                 success:function (data) {
@@ -38,16 +37,16 @@
             });
         }
 
+        //点赞
         function appreciate(obj) {
             var messageId = obj.parentNode.parentNode.parentNode.parentNode.parentNode.id;
             var userId = $.cookie("userId");
-            var UserMessage={
-                messageId:messageId,
-                userId:userId
-            };
             $.ajax({
-                url:"appreciate",
-                data:JSON.stringify(UserMessage),
+                url:"agree/incagreenum",
+                data:{
+                    messageId:messageId,
+                    userId:userId
+                },
                 type:"POST",
                 dataType:"text",
                 success:function (data) {
@@ -62,16 +61,16 @@
             })
         }
 
+        //收藏
         function collection(obj) {
             var messageId = obj.parentNode.parentNode.parentNode.parentNode.parentNode.id;
             var userId = $.cookie("userId");
-            var UserMessage={
-                messageId:messageId,
-                userId:userId
-            };
             $.ajax({
-                url:"collection",
-                data:JSON.stringify(UserMessage),
+                url:"collection/savecollection",
+                data:{
+                    messageId:messageId,
+                    userId:userId
+                },
                 type:"POST",
                 dataType:"text",
                 success:function (data) {
@@ -99,26 +98,27 @@
             })
         }
 
+        //转发
         function forward(obj) {
             var messageId = obj.parentNode.parentNode.parentNode.parentNode.parentNode.id;
             var userId = $.cookie("userId");
-            var UserMessage={
-                messageId:messageId,
-                userId:userId
-            };
             $.ajax({
-                url:"forward",
-                data:JSON.stringify(UserMessage),
+                url:"forward/forwardmessage",
+                data:{
+                    messageId:messageId,
+                    userId:userId
+                },
                 type:"POST",
                 dataType:"text",
                 async: false,
                 success:function (data) {
-                    if(data=="true")
-                    {
-                        var text=obj.innerText;
-                        var num = parseInt(text.match(/\d+/g))+1;
-                        obj.innerHTML="转发"+num;
+                    console.log(data);
+                    if ("true" == data) {
                         alert("转发成功");
+                        var text = obj.innerText;
+                        var num = parseInt(text.match(/\d+/g)) + 1;
+                        obj.innerHTML = "转发" + num;
+                        // alert("转发成功");
                     }
 
                 }
@@ -126,7 +126,6 @@
         }
 
         onload = function () {
-            alert("asdjgajsdkjfja")
             $.ajax({
                 url: "message/getmessagehome",
                 type: "POST",
@@ -301,15 +300,16 @@
         }
 
         .footer > span {
-            border-top: 2px solid #c6c8ca;
-            border-bottom: 3px solid #c6c8ca;
+            /*border-top: 2px solid #c6c8ca;*/
+            /*border-bottom: 3px solid #c6c8ca;*/
             display: block;
             width: 100%;
             height: 100%;
         }
 
         .footer > span > a {
-            border-left: 2px solid rgba(231, 234, 237, 0.8);
+            border-left: 1px solid rgba(231, 234, 237, 0.8);
+            border: none;
             height: 100%;
             width: 20%;
             display: block;

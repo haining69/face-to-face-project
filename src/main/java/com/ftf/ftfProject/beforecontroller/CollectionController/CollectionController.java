@@ -32,12 +32,14 @@ public class CollectionController {
     @ResponseBody
     public String saveCollection(Integer messageId, Integer userId){
         if (collectionsService.selectByUserIdAndMessageId(messageId, userId)){
+            System.out.println("收藏过了！");
             return "false";
         }else {
             Collections collections = PackCollection.PackCollection(messageId,userId);
             if ("true".equals(collectionsService.saveCollection(collections))){
                 messageService.incCollection(messageId);
             }
+            System.out.println("收藏成功！");
             return "true";
         }
     }

@@ -30,14 +30,20 @@ public class RelationController {
     @RequestMapping("/saverelation")
     public String saveRelation(Integer messageId, Integer userId){
         int userById = messageService.getUserId(messageId);
-        if (relationService.selectByUserIdAndUserById(userId, userById)){
-            return "false";
-        }else {
-            Relation relation = PackRelation.PackRelation(userId,userById);
-            if ("true".equals(relationService.saveRelation(relation))){
-                return "true";
+        if (userById != userId){
+            if (relationService.selectByUserIdAndUserById(userId, userById)){
+                System.out.println("关注失败！");
+                return "false";  //如果有数据则返回false
+            }else {
+                Relation relation = PackRelation.PackRelation(userId,userById);
+                if ("true".equals(relationService.saveRelation(relation))){
+                    System.out.println("关注成功！");
+                    return "true";
+                }
+                return "false";
             }
+        }else {
+            return "false";
         }
-        return "false";
     }
 }

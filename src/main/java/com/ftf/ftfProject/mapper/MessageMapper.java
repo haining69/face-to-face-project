@@ -35,6 +35,10 @@ public interface MessageMapper {
     @Select("select messages_id from message where user_id = (select user_id from users where user_id=#{userId}) and messages_info = #{info}")
     int getMessageId(String userId,String info);
 
+    //根据用户Id和messageId进行查询消息
+    @Select("select messages_id from message where user_id = #{userId} and messages_info = #{info}")
+    Message selectuserIdAndInfo(String userId,String info);
+
     //根据传入的messageId进行查询，返回message内容
     @Select("select messages_info from message where messages_id = #{messageId}")
     String getinfo(int messageId);

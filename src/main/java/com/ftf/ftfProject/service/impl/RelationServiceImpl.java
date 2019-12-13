@@ -35,7 +35,7 @@ public class RelationServiceImpl implements RelationService {
         if (relation != null){
             return true;
         }else {
-            return false;
+            return true;
         }
     }
 }

@@ -31,7 +31,6 @@
 
         // 删除
         function userDel(obj) {
-            var userNikename = $.cookie("userNikename");
             var article = obj.parentNode.parentNode.parentNode.parentNode.parentNode;
             var id = article.id;
             $.ajax({
@@ -56,7 +55,8 @@
         function remark(obj) {
 
             var messageId = obj.parentNode.parentNode.parentNode.parentNode.parentNode.id;
-             var  userId=$.cookie("userId");
+
+            var  userId=$.cookie("userId");
             obj.onclick = null;
             var parent = obj.parentNode.parentNode;
             var div = document.createElement("div");
@@ -155,7 +155,6 @@
 
         onload = function () {
             var userNikename = $.cookie("userNikename");
-
 
             $.ajax({
                 url: "message/getmessage",
@@ -409,8 +408,6 @@
                     },
                 }
             )
-
-
     });
 
 
