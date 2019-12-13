@@ -274,6 +274,9 @@
                         </label>
                         <input class="button button-skin " type="button" id="send" value="发表" >
                     </div>
+                    <form action="" method="post" enctype="multipart/form-data" id="atricleimgs">
+                        <input type="file" multiple name="files">
+                    </form>
                 </div>
             </div>
 
@@ -361,18 +364,21 @@
     $("#send").click(function () {
         var message = $("#message").val();
         var userId = $.cookie("userId");
-        var time = new Date();
-        var messageData = {
-            userId:userId,
-            "info": message,
-        }
+        var formdata=new FormData($("#atricleimgs")[0]);
+        formdata.append("userId",userId);
+        formdata.append("info",message);
+        formdata.append("userNikename",$.cookie("userNikename"));
+
         if (message != "")
             $.ajax(
                 {
                     url: "message/savemessage",
                     type: "POST",
-                    data: {userNikename: userNikename, info: message},
+                    data:formdata,
                     dataType: "text",
+                    cache: false,
+                    processData: false,
+                    contentType: false,
                     success: function (data) {
                         if ("false" != data) {
                             alert(message);
@@ -406,6 +412,10 @@
 
                         $("#message").val("");
                     },
+                    error:function (data) {
+                        alert("ghjgfkjhagajhkdgkajsfd");
+
+                    }
                 }
             )
     });

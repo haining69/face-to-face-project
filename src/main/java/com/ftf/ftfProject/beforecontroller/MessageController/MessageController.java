@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -49,14 +52,26 @@ public class MessageController {
      */
     @RequestMapping("/savemessage")
     @ResponseBody
-    public String saveMessage(String info,String userId){
-        Message message = PackMessage.PackMessage(info,userId);
-        if (messageService.saveMessage(message) ){  //如果存储成功则进行返回消息id
-            String messageid = messageService.getMessageId(userId,info);
-            return messageid;
-        }else {
-            return "false";
+//    @MultipartConfig()
+    public String saveMessage(MultipartFile[] files, HttpServletRequest request){
+//        Message message = PackMessage.PackMessage(info,userId);
+//        if (messageService.saveMessage(message) ){  //如果存储成功则进行返回消息id
+//            String messageid = messageService.getMessageId(userId,info);
+//            return messageid;
+//        }else {
+//            return "false";
+//        }
+        System.out.println(request.getParameter("info"));
+
+        System.out.println(request.getParameter("userId"));
+
+        for (MultipartFile file : files) {
+            System.out.println(file.getOriginalFilename());
+
         }
+
+        return "173248";
+
     }
 
     /**

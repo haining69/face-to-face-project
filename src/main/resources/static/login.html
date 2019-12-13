@@ -108,8 +108,8 @@
                         alert("登陆成功");
                         alert(data);
                         $.cookie("userId",data)
-                        $.cookie("userNikename",uname);
                         window.location.href="home.html"
+                        $.cookie("userNikename",uname);
                     } else {
                         alert("用户名或密码错误")
                     }
