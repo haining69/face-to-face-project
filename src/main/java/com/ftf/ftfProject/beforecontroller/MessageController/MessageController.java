@@ -69,7 +69,7 @@ public class MessageController {
             imgs.add(messageid);   //传回文章Id
             for (MultipartFile file : files) {    //遍历文件
                 //上传文件并返回url
-                String url = qiniuUpload.updateFile(file, UUID.randomUUID().toString()+"-"+file.getOriginalFilename());
+                String url = qiniuUpload.updateFile(file, UUID.randomUUID().toString()+".jpg");
                 //存储图片
                 Img img = PackMessage.PackImg(Integer.valueOf(messageid), url);
                 imgService.saveImg(img);

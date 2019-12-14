@@ -197,10 +197,7 @@
                             "\n" +
                             " <p style='word-break:break-all;width: 100%;display: block;float: left;'>" +
                             messageinfo +
-                            "</p>\n" + "<div  id=" + imgId + " class='articleImgs' style='width: 100%;height:auto;'>" +
-
-
-                            "</div>" +
+                            "</p>\n" + "<div  id=" + imgId + " class='articleImgs' style='width: 100%;height:auto;'> + </div>" +
                             "           <p class=\"infoOperation\" style='display: block;width: 100%;float: left;'>\n" +
 
                             "                       <span class=\"time\" style='display: block;float: left;'>" + time + "</span>\n" +
@@ -243,9 +240,9 @@
 </head>
 <body>
 
-<div class="wrap-body">
-    <header class="main-header">
-        <div class="zerogrid">
+<div class="wrap-body" style="width: 100%;height: 100%;">
+    <header class="main-header" >
+        <div class="zerogrid" >
             <div class="t-center">
                 <a class="site-branding" href="../test/index.html">
                     <img src="images/logo.png" width="250px"/>
@@ -316,12 +313,12 @@
             </div>
 
 
-            <div class="MessageList">
 
-            </div>
         </div>
     </section>
+    <div class="MessageList">
 
+    </div>
     <footer>
         <div class="zerogrid">
             <div class="wrap-footer">
@@ -402,8 +399,6 @@
         var formdata = new FormData($("#atricleimgs")[0]);
         formdata.append("userId", userId);
         formdata.append("info", message);
-        // formdata.append("userNikename",$.cookie("userNikename"));
-
         if (message != "")
             $.ajax(
                 {
@@ -415,35 +410,32 @@
                     processData: false,
                     contentType: false,
                     success: function (data) {
-                        if ("null" != data) {
-                            alert(message);
-                            alert(data);
-                            var article = document.createElement("article");
-                            article.id = data[0];
-                            article.className = "single-post zerogrid";
-                            article.innerHTML = " <div class=\"row wrap-post\">" +
-                                "\n" +
-                                "            <div class=\"entry-content\">\n" +
-                                "\n" +
-                                "                <p style='word-break:break-all;'>"
-                                + message +
-                                "</p>\n" +
-                                " <p class=\"infoOperation\">\n" +
-                                "                <span class=\"time\" style='display: block;float: left;'>2019.1.29</span>\n" +
-                                "                <span class=\"infoHandle\" style='display: block;float: right;'>\n" +
-                                "                    <a href=\"javascript:;\" onclick='up(this)'>点赞</a>\n" +
-                                "                    <a href=\"javascript:;\" class='delete'>转发</a>\n" +
-                                "                    <a onclick=udelete()>删除</a>\n" +
-                                "                </span>\n" +
-                                "            </p>" +
-                                "            </div>\n" +
-                                "\n" +
-                                "        </div>";
+                        var article = document.createElement("article");
+                        article.innerHTML = " <div class=\"row wrap-post\">" +
+                            "\n" +
+                            "            <div class=\"entry-content\">\n" +
+                            "\n" +
+                            " <p style='word-break:break-all;width: 100%;display: block;float: left;'>" +
+                            messageinfo +
+                            "</p>\n" + "<div  id=" + imgId + " class='articleImgs' style='width: 100%;height:auto;width: 1000px;background-color:red;'> + </div>" +
+                            "           <p class=\"infoOperation\" style='display: block;width: 100%;float: left;'>\n" +
 
-                            var ele = document.getElementsByClassName("MessageList")[0];
+                            "                       <span class=\"time\" style='display: block;float: left;'>" + time + "</span>\n" +
+                            "                       <span class=\"infoHandle\" style='display: block;float: right'>\n" +
+                            "                       <a href=\"javascript:;\">点赞" + messagesAgreenum + "</a>\n" +
+                            "                        <a href=\"javascript:;\"onclick='resend(this);'>转发" + messagesTranspondnum + "</a>\n" +
+                            "                       <a href=\"javascript:;\" onclick='remark(this);'>评论" + messagesCommentnum + "</a>\n" +
+                            "                        <a href=\"javascript:;\" onclick='userDel(this);'>删除</a>\n" +
+                            "                   </span>\n" +
+                            "            </p>" +
+                            "        </div>\n" +
+                            "\n" +
+                            " </div>";
+
+                        var ele = document.getElementsByClassName("MessageList")[0];
                             ele.prepend(article);
 
-                        }
+
 
                         $("#message").val("");
                     },

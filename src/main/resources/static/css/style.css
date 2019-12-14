@@ -270,11 +270,11 @@ body .wrap-body {
     background-image: url(../images/bg-2.jpg);
     background-position: center center;
     background-repeat: no-repeat;
-    background-attachment: fixed;
+    /*background-attachment: fixed;*/
     background-size: cover;
     color: #fff;
     width: 1728px;
-    height: 1000px;
+    height: auto;
     position: relative;
 }
 
