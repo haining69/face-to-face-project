@@ -16,9 +16,9 @@ public interface ImgMapper {
     //存储图片
     @Insert("insert into img(message_id, img_url)" +
             "values(#{messageId}, #{imgUrl}) ")
-    public int saveImg(Img img);
+    int saveImg(Img img);
 
-    //根据messageId查询图片路径
-    @Select("select * from img where message_id = #{messageId}")
-    public List<Img> getImgs(int messageId);
+    //根据messageId查询图片路径  根据img_id升序排序
+    @Select("select * from img where message_id = #{messageId} ORDER BY img_id ASC")
+    List<Img> getImgs(int messageId);
 }

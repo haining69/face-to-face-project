@@ -1,7 +1,10 @@
 package com.ftf.ftfProject.service.impl;
 
+import com.ftf.ftfProject.entity.Img;
 import com.ftf.ftfProject.entity.Message;
+import com.ftf.ftfProject.mapper.ImgMapper;
 import com.ftf.ftfProject.mapper.MessageMapper;
+import com.ftf.ftfProject.metaclass.MessageAndImgs;
 import com.ftf.ftfProject.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,8 @@ public class MessageServiceImpl implements MessageService {
 
     @Autowired
     private MessageMapper messageMapper;
+    @Autowired
+    private ImgMapper imgMapper;
 
     @Override
     public List<Message> getAllMessage() {
@@ -21,15 +26,29 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public List<Message> getMessage(String userNikename, int number) {
+    public List<MessageAndImgs> getMessage(Integer userId, int number) {
         int number1 = (number-1)*5;   //根据页数进行查询条数
-        return messageMapper.getMessage(userNikename, number1);
+        //获取5条message数据
+        List<Message> messages = messageMapper.getMessage(userId, number1);
+        //创建List<MessageAndImgs>对象
+        List<MessageAndImgs> messageAndImgs = new ArrayList<>();
+
+        for (Message message : messages) {
+            //创建MessageAndImgs对象，并进行初始化
+            MessageAndImgs messageAndImgs1 = new MessageAndImgs();
+            List<Img> imgs = imgMapper.getImgs(Integer.parseInt(message.getMessagesId()));   //获取
+            messageAndImgs1.setMessage(message);
+            messageAndImgs1.setImgs(imgs);
+            //往list中元素
+            messageAndImgs.add(messageAndImgs1);
+        }
+        return messageAndImgs;
     }
 
     @Override
-    public int getpages(String userNikename) {
-        System.out.println(userNikename);
-        int total =  messageMapper.getTotal(userNikename);
+    public int getpages(Integer userId) {
+        System.out.println(userId);
+        int total =  messageMapper.getTotal(userId);
 //        System.out.println("total=" + total);
         return  (total+4)/5;
     }

@@ -56,93 +56,93 @@
 
             var messageId = obj.parentNode.parentNode.parentNode.parentNode.parentNode.id;
 
-            var  userId=$.cookie("userId");
+            var userId = $.cookie("userId");
             obj.onclick = null;
             var parent = obj.parentNode.parentNode;
             var div = document.createElement("div");
-                 div.style.width = 100 + "%";
+            div.style.width = 100 + "%";
             var text = document.createElement("textarea");
-                text.style.width = 80 + "%";
-                text.style.height = 45 + "px";
-                text.style.resize = "none";
-                text.style.border = "none";
-                text.style.outline = "none";
-                text.style.cssFloat = "left";
-                text.style.margin = 0;
-                text.style.padding = 0;
+            text.style.width = 80 + "%";
+            text.style.height = 45 + "px";
+            text.style.resize = "none";
+            text.style.border = "none";
+            text.style.outline = "none";
+            text.style.cssFloat = "left";
+            text.style.margin = 0;
+            text.style.padding = 0;
             var input = document.createElement("input");
-                input.type = "button";
-                input.value = "发表评论";
-                input.style.width = 20 + "%";
-                input.style.height = 50 + "px";
-                input.style.display = "block";
-                input.style.cssFloat = "right";
-                input.style.lineHeight = 45 + "px";
-                input.style.margin = 0;
-                input.style.padding = 0;
+            input.type = "button";
+            input.value = "发表评论";
+            input.style.width = 20 + "%";
+            input.style.height = 50 + "px";
+            input.style.display = "block";
+            input.style.cssFloat = "right";
+            input.style.lineHeight = 45 + "px";
+            input.style.margin = 0;
+            input.style.padding = 0;
 
             var remarkList = document.createElement("div");
-                remarkList.style.width=100+"%";
-                remarkList.style.cssFloat="left";
-                div.appendChild(text);
-                div.appendChild(input);
-                parent.appendChild(div);
-                parent.appendChild(remarkList);
+            remarkList.style.width = 100 + "%";
+            remarkList.style.cssFloat = "left";
+            div.appendChild(text);
+            div.appendChild(input);
+            parent.appendChild(div);
+            parent.appendChild(remarkList);
 
 
-                $.ajax({
-                    url:"comment/getcomments",
-                    type:"POST",
-                    data:{messageId:messageId},
-                    dataType:"JSON",
-                    success:function (data) {
+            $.ajax({
+                url: "comment/getcomments",
+                type: "POST",
+                data: {messageId: messageId},
+                dataType: "JSON",
+                success: function (data) {
 
-                      for (var i=0;i<data.length;i++){
-                          var   userName=data[i]["userNikename"];
-                         var commentsInfo=data[i]["commentInfo"];
-                          var span=document.createElement("span");
-                          span.style.width=100+"%";
-                          span.style.display="inline-block";
-                          input.style.lineHeight = 50 + "px";
-                          input.style.margin = 0;
-                          input.style.padding = 0;
-                          span.style.wordBreak="break-all";
-                          span.innerText=userName+":"+commentsInfo;
-                          span.style.padding=0;
-                          span.style.margin=0;
-                          remarkList.appendChild(span);
-
-                      }
+                    for (var i = 0; i < data.length; i++) {
+                        var userName = data[i]["userNikename"];
+                        var commentsInfo = data[i]["commentInfo"];
+                        var span = document.createElement("span");
+                        span.style.width = 100 + "%";
+                        span.style.display = "inline-block";
+                        input.style.lineHeight = 50 + "px";
+                        input.style.margin = 0;
+                        input.style.padding = 0;
+                        span.style.wordBreak = "break-all";
+                        span.innerText = userName + ":" + commentsInfo;
+                        span.style.padding = 0;
+                        span.style.margin = 0;
+                        remarkList.appendChild(span);
 
                     }
-                })
-                input.onclick=function () {
-                var userNikename = $.cookie("userNikename");
-                var text1=text.value;
-                $.ajax({
-                    url:"comment/savecomment",
-                    type:"POST",
-                    data:{remark:text1,userId:userId,messageId:messageId},
-                    dataType:"text",
-                    success:function (data) {
-                        alert(data);
-                        if ("true"==data){
 
-                            var span=document.createElement("span");
-                            span.style.width=100+"%";
-                            span.style.display="inline-block";
+                }
+            });
+            input.onclick = function () {
+                var userNikename = $.cookie("userNikename");
+                var text1 = text.value;
+                $.ajax({
+                    url: "comment/savecomment",
+                    type: "POST",
+                    data: {remark: text1, userId: userId, messageId: messageId},
+                    dataType: "text",
+                    success: function (data) {
+                        alert(data);
+                        if ("true" == data) {
+
+                            var span = document.createElement("span");
+                            span.style.width = 100 + "%";
+                            span.style.display = "inline-block";
                             input.style.lineHeight = 50 + "px";
                             input.style.margin = 0;
                             input.style.padding = 0;
-                            span.style.wordBreak="break-all";
-                            span.innerText=userNikename+":"+text1;
-                            span.style.padding=0;
-                            span.style.margin=0;
+                            span.style.wordBreak = "break-all";
+                            span.innerText = userNikename + ":" + text1;
+                            span.style.padding = 0;
+                            span.style.margin = 0;
                             remarkList.appendChild(span);
-                            text.value="";
+                            text.value = "";
                         }
                     },
-                    error:function (data) {
+                    error: function (data) {
                         alert(data);
                     }
                 })
@@ -155,11 +155,11 @@
 
         onload = function () {
             var userNikename = $.cookie("userNikename");
-
+            var userId = $.cookie("userId");
             $.ajax({
                 url: "message/getmessage",
                 type: "POST",
-                data: {userNikename: userNikename, page: 1},
+                data: {userId: userId, page: 1},
                 dataType: "JSON",
                 success: function (data) {
                     for (var i = 0; i < data.length; i++) {
@@ -178,56 +178,58 @@
                         // var imgId=id+$.cookie("userId");
                         //
 
-                        var id=data[i]["message"]["messageId"];
-                        var time=data[i]["message"]["messagesTime"];
+                        var id = data[i]["message"]["messageId"];
+                        var time = data[i]["message"]["messagesTime"];
                         var index = time.indexOf('.');
-                        time = time.substr(0,index);
-                        var messagesTranspondnum=data[i]["message"]["messagesTranspondnum"];
-                        var messagesCommentnum=data[i]["message"]["messagesCommentnum"];
-                        var messagesCommentnum=data[i]["message"]["messagesCommentnum"];
-                        var messagesAgreenum=data[i]["message"]["messagesAgreenum"];
+                        time = time.substr(0, index);
+                        var messagesTranspondnum = data[i]["message"]["messagesTranspondnum"];
+                        var messagesCommentnum = data[i]["message"]["messagesCommentnum"];
+                        var messagesCommentnum = data[i]["message"]["messagesCommentnum"];
+                        var messagesAgreenum = data[i]["message"]["messagesAgreenum"];
+                        var messageinfo = data[i]["message"]["messagesInfo"];
                         var article = document.createElement("article");
                         article.id = id;
-                        var imgId=id+$.cookie("userId");
+                        var imgId = id + $.cookie("userId");
                         article.className = "single-post zerogrid";
                         article.innerHTML = " <div class=\"row wrap-post\">" +
                             "\n" +
                             "            <div class=\"entry-content\">\n" +
                             "\n" +
                             " <p style='word-break:break-all;width: 100%;display: block;float: left;'>" +
-                                data[i]["messagesInfo"] +
-                            "</p>\n" +"<div  id="+imgId+" class='articleImgs' style='width: 100%;height:auto;float: left;background-color:red;'>" +
+                            messageinfo +
+                            "</p>\n" + "<div  id=" + imgId + " class='articleImgs' style='width: 100%;height:auto;'>" +
 
 
-                            "</div>"+
+                            "</div>" +
                             "           <p class=\"infoOperation\" style='display: block;width: 100%;float: left;'>\n" +
 
-                            "                       <span class=\"time\" style='display: block;float: left;'>"+time+"</span>\n" +
+                            "                       <span class=\"time\" style='display: block;float: left;'>" + time + "</span>\n" +
                             "                       <span class=\"infoHandle\" style='display: block;float: right'>\n" +
-                            "                       <a href=\"javascript:;\">点赞"+messagesAgreenum+"</a>\n" +
-                            "                        <a href=\"javascript:;\"onclick='resend(this);'>转发"+messagesTranspondnum+"</a>\n" +
-                            "                       <a href=\"javascript:;\" onclick='remark(this);'>评论"+messagesCommentnum+"</a>\n" +
+                            "                       <a href=\"javascript:;\">点赞" + messagesAgreenum + "</a>\n" +
+                            "                        <a href=\"javascript:;\"onclick='resend(this);'>转发" + messagesTranspondnum + "</a>\n" +
+                            "                       <a href=\"javascript:;\" onclick='remark(this);'>评论" + messagesCommentnum + "</a>\n" +
                             "                        <a href=\"javascript:;\" onclick='userDel(this);'>删除</a>\n" +
                             "                   </span>\n" +
                             "            </p>" +
                             "        </div>\n" +
                             "\n" +
-                            " </div>"
+                            " </div>";
 
                         var ele = document.getElementsByClassName("MessageList")[0];
                         ele.append(article);
-                            var imgArt=document.getElementById(imgId);
+                        var imgArt = document.getElementById(imgId);
 
-                            var imgsList=data[i]["imgs"];
-                        for (var j=0;j<imgsList.length;j++){
-                                var img=document.createElement("img");
-                                img.src=imgsList[j]["imgUrl"];
-                                img.style.width=33+"%";
-                                img.style.height="253px"
-                                img.style.marginLeft=1+"px";
-                                img.style.marginRight=1+"px";
-                                imgArt.append(img);
-                         }
+                        var imgsList = data[i]["imgs"];
+                        for (var j = 0; j < imgsList.length; j++) {
+                            var img = document.createElement("img");
+                            img.src = imgsList[j]["imgUrl"];
+                            img.style.width = 33 + "%";
+                            img.style.height = "200px";
+                            img.style.marginLeft = 1 + "px";
+                            img.style.marginRight = 1 + "px";
+                            img.style.marginTop = 1 + "px";
+                            imgArt.append(img);
+                        }
 
                     }
                 }
@@ -251,7 +253,7 @@
             </div>
             <div class="row">
                 <div class="col-2-3">
-                     <!-- Menu-main -->
+                    <!-- Menu-main -->
                     <div id='cssmenu'>
                         <ul>
                             <li><a href='home.html'><span>主页</span></a></li>
@@ -305,7 +307,7 @@
                             <span>日志内容</span>
                             <textarea name="message" id="message" style="resize: none"></textarea>
                         </label>
-                        <input class="button button-skin " type="button" id="send" value="发表" >
+                        <input class="button button-skin " type="button" id="send" value="发表">
                     </div>
                     <form action="" method="post" enctype="multipart/form-data" id="atricleimgs">
                         <input type="file" multiple name="files">
@@ -397,9 +399,9 @@
     $("#send").click(function () {
         var message = $("#message").val();
         var userId = $.cookie("userId");
-        var formdata=new FormData($("#atricleimgs")[0]);
-        formdata.append("userId",userId);
-        formdata.append("info",message);
+        var formdata = new FormData($("#atricleimgs")[0]);
+        formdata.append("userId", userId);
+        formdata.append("info", message);
         // formdata.append("userNikename",$.cookie("userNikename"));
 
         if (message != "")
@@ -407,7 +409,7 @@
                 {
                     url: "message/savemessage",
                     type: "POST",
-                    data:formdata,
+                    data: formdata,
                     dataType: "text",
                     cache: false,
                     processData: false,
@@ -436,7 +438,7 @@
                                 "            </p>" +
                                 "            </div>\n" +
                                 "\n" +
-                                "        </div>"
+                                "        </div>";
 
                             var ele = document.getElementsByClassName("MessageList")[0];
                             ele.prepend(article);
@@ -445,7 +447,7 @@
 
                         $("#message").val("");
                     },
-                    error:function (data) {
+                    error: function (data) {
                         alert("ghjgfkjhagajhkdgkajsfd");
 
                     }

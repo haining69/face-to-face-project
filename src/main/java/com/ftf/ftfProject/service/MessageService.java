@@ -1,6 +1,7 @@
 package com.ftf.ftfProject.service;
 
 import com.ftf.ftfProject.entity.Message;
+import com.ftf.ftfProject.metaclass.MessageAndImgs;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
 import java.io.StreamTokenizer;
@@ -15,13 +16,13 @@ public interface MessageService {
      * 根据用户名进行连接查询，并进行分页处理
      * @return
      */
-    List<Message> getMessage(String userNikename, int number);
+    List<MessageAndImgs> getMessage(Integer userId, int number);
 
     /**
      * 查询当前用户以审核过的动态条数,并转化成页数
      * @return
      */
-    int getpages(String userNikename);
+    int getpages(Integer userId);
 
     /**
      * 根据用户名以及动态内容进行查询动态ID

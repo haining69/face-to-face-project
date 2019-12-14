@@ -5,6 +5,7 @@ import com.ftf.ftfProject.Tools.Pack;
 import com.ftf.ftfProject.Tools.QiniuUpload;
 import com.ftf.ftfProject.entity.Img;
 import com.ftf.ftfProject.entity.Message;
+import com.ftf.ftfProject.metaclass.MessageAndImgs;
 import com.ftf.ftfProject.service.impl.ImgServiceImpl;
 import com.ftf.ftfProject.service.impl.MessageServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +40,10 @@ public class MessageController {
      */
     @RequestMapping("/getmessage")
     @ResponseBody
-    public List<Message> getmessage(String userNikename, int page){  //String userNikename, int number
-        int pages = messageService.getpages(userNikename); // 返回的页数
-        return messageService.getMessage(userNikename, page);   //返回查找的动态，每次返回5条记录
+    public List<MessageAndImgs> getmessage(Integer userId, int page){  //String userNikename, int number
+        System.out.println(userId);
+        int pages = messageService.getpages(userId); // 返回的页数
+        return messageService.getMessage(userId, page);   //返回查找的动态，每次返回5条记录
     }
 
 
@@ -72,6 +74,9 @@ public class MessageController {
                 Img img = PackMessage.PackImg(Integer.valueOf(messageid), url);
                 imgService.saveImg(img);
                 imgs.add(url);    //添加图片的url
+            }
+            for (String img : imgs) {
+                System.out.println(img);
             }
             return imgs;
         }else {

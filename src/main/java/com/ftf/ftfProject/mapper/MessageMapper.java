@@ -16,16 +16,16 @@ import java.util.List;
 public interface MessageMapper {
 
     //根据用户名进行查询动态，查询当前用户所有通过审核的动态消息的总个数
-    @Select("select count(*) from message where user_id = (select user_id from users where user_nikename=#{haining69}) and messages_state = ${1}")
-    int getTotal(String userNikename);
+    @Select("select count(*) from message where user_id = #{userId} and messages_state = ${1}")
+    int getTotal(Integer userId);
 
     //返回总动态条数
     @Select("select count(user_id) from message where trim(user_id)=${22}")
     int getMessageTotal();
 
     //根据用户名进行分页查询动态消息，并按时间进行降序排序（时间在前面的
-    @Select("select * from message where user_id in (select user_id from users where user_nikename=#{userNikename}) and messages_state = ${1} ORDER BY messages_time DESC limit #{number},5")
-    List<Message> getMessage(String userNikename,int number);
+    @Select("select * from message where user_id =#{userId} and messages_state = ${1} ORDER BY messages_time DESC limit #{number},5")
+    List<Message> getMessage(Integer userId,int number);
 
     //主页进行返回消息数据
     @Select("select * from message where messages_state = ${1} ORDER BY messages_time DESC")
