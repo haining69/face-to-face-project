@@ -163,38 +163,71 @@
                 dataType: "JSON",
                 success: function (data) {
                     for (var i = 0; i < data.length; i++) {
-                        var article = document.createElement("article");
-                        var id = data[i]["messagesId"];
-                        var time=data[i]["messagesTime"];
+
+                        // var id = data[i]["messagesId"];
+                        // var time=data[i]["messagesTime"];
+                        //  var index = time.indexOf('.');
+                        //   time = time.substr(0,index);
+                        // var messagesTranspondnum=data[i]["messagesTranspondnum"];
+                        // var messagesCommentnum=data[i]["messagesCommentnum"];
+                        // var messagesAgreenum=data[i]["messagesAgreenum"];
+                        //
+                        //
+                        // var article = document.createElement("article");
+                        // article.id = id;
+                        // var imgId=id+$.cookie("userId");
+                        //
+
+                        var id=data[i]["message"]["messageId"];
+                        var time=data[i]["message"]["messagesTime"];
                         var index = time.indexOf('.');
                         time = time.substr(0,index);
-                        var messagesTranspondnum=data[i]["messagesTranspondnum"];
-                        var messagesCommentnum=data[i]["messagesCommentnum"];
-                        var messagesAgreenum=data[i]["messagesAgreenum"];
+                        var messagesTranspondnum=data[i]["message"]["messagesTranspondnum"];
+                        var messagesCommentnum=data[i]["message"]["messagesCommentnum"];
+                        var messagesCommentnum=data[i]["message"]["messagesCommentnum"];
+                        var messagesAgreenum=data[i]["message"]["messagesAgreenum"];
+                        var article = document.createElement("article");
                         article.id = id;
+                        var imgId=id+$.cookie("userId");
                         article.className = "single-post zerogrid";
                         article.innerHTML = " <div class=\"row wrap-post\">" +
                             "\n" +
                             "            <div class=\"entry-content\">\n" +
                             "\n" +
-                            " <p style='word-break:break-all;'>" +
-                            data[i]["messagesInfo"] +
-                            "</p>\n" +
-                            " <p class=\"infoOperation\">\n" +
-                            "                <span class=\"time\" style='display: block;float: left;'>"+time+"</span>\n" +
-                            "                <span class=\"infoHandle\" style='display: block;float: right'>\n" +
-                            "                    <a href=\"javascript:;\">点赞"+messagesAgreenum+"</a>\n" +
-                            "                    <a href=\"javascript:;\"onclick='resend(this);'>转发"+messagesTranspondnum+"</a>\n" +
-                            "                    <a href=\"javascript:;\" onclick='remark(this);'>评论"+messagesCommentnum+"</a>\n" +
-                            "                    <a href=\"javascript:;\" onclick='userDel(this);'>删除</a>\n" +
-                            "                </span>\n" +
+                            " <p style='word-break:break-all;width: 100%;display: block;float: left;'>" +
+                                data[i]["messagesInfo"] +
+                            "</p>\n" +"<div  id="+imgId+" class='articleImgs' style='width: 100%;height:auto;float: left;background-color:red;'>" +
+
+
+                            "</div>"+
+                            "           <p class=\"infoOperation\" style='display: block;width: 100%;float: left;'>\n" +
+
+                            "                       <span class=\"time\" style='display: block;float: left;'>"+time+"</span>\n" +
+                            "                       <span class=\"infoHandle\" style='display: block;float: right'>\n" +
+                            "                       <a href=\"javascript:;\">点赞"+messagesAgreenum+"</a>\n" +
+                            "                        <a href=\"javascript:;\"onclick='resend(this);'>转发"+messagesTranspondnum+"</a>\n" +
+                            "                       <a href=\"javascript:;\" onclick='remark(this);'>评论"+messagesCommentnum+"</a>\n" +
+                            "                        <a href=\"javascript:;\" onclick='userDel(this);'>删除</a>\n" +
+                            "                   </span>\n" +
                             "            </p>" +
-                            "            </div>\n" +
+                            "        </div>\n" +
                             "\n" +
-                            "        </div>"
+                            " </div>"
 
                         var ele = document.getElementsByClassName("MessageList")[0];
                         ele.append(article);
+                            var imgArt=document.getElementById(imgId);
+
+                            var imgsList=data[i]["imgs"];
+                        for (var j=0;j<imgsList.length;j++){
+                                var img=document.createElement("img");
+                                img.src=imgsList[j]["imgUrl"];
+                                img.style.width=33+"%";
+                                img.style.height="253px"
+                                img.style.marginLeft=1+"px";
+                                img.style.marginRight=1+"px";
+                                imgArt.append(img);
+                         }
 
                     }
                 }
