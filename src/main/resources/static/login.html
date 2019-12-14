@@ -101,13 +101,12 @@
             $.ajax({
                 url:"beforeuser/login",
                 data:{userNikename: uname, userPassword: upass},
-
-                dataType: "text",
+                // dataType: "json",
                 success:function (data) {
-                    if (data!="true"){
+                    if (data!="null"){
                         alert("登陆成功");
-                        alert(data);
-                        $.cookie("userId",data)
+                        alert(data.userId);
+                        $.cookie("userId",data.userId)
                         window.location.href="home.html"
                         $.cookie("userNikename",uname);
                     } else {

@@ -367,7 +367,7 @@
         var formdata=new FormData($("#atricleimgs")[0]);
         formdata.append("userId",userId);
         formdata.append("info",message);
-        formdata.append("userNikename",$.cookie("userNikename"));
+        // formdata.append("userNikename",$.cookie("userNikename"));
 
         if (message != "")
             $.ajax(
@@ -380,11 +380,11 @@
                     processData: false,
                     contentType: false,
                     success: function (data) {
-                        if ("false" != data) {
+                        if ("null" != data) {
                             alert(message);
                             alert(data);
                             var article = document.createElement("article");
-                            article.id = data;
+                            article.id = data[0];
                             article.className = "single-post zerogrid";
                             article.innerHTML = " <div class=\"row wrap-post\">" +
                                 "\n" +

@@ -93,4 +93,17 @@ public class Pack {
         forward.setUserId(userId);
         return forward;
     }
+
+    /**
+     * 创建Img对象，初始化并返回对象
+     * @param messageId
+     * @param url
+     * @return
+     */
+    public Img PackImg(Integer messageId, String url){
+        Img img = new Img();
+        img.setMessageId(messageId);
+        img.setImgUrl(url);
+        return img;
+    }
 }

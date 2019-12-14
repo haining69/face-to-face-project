@@ -25,6 +25,7 @@ public class RegistController {
     @RequestMapping("/register")
     public void register(Users user){
         user.setUserTime(new Date());
+        user.setUserImg("http://q2cp0cbhu.bkt.clouddn.com/25df441c-0c52-4f22-b379-68705d721805");  //设置默认头像
 //        System.out.println(user.getUserTime());
         userService.register(user);
     }

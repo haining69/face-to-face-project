@@ -26,13 +26,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String login(Users user) {
+    public Users login(Users user) {
 //        System.out.println(user);
         Users users = userMapper.login(user);
         if (users != null) {
-            return users.getUserId();
+            return users;
         } else {
-            return "false";
+            return null;
         }
     }
 
@@ -85,6 +85,24 @@ public class UserServiceImpl implements UserService {
     @Override
     public Boolean update(Users user) {
         if (userMapper.updateUser(user) > 0){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean updateImg(Integer userId, String url) {
+        if (userMapper.updateImg(userId, url) == 1){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean updateUserInfo(Users users, Integer userId) {
+        if (userMapper.updateUserInfo(users, userId) == 1){
             return true;
         }else {
             return false;

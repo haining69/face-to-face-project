@@ -80,7 +80,6 @@
                         var num =  1+parseInt(text.match(/\d+/g));
                         obj.innerText="收藏"+num;
                     }
-
                 },
                 error:function (e) {
                    //  var text=obj.innerText;
@@ -183,14 +182,14 @@
 
 
                         $.ajax({
-                            url: "getmessageImg",
+                            url: "message/getmessageimg",
                             data: {messagesId: messagesId},
                             type: "POST",
                             dataType: "JSON",
                             async: false,
                             success: function (imgsdata) {
                                 for (var i = 0; i < imgsdata.length; i++) {
-                                    var src = imgsdata[i]["src"];
+                                    var src = imgsdata[i]["imgUrl"];
                                     var img = document.createElement("img");
                                     img.src = src;
                                     document.getElementById(imgid).appendChild(img);

@@ -9,7 +9,7 @@ public interface UserService {
     List<Users> selectAll();
 
     //登录返回一个布尔值
-    String login(Users user);
+    Users login(Users user);
 
     //注册用户名查重并且找回密码时候进行用户名进行查重
     Boolean findByUsername(Users user);
@@ -30,6 +30,12 @@ public interface UserService {
 
     //根据用户名与密码修改用户并让用户找回密码
     Boolean update(Users user);
+
+    //根据传入的userId进行修改用户头像
+    Boolean updateImg(Integer userId, String url);
+
+    //根据传入的userId进行更新该用户信息
+    Boolean updateUserInfo(Users users, Integer userId);
 
 
 

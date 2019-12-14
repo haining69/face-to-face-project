@@ -22,6 +22,24 @@ public class Users implements Serializable {
     private String userStatusStr;
     private String userImg;
     private Date userBirthday;
+    private String userPersonalized;
+    private String realName;
+
+    public String getUserPersonalized() {
+        return userPersonalized;
+    }
+
+    public void setUserPersonalized(String userPersonalized) {
+        this.userPersonalized = userPersonalized;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
 
     public String getUserId() {
         return userId;
@@ -116,6 +134,8 @@ public class Users implements Serializable {
                 ", userStatusStr='" + userStatusStr + '\'' +
                 ", userImg='" + userImg + '\'' +
                 ", userBirthday=" + userBirthday +
+                ", userPersonalized='" + userPersonalized + '\'' +
+                ", realName='" + realName + '\'' +
                 '}';
     }
 }
