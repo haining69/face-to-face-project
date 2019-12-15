@@ -15,17 +15,19 @@
     <script src="js/jquery.min.js" type="text/javascript"></script>
     <script src="js/jquery.cookie.js" type="text/javascript"></script>
     <style>
-        article>article>.footer>.comment{
+        article > article > .footer > .comment {
             width: 100%;
             height: auto;
             border-bottom: 1px revert solid;
-            border-top:1px revert solid ;
+            border-top: 1px revert solid;
         }
-        article>article>.footer>.commentInput{
+
+        article > article > .footer > .commentInput {
             width: 100%;
             height: 45px;
         }
-        .commentInput>textarea{
+
+        .commentInput > textarea {
             width: 80%;
             height: 45px;
             text-decoration: none;
@@ -38,7 +40,8 @@
             float: left;
             background-color: deepskyblue;
         }
-        .commentInput>input{
+
+        .commentInput > input {
             width: 20%;
             height: 45px;
             margin: 0px;
@@ -46,18 +49,21 @@
             display: block;
             float: left;
         }
-        .comment>.commentList{
+
+        .comment > .commentList {
             width: 100%;
             height: auto;
         }
-        .comment>.commentList>p{
+
+        .comment > .commentList > p {
             width: 100%;
             height: auto;
             font-size: 20px;
             display: block;
             float: left;
         }
-        .comment>.commentList>p>{
+
+        .comment > .commentList > p > {
             width: 100%;
             height: auto;
             font-size: 20px;
@@ -67,102 +73,124 @@
     </style>
     <script>
 
-      function  loadSonComment(obj,inputId){
-          obj.onblur=null;
-          var commentsid=obj.parentNode.id;
+        function addcomment(obj, textid) {
+            var messageId = obj.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.id;
+            var commentslist = obj.parentNode.parentNode.children[1];
+            var p = document.createElement("p");
+             var userNikename=  $.cookie("userNikename");
+        var commnetinfo = document.getElementById(textid).value
+            $.ajax({
+                url:"addroot",
+                type:"POST",
+                data:{messageId:messageId,commnetinfo:commnetinfo,userNikename:userNikename},
+                dataType:"text",
+                success:function (data) {
+                    p.id=data;
+                    p.innerHTML = $.cookie("userNikename") + ":" + document.getElementById(textid).value + "<a onblur='loadSonComment(this," + textid + ")' onclick='addSon(this," + textid + ")'>回复</a>"
+                    commentslist.append(p);
+                }
+            })
 
-          $.ajax({
-              url:"getZi",
-              data:{commentsid:commentsid},
-              dataType:"JSON",
-              success:function (data) {
-                  var userNikename=data["userNikename"];
-                  var userByNikename=data["userByNikename"];
-                  var replyInfo=data["replyInfo"];
-                  var replyid=data["replyId"];
+            p.innerHTML = $.cookie("userNikename") + ":" + document.getElementById(textid).value + "<a onblur='loadSonComment(this," + textid + ")' onclick='addSon(this," + textid + ")'>回复</a>"
+        }
 
-                  var p= document.createElement("p");
-                  p.innerHTML=userNikename+"@"+userByNikename+replyInfo+"<a onblur='loadSonComment(this,"+inputId+")' onclick='addSon(this,"+inputId+")'>回复</a>"
+        function loadSonComment(obj, inputId) {
+            obj.onblur = null;
+            var commentsid = obj.parentNode.id;
 
-                  p.id="replyid"+replyid;
-                  obj.parentNode.parentNode.append(p);
+            $.ajax({
+                url: "getZi",
+                data: {commentsid: commentsid},
+                dataType: "JSON",
+                success: function (data) {
+                    var userNikename = data["userNikename"];
+                    var userByNikename = data["userByNikename"];
+                    var replyInfo = data["replyInfo"];
+                    var replyid = data["replyId"];
 
-              }
-          })
+                    var p = document.createElement("p");
+                    p.innerHTML = userNikename + "@" + userByNikename + replyInfo + "<a onblur='loadSonComment(this," + inputId + ")' onclick='addSon(this," + inputId + ")'>回复</a>";
 
-      }
-        function addSon(obj,inputId) {
-          var userNikename=$.cookie("userNikename");
-          var userId=$.cookie("userId");
-          var replyInfo= document.getElementById(inpuId).value;
-          var  replyByid=obj.parentNode.id;
-          var temstr=obj.parentNode.innerHTML;
-          var userByNikename=temstr.substr(temstr.indexOf('@'),temstr.indexOf(":"))
-         $.ajax({
-             url:"addreply",
-             data:{userId:userId,replyInfo:replyInfo,replyByid:replyByid},
-             type:"post",
-             dataType:"text",
-             success:function (data) {
+                    p.id = "replyid" + replyid;
+                    obj.parentNode.parentNode.append(p);
 
-                 var p= document.createElement("p");
-                 p.innerHTML=userNikename+"@"+userByNikename+":"+replyInfo+"<a onblur='loadSonComment(this,"+inputId+")' onclick='addSon(this,"+inputId+")'>回复</a>"
+                }
+            })
 
-                 p.id="replyid"+data;
-                 obj.parentNode.parentNode.append(p);
+        }
 
-             }
-         })
+        function addSon(obj, inputId) {
+            var userNikename = $.cookie("userNikename");
+            var userId = $.cookie("userId");
+            var replyInfo = document.getElementById(inpuId).value;
+            var replyByid = obj.parentNode.id;
+            var temstr = obj.parentNode.innerHTML;
+            var userByNikename = temstr.substr(temstr.indexOf('@'), temstr.indexOf(":"));
+            $.ajax({
+                url: "addreply",
+                data: {userId: userId, replyInfo: replyInfo, replyByid: replyByid},
+                type: "post",
+                dataType: "text",
+                success: function (data) {
 
+                    var p = document.createElement("p");
+                    p.innerHTML = userNikename + "@" + userByNikename + ":" + replyInfo + "<a onblur='loadSonComment(this," + inputId + ")' onclick='addSon(this," + inputId + ")'>回复</a>";
+
+                    p.id = "replyid" + data;
+                    obj.parentNode.parentNode.append(p);
+
+                }
+            })
 
 
         }
-    function comment(obj) {
-        obj.onclick=null;
-        var userid=$.cookie("userId");
-        var messageId = obj.parentNode.parentNode.parentNode.parentNode.parentNode.id;
-        var comment =document.createElement("div");
-            comment.className="comment";
+
+        function comment(obj) {
+            obj.onclick = null;
+            var userid = $.cookie("userId");
+            var messageId = obj.parentNode.parentNode.parentNode.parentNode.parentNode.id;
+            var comment = document.createElement("div");
+            comment.className = "comment";
 
 
-        var commentInput=document.createElement("div");
-            commentInput.className="commentInput";
-            commentInput.innerHTML="<textarea id='"+userid+messageId+"'></textarea><input value='点击发表评论' type=\"button\" onclick=\"addcomment(this)\">"
+            var commentInput = document.createElement("div");
+            commentInput.className = "commentInput";
+            commentInput.innerHTML = "<textarea id='" + userid + messageId + "'></textarea><input value='点击发表评论' type=\"button\" onclick=\"addcomment(this," + userid + messageId + ")\">";
             comment.append(commentInput);
 
             obj.parentNode.parentNode.append(comment);
 
 
-        var commentList=document.createElement("div");
-        commentList.className="commentList";
+            var commentList = document.createElement("div");
+            commentList.className = "commentList";
             $.ajax({
-                url:"getRootComment",
-                data:{messageId:messageId},
-                dataType:"JSON",
-                success:function (data) {
-                   for (var i=0;i<data.length;i++){
-                       var userNikename=data[i]["userNikename"];
-                       var commentsInfo=data[i]["comments"]["commentsInfo"];
-                       var commentsId="commentsId"+data[i]["comments"]["commentsId"];
-                       var p=document.createElement("p");
-                           p.id=commentsId;
-                           p.innerHTML=userNikename+":"+commentsInfo+"<a onblur='loadSonComment(this,userid+messageId)' onclick='addSon(this,"+userid+messageId+")'>回复</a>";
-                           commentList.append(p);
-                   }
+                url: "getRootComment",
+                data: {messageId: messageId},
+                dataType: "JSON",
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        var userNikename = data[i]["userNikename"];
+                        var commentsInfo = data[i]["comments"]["commentsInfo"];
+                        var commentsId = "commentsId" + data[i]["comments"]["commentsId"];
+                        var p = document.createElement("p");
+                        p.id = commentsId;
+                        p.innerHTML = userNikename + ":" + commentsInfo + "<a onblur='loadSonComment(this,userid+messageId)' onclick='addSon(this," + userid + messageId + ")'>回复</a>";
+                        commentList.append(p);
+                    }
                     comment.append(commentInput);
                     comment.append(commentList);
 
 
                 },
-                error:function () {
+                error: function () {
                     alert("error");
-                    for (var i=0;i<data.length;i++){
-                        var userNikename=data[i]["userNikename"];
-                        var commentsInfo=data[i]["commentsInfo"];
-                        var commentsId="commentsId"+data[i]["commentsId"];
-                        var p=document.createElement("p");
-                        p.id=commentsId;
-                        p.innerHTML=userNikename+":"+commentsInfo+"<a onblur='loadSonComment(this,"+userid+messageId+")' onclick='addSon(this,"+userid+messageId+")'>回复</a>>";
+                    for (var i = 0; i < data.length; i++) {
+                        var userNikename = data[i]["userNikename"];
+                        var commentsInfo = data[i]["commentsInfo"];
+                        var commentsId = "commentsId" + data[i]["commentsId"];
+                        var p = document.createElement("p");
+                        p.id = commentsId;
+                        p.innerHTML = userNikename + ":" + commentsInfo + "<a onblur='loadSonComment(this," + userid + messageId + ")' onclick='addSon(this," + userid + messageId + ")'>回复</a>>";
                         commentList.append(p);
                     }
 
@@ -172,8 +200,7 @@
 
             })
 
-    }
-
+        }
 
 
         // 关注
@@ -181,19 +208,17 @@
             var messageId = obj.parentNode.parentNode.parentNode.parentNode.parentNode.id;
             var userId = $.cookie("userId");
             $.ajax({
-                url:"relation/saverelation",
-                data:{
-                    messageId:messageId,
-                    userId:userId
+                url: "relation/saverelation",
+                data: {
+                    messageId: messageId,
+                    userId: userId
                 },
-                type:"POST",
-                dataType:"text",
-                success:function (data) {
-                    if(data=="true")
-                    {
+                type: "POST",
+                dataType: "text",
+                success: function (data) {
+                    if (data == "true") {
                         alert("关注成功");
-                    }
-                    else alert("未关注成功");
+                    } else alert("未关注成功");
                 }
             });
         }
@@ -203,19 +228,18 @@
             var messageId = obj.parentNode.parentNode.parentNode.parentNode.parentNode.id;
             var userId = $.cookie("userId");
             $.ajax({
-                url:"agree/incagreenum",
-                data:{
-                    messageId:messageId,
-                    userId:userId
+                url: "agree/incagreenum",
+                data: {
+                    messageId: messageId,
+                    userId: userId
                 },
-                type:"POST",
-                dataType:"text",
-                success:function (data) {
-                    if(data=="true")
-                    {
-                        var text=obj.innerText;
-                        var num =  1+parseInt(text.match(/\d+/g));
-                        obj.innerHTML="点赞"+num;
+                type: "POST",
+                dataType: "text",
+                success: function (data) {
+                    if (data == "true") {
+                        var text = obj.innerText;
+                        var num = 1 + parseInt(text.match(/\d+/g));
+                        obj.innerHTML = "点赞" + num;
                     }
 
                 }
@@ -227,31 +251,30 @@
             var messageId = obj.parentNode.parentNode.parentNode.parentNode.parentNode.id;
             var userId = $.cookie("userId");
             $.ajax({
-                url:"collection/savecollection",
-                data:{
-                    messageId:messageId,
-                    userId:userId
+                url: "collection/savecollection",
+                data: {
+                    messageId: messageId,
+                    userId: userId
                 },
-                type:"POST",
-                dataType:"text",
-                success:function (data) {
-                    if(data=="true")
-                    {
-                        var text=obj.innerText;
-                        var num =  1+parseInt(text.match(/\d+/g));
-                        obj.innerText="收藏"+num;
+                type: "POST",
+                dataType: "text",
+                success: function (data) {
+                    if (data == "true") {
+                        var text = obj.innerText;
+                        var num = 1 + parseInt(text.match(/\d+/g));
+                        obj.innerText = "收藏" + num;
                     }
                 },
-                error:function (e) {
-                   //  var text=obj.innerText;
-                   // var  num=0;
-                   //  alert(text);
-                   //  alert(num);
-                  // num = 1+ parseInt(text.match(/\d+/g));
-                   //  alert(num);
-                   //
-                   //  obj.innerText="收藏"+num;
-                   //  alert(obj.innerText);
+                error: function (e) {
+                    //  var text=obj.innerText;
+                    // var  num=0;
+                    //  alert(text);
+                    //  alert(num);
+                    // num = 1+ parseInt(text.match(/\d+/g));
+                    //  alert(num);
+                    //
+                    //  obj.innerText="收藏"+num;
+                    //  alert(obj.innerText);
 
 
                 }
@@ -263,15 +286,15 @@
             var messageId = obj.parentNode.parentNode.parentNode.parentNode.parentNode.id;
             var userId = $.cookie("userId");
             $.ajax({
-                url:"forward/forwardmessage",
-                data:{
-                    messageId:messageId,
-                    userId:userId
+                url: "forward/forwardmessage",
+                data: {
+                    messageId: messageId,
+                    userId: userId
                 },
-                type:"POST",
-                dataType:"text",
+                type: "POST",
+                dataType: "text",
                 async: false,
-                success:function (data) {
+                success: function (data) {
                     console.log(data);
                     if ("true" == data) {
                         alert("转发成功");
@@ -378,7 +401,7 @@
             /*background-color: chartreuse;*/
         }
 
-        .MessageList >.article {
+        .MessageList > .article {
             width: 100%;
 
         }
