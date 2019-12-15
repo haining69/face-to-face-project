@@ -1,6 +1,7 @@
 package com.ftf.ftfProject.beforecontroller.UserController;
 
 
+import com.ftf.ftfProject.Tools.Pack;
 import com.ftf.ftfProject.entity.Users;
 import com.ftf.ftfProject.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,21 +21,34 @@ public class RegistController {
 
     @Autowired
     private UserServiceImpl userService;
+    @Autowired
+    private Pack PackUser;
 
-    //注册
+    /**
+     * 注册，如果成功返回true
+     * 负责返回false
+     * @param userEmail
+     * @param userNikename
+     * @param userPassword
+     * @return
+     */
     @RequestMapping("/register")
-    public void register(Users user){
-        user.setUserTime(new Date());
-        user.setUserImg("http://q2cp0cbhu.bkt.clouddn.com/25df441c-0c52-4f22-b379-68705d721805");  //设置默认头像
-//        System.out.println(user.getUserTime());
-        userService.register(user);
+    @ResponseBody
+    public String  register(String userEmail, String userNikename, String userPassword){
+        Users user = PackUser.PackUser(userEmail, userNikename, userPassword);
+        if (userService.register(user)){  //如果注册成功，则返回true
+            return "true";
+        }else {
+            return "false";
+        }
     }
 
 
 
     //进行验证码  验证
     @RequestMapping("/verify")
-    public String verify(Users user, HttpServletResponse response) throws IOException, MessagingException {
+    @ResponseBody
+    public String verify(Users user) throws MessagingException {
         if (!userService.findByUsername(user)&&!userService.findByEmail(user)){
             String verify = userService.verify(user.getUserEmail());
             return verify;

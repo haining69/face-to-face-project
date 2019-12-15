@@ -1,5 +1,6 @@
 package com.ftf.ftfProject.beforecontroller.UserController;
 
+import com.ftf.ftfProject.Tools.Pack;
 import com.ftf.ftfProject.Tools.QiniuUpload;
 import com.ftf.ftfProject.entity.Users;
 import com.ftf.ftfProject.service.impl.UserServiceImpl;
@@ -10,11 +11,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
 
 
 /**
- * 用户更新个人信息
+ * 用户查询个人信息
  */
 @Controller
 @RequestMapping("/personinfo")
@@ -23,6 +27,8 @@ public class PersonalInfo {
     private UserServiceImpl userService;
     @Autowired
     private QiniuUpload qiniuUpload;
+    @Autowired
+    private Pack PackUser;
 
     //根据用户Id进行查询用户信息
     @RequestMapping("/getpersoninfo")
@@ -58,19 +64,38 @@ public class PersonalInfo {
     }
 
     /**
-     * 修改用户个人信息  ,如果用户名存在返回false
-     * 如果用户名不存在进行进行更新并返回true
-     * @param users
+     *修改用户个人信息  ,如果用户名存在并于当前用户不同时返回false
+     *如果用户名不存在进行进行更新并返回true
+     * 如果与当前用户一致，则进行更新
+     * @param userNikename
+     * @param realName
+     * @param userPersonalized
+     * @param userSex
+     * @param userBirthday
      * @return
      */
     @RequestMapping("/updateuserinfo")
     @ResponseBody
-    public String updateUserInfo(Users users, Integer userId){
-        if (!userService.findByUsername(users)){   //如果该用户名不存在则进行更新  如果存在则不进行更新
-            userService.updateUserInfo(users, userId);
+    public String updateUserInfo(Integer userId1, String userNikename, String realName , String userPersonalized ,String userSex ,String userBirthday) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");//定义一个formate
+        Date date = simpleDateFormat.parse(userBirthday);//将formate型转化成Date数据类型
+        int userId = userService.findByUsername1(userNikename);
+        if (userId == -1){   //说明没有重名，保存更改的信息
+            Users users = PackUser.PackUser(userId1,userNikename, realName, userPersonalized, userSex, date);
+            userService.updateUserInfo(users);   //更新信息
+//            System.out.println("没崇明");
+//            System.out.println(users);
             return "true";
-        }else {
-            return "false";
+        }else {  //如果用户名存在
+            if (userId == userId1){  //如果用户名与当前用户一致
+                Users users = PackUser.PackUser(userId1, userNikename, realName, userPersonalized, userSex, date);
+                userService.updateUserInfo(users);   //更新信息
+//                System.out.println("没更新用户名！");
+//                System.out.println(users);
+                return "true";
+            }else {
+                return "false";
+            }
         }
     }
 }

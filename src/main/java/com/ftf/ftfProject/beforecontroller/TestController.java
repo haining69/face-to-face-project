@@ -32,6 +32,15 @@ public class TestController {
     @Autowired
     private RelationServiceImpl relationService;
 
+
+    @RequestMapping("/get")
+    @ResponseBody
+    public String get(){
+        int i = userService.findByUsername1("shajsa");
+        System.out.println(i);
+        return "成功了";
+    }
+
     //进入登录页面
     @RequestMapping("/index")
     public String index() {

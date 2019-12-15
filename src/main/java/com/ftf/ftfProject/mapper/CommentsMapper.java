@@ -20,15 +20,17 @@ public interface CommentsMapper {
     List<Comments> getAllComments();
 
     //根据messages_id查找当前评论表数据
-    @Select("select user_nikename as userNikename,comments_info as commentInfo from users,comments where users.user_id = comments.userparent_id and message_id=#{messageId}")
-    List<UserComment> selectByMessagesid(int messageId);
+    @Select("select * from comments where message_id=#{messageId} ORDER BY comments_time ASC")
+    List<Comments> selectByMessagesid(int messageId);
 
     //增加当前说说的评论
-    @Insert("insert into comments(comments_info, comments_time, message_id, userparent_id)" +
-            "values(#{commentsInfo}, #{commentsTime}, #{messageId}, #{userParentId})")
+    @Insert("insert into comments(comments_info, comments_time, message_id, user_id)" +
+            "values(#{commentsInfo}, #{commentsTime}, #{messageId}, #{userId})")
     int saveComment(Comments comments);
 
-    //评论不能修改
+    //根据三个参数查询
+    @Select("select comments_id from comments where comments_info=#{commentInfo} and user_id=#{userId} and message_id=#{messageId} ORDER BY comments_time DESC")
+    List<Integer> getCommentId(Integer messageId,String commentInfo,Integer userId);
 
     //删除评论
     @Delete("delete from comments where comments_id=#{commentsId}")

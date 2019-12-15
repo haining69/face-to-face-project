@@ -47,7 +47,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public int getpages(Integer userId) {
-        System.out.println(userId);
+//        System.out.println(userId);
         int total =  messageMapper.getTotal(userId);
 //        System.out.println("total=" + total);
         return  (total+4)/5;
@@ -135,7 +135,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public int getUserId(Integer messageId) {
-        return 0;
+        return messageMapper.getUserId(messageId);
     }
 
     @Override

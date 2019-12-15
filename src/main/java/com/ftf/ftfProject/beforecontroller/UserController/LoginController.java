@@ -24,7 +24,7 @@ public class LoginController {
 //        user.setUserNikename("tcp666");
 //        user.setUserPassword("tcp666666");
         Users users =  userService.login(user);
-        System.out.println(users.toString());
+//        System.out.println(users.toString());
         return users;
     }
 

@@ -26,23 +26,26 @@
     <link href="owl-carousel/owl.carousel.css" rel="stylesheet">
     <script src="js/html5.js"></script>
     <script src="js/css3-mediaqueries.js"></script>
-    <script src="js/jquery.cookie.js"></script>
     <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.cookie.js"></script>
+
     <script>
         onload=function () {
+            var userId=$.cookie("userId");
             $.ajax({
-                url:"getuser",
+                url:"personinfo/getpersoninfo",
                 data:{userId:userId},
                 type:"POST",
                 dataType:"JSON",
                 success:function (data) {
-                    $("userName").val(data["userNikename"]);
-                    $("realName").val(data["realName"]);
-                    $("styleName").val(data["userPersonalized"]);
-                    $("sex").val(data["userSex"]);
-                    $("birthday").val(data["userBirthday"]);
-                    $("startTime").val(data["userTime"]);
-                    $("mail").val(data["userEmail"]);
+                    $.cookie("users",JSON.stringify(data));
+                    $("#userName").html(data["userNikename"]);
+                    $("#realName").html(data["realName"]);
+                    $("#styleName").html(data["userPersonalized"]);
+                    $("#sex").html(data["userSex"]);
+                    $("#birthday").html(data["userBirthday"]);
+                    $("#startTime").html(data["userTime"]);
+                    $("#mail").html(data["userEmail"]);
                 }
             })
         }
@@ -69,7 +72,7 @@
                             <li><a href='mystory.html'><span>我的故事</span></a></li>
                             <li><a href='friend.html'><span>关注</span></a></li>
                             <li><a href='hotspot.html'><span>热门</span></a></li>
-                            <li class="active"class='last'><a href='contacts.html'><span>个人信息</span></a></li>
+                            <li class='last'><a href='myInformation.html'><span>个人信息</span></a></li>
                         </ul>
                     </div>
                 </div>

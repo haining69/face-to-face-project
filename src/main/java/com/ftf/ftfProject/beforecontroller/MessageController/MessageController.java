@@ -8,6 +8,7 @@ import com.ftf.ftfProject.entity.Message;
 import com.ftf.ftfProject.metaclass.MessageAndImgs;
 import com.ftf.ftfProject.service.impl.ImgServiceImpl;
 import com.ftf.ftfProject.service.impl.MessageServiceImpl;
+import com.ftf.ftfProject.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,8 @@ public class MessageController {
     private QiniuUpload qiniuUpload;
     @Autowired
     private ImgServiceImpl imgService;
+    @Autowired
+    private UserServiceImpl userService;
 
     /**
      * 我的故事
@@ -41,7 +44,7 @@ public class MessageController {
     @RequestMapping("/getmessage")
     @ResponseBody
     public List<MessageAndImgs> getmessage(Integer userId, int page){  //String userNikename, int number
-        System.out.println(userId);
+//        System.out.println(userId);
         int pages = messageService.getpages(userId); // 返回的页数
         return messageService.getMessage(userId, page);   //返回查找的动态，每次返回5条记录
     }
@@ -51,7 +54,7 @@ public class MessageController {
 
     /**
      * 我的故事
-     * 保存动态
+     * 保存动态,进行发表说说
      * @param
      * @return
      */
@@ -61,11 +64,11 @@ public class MessageController {
         List<String> imgs = new ArrayList<>();
         String info = request.getParameter("info");
         String userId = request.getParameter("userId");
-        System.out.println(userId);
+//        System.out.println(userId);
         Message message = PackMessage.PackMessage(info,userId);
         if (messageService.saveMessage(message) ){  //如果存储成功则进行返回消息id
             String messageid = messageService.getMessageId(userId,info);
-            System.out.println(messageid);
+//            System.out.println(messageid);
             imgs.add(messageid);   //传回文章Id
             for (MultipartFile file : files) {    //遍历文件
                 //上传文件并返回url
@@ -75,15 +78,12 @@ public class MessageController {
                 imgService.saveImg(img);
                 imgs.add(url);    //添加图片的url
             }
-            for (String img : imgs) {
-                System.out.println(img);
-            }
+        //进行说说记录加一
+            userService.incMessageNum(Integer.parseInt(userId));
             return imgs;
         }else {
             return null;
         }
-
-
     }
 
     /**
@@ -94,6 +94,9 @@ public class MessageController {
     @ResponseBody
     public String deleteMessage(Integer id){
         if (messageService.deletemessage(id)){
+            Integer userId = messageService.getUserId(id);
+            //删除动态进行说说记录减一
+            userService.decreaMessageNum(userId);
             return "true";
         }else {
             return "false";
@@ -124,7 +127,4 @@ public class MessageController {
 
         return imgService.getImgs(messagesId);
     }
-
-
-
 }

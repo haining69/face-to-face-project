@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -27,13 +28,17 @@ public interface UserMapper {
     Users findByUsername(Users user);
 
     //根据用户名进行查询id
-    @Select("select user_id from users where user_nikename=#{userNikename}")
-    int findByUsername1(String userNikename);
+    @Select("select * from users where user_nikename=#{userNikename}")
+    Users findByUsername1(String userNikename);
+
+    //根据用户Id进行查询用户名
+    @Select("select user_nikename from users where user_id=#{userId}")
+    String getByUserId(Integer userId);
 
     //注册 用户名，密码，email，注册时间，默认头像
-    @Insert("insert into users(user_nikename, user_password, user_email, user_time, user_Img) " +
-            "values(#{userNikename}, #{userPassword}, #{userEmail}, #{userTime}, #{userImg})")
-    void register(Users user);
+    @Insert("insert into users(user_nikename, user_password, user_email, user_time, user_Img, user_messagenum) " +
+            "values(#{userNikename}, #{userPassword}, #{userEmail}, #{userTime}, #{userImg}, #{userMessageNum})")
+    int register(Users user);
 
     //根据email进行查询用户
     @Select("select * from users where user_email=#{userEmail}")
@@ -56,10 +61,18 @@ public interface UserMapper {
     int updateImg(Integer userId, String url);
 
     //根据传入的用户id进行修改用户信息包括  用户名  真实姓名  个性签名  性别  出生日期
-    @Update("update users set user_nikename = #{userNikename} and user_realname = #{realName}" +
-            "and user_personalized = #{userPersonalized} and user_sex = #{userSex} " +
-            "and user_birthday = #{userBirthday} where where user_id=#{userId}")
-    int updateUserInfo(Users users , Integer userId);
+    @Update("update users set user_nikename = #{userNikename} , user_realname = #{realName}" +
+            ", user_personalized = #{userPersonalized} , user_sex = #{userSex} " +
+            ", user_birthday = #{userBirthday} where user_id=#{userId}")
+    int updateUserInfo(Users users);
+
+    //根据传入的userId进行增加发表说说量
+    @Update("update users set user_messagenum = user_messagenum+1 where user_id=#{userId} }")
+    int incMessageNum(Integer userId);
+
+    //根据传入的userId进行减少发表说说量
+    @Update("update users set user_messagenum = user_messagenum-1 where user_id = #{userId}")
+    int decreaMessageNum(Integer userId);
 
   /**
      * 后台数据查询

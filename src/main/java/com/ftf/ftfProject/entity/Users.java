@@ -24,6 +24,15 @@ public class Users implements Serializable {
     private Date userBirthday;
     private String userPersonalized;
     private String realName;
+    private Integer userMessageNum;
+
+    public Integer getUserMessageNum() {
+        return userMessageNum;
+    }
+
+    public void setUserMessageNum(Integer userMessageNum) {
+        this.userMessageNum = userMessageNum;
+    }
 
     public String getUserPersonalized() {
         return userPersonalized;
@@ -136,6 +145,7 @@ public class Users implements Serializable {
                 ", userBirthday=" + userBirthday +
                 ", userPersonalized='" + userPersonalized + '\'' +
                 ", realName='" + realName + '\'' +
+                ", userMessageNum=" + userMessageNum +
                 '}';
     }
 }

@@ -50,7 +50,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int findByUsername1(String userNikename) {
-        return userMapper.findByUsername1(userNikename);
+        Users user = userMapper.findByUsername1(userNikename);
+        if (user != null){
+            return Integer.parseInt(user.getUserId());
+        }else {
+            return -1;
+        }
+    }
+
+    @Override
+    public String getByUserId(Integer userId) {
+        return userMapper.getByUserId(userId);
     }
 
     @Override
@@ -59,8 +69,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void register(Users user) {
-        userMapper.register(user);
+    public Boolean register(Users user) {
+        if (userMapper.register(user) == 1){
+            return true;
+        }else {
+            return false;
+        }
     }
 
     //发送邮箱并返回验证码
@@ -101,8 +115,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean updateUserInfo(Users users, Integer userId) {
-        if (userMapper.updateUserInfo(users, userId) == 1){
+    public Boolean updateUserInfo(Users users) {
+        if (userMapper.updateUserInfo(users) == 1){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean incMessageNum(Integer userId) {
+        if (userMapper.incMessageNum(userId) == 1){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean decreaMessageNum(Integer userId) {
+        if (userMapper.decreaMessageNum(userId) == 1){
             return true;
         }else {
             return false;

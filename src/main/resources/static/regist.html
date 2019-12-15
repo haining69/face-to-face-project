@@ -101,9 +101,14 @@
                 url: "beforeuser/register",
                 data:{userEmail: uemail, userNikename: uname, userPassword: upass},
                 dataType: "text",
-                success: function (data) {
-                    alert("注册成功");
-                    window.location="login.html";
+                success: function (date) {
+                    if ("false" != date){
+                        alert("注册成功");
+                        window.location="login.html";
+                    }else {
+                        alert("注册失败，请重新注册")
+                    }
+
                 },
                 error: function (data) {
                     alert("注册失败");

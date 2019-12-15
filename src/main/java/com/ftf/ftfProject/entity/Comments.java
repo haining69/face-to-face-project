@@ -16,8 +16,7 @@ public class Comments implements Serializable {
     private String commentsInfo;
     private Date commentsTime;
     private String messageId;
-    private String userChildId;
-    private  String userParentId;
+    private String userId;
 
     public String getCommentsId() {
         return commentsId;
@@ -51,20 +50,12 @@ public class Comments implements Serializable {
         this.messageId = messageId;
     }
 
-    public String getUserChildId() {
-        return userChildId;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUserChildId(String userChildId) {
-        this.userChildId = userChildId;
-    }
-
-    public String getUserParentId() {
-        return userParentId;
-    }
-
-    public void setUserParentId(String userParentId) {
-        this.userParentId = userParentId;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     @Override
@@ -74,8 +65,7 @@ public class Comments implements Serializable {
                 ", commentsInfo='" + commentsInfo + '\'' +
                 ", commentsTime=" + commentsTime +
                 ", messageId='" + messageId + '\'' +
-                ", userChildId='" + userChildId + '\'' +
-                ", userParentId='" + userParentId + '\'' +
+                ", userId='" + userId + '\'' +
                 '}';
     }
 }

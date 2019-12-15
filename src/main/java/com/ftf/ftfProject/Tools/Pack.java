@@ -32,11 +32,10 @@ public class Pack {
      */
     public Comments PackComment(String remark,Integer userId,Integer messageId){
         Comments comments = new Comments();
-        comments.setCommentsInfo(remark);
-        comments.setCommentsTime(new Date());
-//        comments.setUserChildId(null);
-        comments.setUserParentId(String.valueOf(userId));
-        comments.setMessageId(String.valueOf(messageId));
+        comments.setCommentsInfo(remark);   //评论内容
+        comments.setCommentsTime(new Date());  //评论时间
+        comments.setUserId(String.valueOf(userId));  //评论人ID
+        comments.setMessageId(String.valueOf(messageId));   //动态ID
         return comments;
     }
 
@@ -105,5 +104,65 @@ public class Pack {
         img.setMessageId(messageId);
         img.setImgUrl(url);
         return img;
+    }
+
+    /**
+     * 创建user对象，初始化并返回对象
+     * @param userEmail
+     * @param userNikename
+     * @param userPassword
+     * @return
+     */
+    public Users PackUser(String userEmail, String userNikename, String userPassword){
+        Users user = new Users();
+        user.setUserNikename(userNikename);  //用户名
+        user.setUserPassword(userPassword);  //密码
+        user.setUserEmail(userEmail);   //email
+        user.setUserTime(new Date());   //注册时间
+        user.setUserImg("http://q2cp0cbhu.bkt.clouddn.com/25df441c-0c52-4f22-b379-68705d721805");
+        user.setUserMessageNum(0);
+        user.setUserBirthday(new Date());
+        return user;
+    }
+
+
+    /**
+     * 修改用户信息封装的user类，初始化并返回对象
+     * @param userId
+     * @param userNikename
+     * @param realName
+     * @param userPersonalized
+     * @param userSex
+     * @param userBirthday
+     * @return
+     */
+    public Users PackUser(Integer userId , String userNikename, String realName , String userPersonalized ,String userSex ,Date userBirthday){
+        Users user = new Users();
+        user.setUserId(String.valueOf(userId));
+        user.setUserNikename(userNikename);  //用户名
+        user.setRealName(realName);  //密码
+        user.setUserPersonalized(userPersonalized);   //email
+        user.setUserSex(userSex);   //注册时间
+        user.setUserMessageNum(0);
+        user.setUserBirthday(userBirthday);
+        return user;
+    }
+
+    /**
+     * 创建回复表对象，初始化并返回对象
+     * @param userId
+     * @param parentid
+     * @param replyInfo
+     * @param userById
+     * @return
+     */
+    public Reply PackReply(Integer userId, Integer parentid, String replyInfo, Integer userById){
+        Reply reply = new Reply();
+        reply.setReplyUserId(userId);
+        reply.setReplyByUserId(userById);
+        reply.setReplyInfo(replyInfo);
+        reply.setCommentParentId(parentid);
+        reply.setReplyTime(new Date());
+        return reply;
     }
 }

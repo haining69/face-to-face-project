@@ -3,6 +3,7 @@ package com.ftf.ftfProject.beforecontroller.CommentsController;
 
 import com.ftf.ftfProject.Tools.Pack;
 import com.ftf.ftfProject.entity.Comments;
+import com.ftf.ftfProject.metaclass.NikeAndComment;
 import com.ftf.ftfProject.metaclass.UserComment;
 import com.ftf.ftfProject.service.impl.CommentsServiceImpl;
 import com.ftf.ftfProject.service.impl.MessageServiceImpl;
@@ -30,18 +31,18 @@ public class CommentsController {
 
     /**
      * 保存评论
-     * @param remark
-     * @param userId
-     * @param messageId
+     * @param commentInfo  评论内容
+     * @param userId  评论人
+     * @param messageId   被评论的说说
      * @return
      */
     @RequestMapping("/savecomment")
     @ResponseBody
-    public String SaveComment(String remark,Integer userId,Integer messageId){
-        Comments comments = PackComment.PackComment(remark, userId, messageId);
+    public String SaveComment(Integer messageId,String commentInfo,Integer userId){
+        Comments comments = PackComment.PackComment(commentInfo, userId, messageId);
         if (commentsService.saveComments(comments)){  //保存成功
             messageService.incComment(messageId);  //评论数加一
-            return "true";
+            return String.valueOf(commentsService.getCommentId(messageId, commentInfo, userId));
         }else {
             return "false";
         }
@@ -54,7 +55,8 @@ public class CommentsController {
      */
     @RequestMapping("/getcomments")
     @ResponseBody
-    public List<UserComment> getComments(String messageId){
+    public List<NikeAndComment> getComments(String messageId){  //
+//        String messageId = "56";
         return commentsService.selectByMessagesid(messageId);
     }
 }
