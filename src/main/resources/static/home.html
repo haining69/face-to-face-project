@@ -102,7 +102,7 @@
         }
 
         function loadSonComment(obj, inputId) {
-            alert("innnnnnn.................")
+
             obj.onfocus= null;
             var commentsid = obj.parentNode.id;
             console.log(commentsid);
@@ -118,7 +118,7 @@
                      var replyid = data[i]["reply"]["replyId"];
 
                      var p = document.createElement("p");
-                     p.innerHTML = userNikename  + userByNikename + replyInfo + "<a onfocus='loadSonComment(this," + inputId + ")' onclick='addSon(this," + inputId + ")'>回复</a>";
+                     p.innerHTML ="<a onclick='loadSonComment(this,"+inputId+")'>"+ userNikename  + userByNikename + replyInfo +"</a>"+ "<a onfocus='loadSonComment(this," + inputId + ")' onclick='addSon(this," + inputId + ")'>回复</a>";
 
                      p.id = "replyid" + replyid;
                      obj.parentNode.parentNode.append(p);
@@ -147,7 +147,7 @@
                 success: function (data) {
 
                     var p = document.createElement("p");
-                    p.innerHTML = userNikename  +":"+ userByNikename + ":" + replyInfo + "<a onfocus='loadSonComment(this," + inputId + ")' onclick='addSon(this," + inputId + ")'>回复</a>";
+                    p.innerHTML ="<a onclick='loadSonComment(this,"+inputId+")'>"+ userNikename  +":"+ userByNikename + ":" + replyInfo +"</a>"+ "<a  onclick='addSon(this," + inputId + ")'>回复</a>";
 
                     p.id = "replyid" + data;
                     obj.parentNode.parentNode.append(p);
@@ -187,29 +187,15 @@
                         var commentsId = "commentsId" + data[i]["comments"]["commentsId"];
                         var p = document.createElement("p");
                         p.id = commentsId;
-                        p.innerHTML = userNikename + ":" + commentsInfo + "<a onfocus='loadSonComment(this,"+userid+messageId+")' onclick='addSon(this," + userid + messageId + ")'>回复</a>";
+                        p.innerHTML ="<a onclick='loadSonComment(this,"+userid+messageId+")'>"+userNikename+":"+commentsInfo +"</a>"+ "<a onclick='addSon(this," + userid + messageId + ")'>回复</a>";
                         commentList.append(p);
                     }
                     comment.append(commentInput);
                     comment.append(commentList);
 
 
-                },
-                error: function () {
-                    alert("error");
-                    for (var i = 0; i < data.length; i++) {
-                        var userNikename = data[i]["userNikename"];
-                        var commentsInfo = data[i]["commentsInfo"];
-                        var commentsId = "commentsId" + data[i]["commentsId"];
-                        var p = document.createElement("p");
-                        p.id = commentsId;
-                        p.innerHTML = userNikename + ":" + commentsInfo + "<a onfocus='loadSonComment(this," + userid + messageId + ")' onclick='addSon(this," + userid + messageId + ")'>回复</a>>";
-                        commentList.append(p);
-                    }
-
-                    comment.append(commentList);
-
                 }
+
 
             })
 
