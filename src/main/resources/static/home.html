@@ -15,7 +15,7 @@
     <script src="js/jquery.min.js" type="text/javascript"></script>
     <script src="js/jquery.cookie.js" type="text/javascript"></script>
     <style>
-        article > article >.main>.footer .comment {
+        article > article > .main > .footer .comment {
             width: 100%;
             height: auto;
             border-bottom: 1px revert solid;
@@ -34,11 +34,11 @@
             resize: none;
             border: none;
             margin: 0px;
-            font-size: 20px;
+            font-size: 30px;
             padding: 0px;
             display: block;
             float: left;
-            background-color: deepskyblue;
+            background-color: #dddddd;
         }
 
         .commentInput > input {
@@ -55,20 +55,23 @@
             height: auto;
         }
 
-       .commentList > p {
+        .commentList > p {
             width: 100%;
             height: auto;
-            font-size: 20px;
+            font-size: 30px;
             display: block;
             float: left;
         }
 
-       .commentList > p > {
-            width: 100%;
-            height: auto;
-            font-size: 20px;
-            display: block;
+        .commentList > p > a {
+            width: auto;
+            height: 100%;
+            line-height: 30px;
+            text-decoration: none;
+            font-size: 30px;
+            display: inline-block;
             float: left;
+            color: lightseagreen;
         }
     </style>
     <script>
@@ -79,19 +82,19 @@
             var commentslist = obj.parentNode.parentNode.children[1];
             console.log(commentslist);
             var p = document.createElement("p");
-             var userNikename=  $.cookie("userNikename");
-             var userId = $.cookie("userId");
-        var commnetinfo = document.getElementById(textid).value
+            var userNikename = $.cookie("userNikename");
+            var userId = $.cookie("userId");
+            var commnetinfo = document.getElementById(textid).value;
             $.ajax({
-                url:"comment/savecomment",
-                type:"POST",
-                data:{messageId:messageId,commentInfo:commnetinfo,userId:userId},
-                dataType:"text",
-                success:function (data) {
+                url: "comment/savecomment",
+                type: "POST",
+                data: {messageId: messageId, commentInfo: commnetinfo, userId: userId},
+                dataType: "text",
+                success: function (data) {
                     alert(data);
                     if ("false" != data) {
-                        p.id=data;
-                        p.innerHTML = $.cookie("userNikename") + ":" + document.getElementById(textid).value + "<a onfocus='loadSonComment(this," + textid + ")' onclick='addSon(this," + textid + ")'>回复</a>"
+                        p.id = data;
+                        p.innerHTML = "<a onclick='loadSonComment(this,"+textid+")'>"+$.cookie("userNikename") + ":" + document.getElementById(textid).value +"</a>"+ "<a onfocus='loadSonComment(this," + textid + ")' onclick='addSon(this," + textid + ")'>回复</a>";
                         // p.innerHTML = $.cookie("userNikename") + ":" + document.getElementById(textid).value + "<a onfocus='loadSonComment(this," + textid + ")' onclick='addSon(this," + textid + ")'>回复</a>"
                         commentslist.append(p);
                     }
@@ -103,27 +106,29 @@
 
         function loadSonComment(obj, inputId) {
 
-            obj.onfocus= null;
-            var commentsid = obj.parentNode.id;
-            console.log(commentsid);
+            obj.onclick = null;
+            var commmentsId = obj.parentNode.id;
+            console.log(commmentsId);
             $.ajax({
                 url: "reply/getreply",
-                data: {commentsid: commentsid},
+                data: {commmentsId: commmentsId},
                 dataType: "JSON",
                 success: function (data) {
-                 for (var i=0;i<data.length;i++){
-                     var userNikename = data[i]["reply"]["userNikename"];
-                     var userByNikename = data[i]["reply"]["userByNikename"];
-                     var replyInfo = data[i]["reply"]["replyInfo"];
-                     var replyid = data[i]["reply"]["replyId"];
+                    console.log(data);
+                    for (var i = 0; i < data.length; i++) {
+                        var userNikename = data[i]["userNikename"];
+                        console.log(userNikename);
+                        var userByNikename = data[i]["userByNikename"];
+                        var replyInfo = data[i]["reply"]["replyInfo"];
+                        var replyid = data[i]["reply"]["replyId"];
 
-                     var p = document.createElement("p");
-                     p.innerHTML ="<a onclick='loadSonComment(this,"+inputId+")'>"+ userNikename  + userByNikename + replyInfo +"</a>"+ "<a onfocus='loadSonComment(this," + inputId + ")' onclick='addSon(this," + inputId + ")'>回复</a>";
+                        var p = document.createElement("p");
+                        p.innerHTML = "<a onclick='loadSonComment(this," + inputId + ")'>" + userNikename + "@" + userByNikename + ":" + replyInfo + "</a>" + "<a onfocus='loadSonComment(this," + inputId + ")' onclick='addSon(this," + inputId + ")'>回复</a>";
 
-                     p.id = "replyid" + replyid;
-                     obj.parentNode.parentNode.append(p);
+                        p.id = "replyid" + replyid;
+                        obj.parentNode.parentNode.append(p);
 
-                 }
+                    }
                 }
             })
 
@@ -135,19 +140,19 @@
             var replyInfo = document.getElementById(inputId).value;
 
             var replyByid = obj.parentNode.id;
-            var temstr = obj.parentNode.innerHTML;
+            var temstr = obj.parentNode.innerText;
 
             var userByNikename = temstr.substr(0, temstr.indexOf(":"));
-           console.log(temstr+"++++++++:"+userByNikename);
+            console.log(temstr + "++++++++:" + userByNikename);
             $.ajax({
                 url: "reply/savereply",
-                data: {userId: userId, replyInfo: replyInfo, replyByid: replyByid, userByNikename:userByNikename},
+                data: {userId: userId, replyInfo: replyInfo, replyByid: replyByid, userByNikename: userByNikename},
                 type: "post",
                 dataType: "text",
                 success: function (data) {
 
                     var p = document.createElement("p");
-                    p.innerHTML ="<a onclick='loadSonComment(this,"+inputId+")'>"+ userNikename  +":"+ userByNikename + ":" + replyInfo +"</a>"+ "<a  onclick='addSon(this," + inputId + ")'>回复</a>";
+                    p.innerHTML = "<a onclick='loadSonComment(this," + inputId + ")'>" + userNikename + ":" + userByNikename + ":" + replyInfo + "</a>" + "<a  onclick='addSon(this," + inputId + ")'>回复</a>";
 
                     p.id = "replyid" + data;
                     obj.parentNode.parentNode.append(p);
@@ -187,7 +192,7 @@
                         var commentsId = "commentsId" + data[i]["comments"]["commentsId"];
                         var p = document.createElement("p");
                         p.id = commentsId;
-                        p.innerHTML ="<a onclick='loadSonComment(this,"+userid+messageId+")'>"+userNikename+":"+commentsInfo +"</a>"+ "<a onclick='addSon(this," + userid + messageId + ")'>回复</a>";
+                        p.innerHTML = "<a onclick='loadSonComment(this," + userid + messageId + ")'>" + userNikename + ":" + commentsInfo + "</a>" + "<a onclick='addSon(this," + userid + messageId + ")'>回复</a>";
                         commentList.append(p);
                     }
                     comment.append(commentInput);
@@ -477,7 +482,7 @@
         .main > .footer {
             display: block;
             width: 100%;
-           height: auto;
+            height: auto;
             float: right;
 
         }

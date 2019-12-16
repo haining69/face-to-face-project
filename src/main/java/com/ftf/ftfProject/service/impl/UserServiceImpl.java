@@ -50,6 +50,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int findByUsername1(String userNikename) {
+        System.out.println(userNikename);
         Users user = userMapper.findByUsername1(userNikename);
         if (user != null){
             return Integer.parseInt(user.getUserId());

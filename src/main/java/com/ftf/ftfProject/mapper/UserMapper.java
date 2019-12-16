@@ -58,7 +58,7 @@ public interface UserMapper {
 
     //ge根据传入的userId，修改自己的头像
     @Update("update users set user_Img = #{userImg} where user_id=#{userId}")
-    int updateImg(Integer userId, String url);
+    int updateImg(Integer userId, String userImg);
 
     //根据传入的用户id进行修改用户信息包括  用户名  真实姓名  个性签名  性别  出生日期
     @Update("update users set user_nikename = #{userNikename} , user_realname = #{realName}" +
@@ -67,7 +67,7 @@ public interface UserMapper {
     int updateUserInfo(Users users);
 
     //根据传入的userId进行增加发表说说量
-    @Update("update users set user_messagenum = user_messagenum+1 where user_id=#{userId} }")
+    @Update("update users set user_messagenum = user_messagenum+1 where user_id=#{userId}")
     int incMessageNum(Integer userId);
 
     //根据传入的userId进行减少发表说说量

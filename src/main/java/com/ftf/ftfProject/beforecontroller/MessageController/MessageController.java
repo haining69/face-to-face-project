@@ -92,9 +92,9 @@ public class MessageController {
      */
     @RequestMapping("/deletemessage")
     @ResponseBody
-    public String deleteMessage(Integer id){
+    public String deleteMessage(Integer id,Integer userId){
+        System.out.println(id);
         if (messageService.deletemessage(id)){
-            Integer userId = messageService.getUserId(id);
             //删除动态进行说说记录减一
             userService.decreaMessageNum(userId);
             return "true";

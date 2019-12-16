@@ -24,7 +24,7 @@ public interface MessageMapper {
     int getMessageTotal();
 
     //根据用户名进行分页查询动态消息，并按时间进行降序排序（时间在前面的
-    @Select("select * from message where user_id =#{userId} and messages_state = ${1} ORDER BY messages_time DESC limit #{number},5")
+    @Select("select * from message where user_id =#{userId} and messages_state = ${1} ORDER BY messages_time DESC")
     List<Message> getMessage(Integer userId,int number);
 
     //主页进行返回消息数据
