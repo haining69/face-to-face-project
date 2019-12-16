@@ -24,21 +24,14 @@ public class ReplyController {
 
     /**
      * 根据传回来的评论Id进行铲查询子评论
-     * @param commmentsId
+     * @param commmentId
      * @return
      */
     @RequestMapping("/getreply")
     @ResponseBody
-    public List<ReplyPackClass> getReply(String commmentsId){ //
-        System.out.println(commmentsId);
+    public List<ReplyPackClass> getReply(Integer commmentId){ //
 //        Integer commmentId = 1;
-        if (commmentsId.contains("comments")){
-            Integer id = new Integer(commmentsId.substring(10,commmentsId.length()));
-            return replyService.getReply(id);
-        }else {
-            Integer id = new Integer(commmentsId.substring(7,commmentsId.length()));
-            return replyService.getReply(id);
-        }
+        return replyService.getReply(commmentId);
     }
 
 

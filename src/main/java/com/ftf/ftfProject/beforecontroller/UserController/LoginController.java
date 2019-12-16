@@ -32,6 +32,7 @@ public class LoginController {
     @ResponseBody
     public Users getUser(Integer userId){
         Users users = userService.getUser(userId);
+        System.out.println(users.toString());
         return users;
     }
 }
