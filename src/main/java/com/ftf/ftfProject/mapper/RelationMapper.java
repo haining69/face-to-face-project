@@ -20,7 +20,7 @@ public interface RelationMapper {
     List<Relation> getAllRelation();
 
     //根据UserId查询关系表数据
-    @Select("select * from users where user_id=#{userId}")
+    @Select("select * from relation where user_id=#{userId} and user_byid=#{userbyId}")
     Relation selectByUserIdAndUserById(Integer userId, Integer userbyId);
 
     //增加用户关系

@@ -34,9 +34,10 @@ public class AgreeController {
             }else {
                 Agree agree = PackAgree.PackAgree(messageId, userId);
                 if ("true".equals(agreeService.saveAgree(agree))){
-                    messageService.incAgreenum(String.valueOf(messageId));
+                    messageService.incAgreenum(messageId);
+                    System.out.println("点赞成功了！");
                 }
-                System.out.println("点赞成功了！");
+
                 return "true";
             }
         }else {

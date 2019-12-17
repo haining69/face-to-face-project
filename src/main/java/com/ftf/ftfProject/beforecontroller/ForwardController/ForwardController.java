@@ -35,16 +35,22 @@ public class ForwardController {
     @RequestMapping("/forwardmessage")
     @ResponseBody
     public String forwardmessage(Integer messageId, Integer userId){
+        //得到转发的谁Id
         int userById = messageService.getUserId(messageId);
         if (userId != userById){
             if (forwardService.getForward(messageId,userId)){
                 System.out.println("转发失败了！");
                 return "false";
             }else {
-                String info = messageService.getnameandinfo(String.valueOf(messageId));
-                Message message = PackMessage.PackMessage(info,String.valueOf(userId));
-                Forward forward = PackForward.PackForward(messageId, userId);
+                String info = messageService.getnameandinfo(String.valueOf(messageId));  //获得消息
+                Message message = PackMessage.PackMessage(info,String.valueOf(userId));  //包装
+                Forward forward = PackForward.PackForward(messageId, userId);  //转发表记录数据
                 if (messageService.saveMessage(message) && forwardService.saveForward(forward)){  //如果存储成功则进行返回消息id
+                    //查询转发messageId
+                    String str = messageService.getMessageId(String.valueOf(userId), info);
+                    //查询文章图片,并进行保存
+                    forwardService.forwardImg(Integer.parseInt(str),userId);
+                    //转发加一
                     messageService.incTranspond(messageId);
                     System.out.println("转发成功！");
                     return "true";

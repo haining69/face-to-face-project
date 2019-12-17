@@ -14,6 +14,7 @@ public class AgreeServiceImpl implements AgreeService {
     @Override
     public String saveAgree(Agree agree) {
         int i =  agreeMapper.saveAgree(agree);
+        System.out.println(i);
         if (i == 1){
             return "true";
         }else {

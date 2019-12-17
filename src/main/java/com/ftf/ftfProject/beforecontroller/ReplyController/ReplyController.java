@@ -24,38 +24,35 @@ public class ReplyController {
 
     /**
      * 根据传回来的评论Id进行铲查询子评论
-     * @param commmentId
+     * @param parent
      * @return
      */
     @RequestMapping("/getreply")
     @ResponseBody
-    public List<ReplyPackClass> getReply(Integer commmentId){ //
-//        Integer commmentId = 1;
-        return replyService.getReply(commmentId);
+    public List<ReplyPackClass> getReply(String parent){ //
+        System.out.println(parent);
+        return replyService.getReply(parent);
     }
 
 
-
+    /**
+     * 保存回复，
+     * @param userId  回复人
+     * @param replyByid  上一条回复
+     * @param replyInfo  回复内容
+     * @param userByNikename  被回复人名字
+     * @return
+     */
     @RequestMapping("/savereply")
     @ResponseBody
     public String saveReply(Integer userId, String replyByid, String replyInfo, String userByNikename){
         System.out.println(userId+"+"+replyByid+"+"+replyInfo+"+"+userByNikename);
-        if (replyByid.contains("comments")){   //回复主评论  返回回复Id号
-            Integer commentsId = new Integer(replyByid.substring(10,replyByid.length()));
-            Integer userById = userService.findByUsername1(userByNikename);
-            Reply reply = PackReply.PackReply(userId, commentsId, replyInfo, userById);
-            //存储
-            replyService.saveReply(reply);
-            //查询replyId并返回
-            return String.valueOf(replyService.getReplyId(userId, commentsId));
-        }else {    //回复子评论  返回回复Id号
-            Integer replyId = new Integer(replyByid.substring(7,replyByid.length()));
-            Integer userById = userService.findByUsername1(userByNikename);
-            Reply reply = PackReply.PackReply(userId, replyId, replyInfo, userById);
-            //存储
-            replyService.saveReply(reply);
-            //查询replyId并返回
-            return String.valueOf(replyService.getReplyId(userId, replyId));
-        }
+        Integer userById = userService.findByUsername1(userByNikename);  //找到被回复人的ID号
+        Reply reply = PackReply.PackReply(userId, replyByid, replyInfo, userById);  //进行打包
+        //存储
+        replyService.saveReply(reply);
+        //查询replyId并返回
+        return String.valueOf(replyService.getReplyId(userId, replyByid));
+
     }
 }

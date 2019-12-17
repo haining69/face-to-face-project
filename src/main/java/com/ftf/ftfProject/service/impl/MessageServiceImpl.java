@@ -85,8 +85,8 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public void incAgreenum(String messagesId) {
-        messageMapper.incAgreenum(Integer.parseInt(messagesId));
+    public void incAgreenum(Integer messagesId) {
+        messageMapper.incAgreenum(messagesId);
     }
 
     @Override

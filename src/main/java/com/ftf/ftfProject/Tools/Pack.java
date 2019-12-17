@@ -151,17 +151,17 @@ public class Pack {
     /**
      * 创建回复表对象，初始化并返回对象
      * @param userId
-     * @param parentid
+     * @param parent
      * @param replyInfo
      * @param userById
      * @return
      */
-    public Reply PackReply(Integer userId, Integer parentid, String replyInfo, Integer userById){
+    public Reply PackReply(Integer userId, String parent, String replyInfo, Integer userById){
         Reply reply = new Reply();
         reply.setReplyUserId(userId);
         reply.setReplyByUserId(userById);
         reply.setReplyInfo(replyInfo);
-        reply.setCommentParentId(parentid);
+        reply.setCommentParent(parent);
         reply.setReplyTime(new Date());
         return reply;
     }

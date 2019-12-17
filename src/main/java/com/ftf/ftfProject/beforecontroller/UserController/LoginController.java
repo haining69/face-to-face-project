@@ -32,7 +32,10 @@ public class LoginController {
     @ResponseBody
     public Users getUser(Integer userId){
         Users users = userService.getUser(userId);
-        System.out.println(users.toString());
-        return users;
+        if (users != null){
+            return users;
+        }
+        return null;
+
     }
 }

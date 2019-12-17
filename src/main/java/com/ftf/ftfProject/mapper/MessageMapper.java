@@ -52,7 +52,7 @@ public interface MessageMapper {
     String getusername(int messageId);
 
     //根据传入的message_id进行增加点赞数
-    @Update("update message set messages_readnum=messages_readnum+1 where messages_id=${messagesId}")
+    @Update("update message set messages_agreenum=messages_agreenum+1 where messages_id=${messagesId}")
     int incAgreenum(int messagesId);
 
     //根据传入的message_id进行减少点赞数

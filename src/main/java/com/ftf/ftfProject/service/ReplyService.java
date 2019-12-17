@@ -9,10 +9,10 @@ public interface ReplyService {
 
     /**
      * 根据传来的评论Id进行查询子评论
-     * @param commentId
+     * @param parent
      * @return
      */
-    public List<ReplyPackClass> getReply(Integer commentId);
+    List<ReplyPackClass> getReply(String parent);
 
     /**
      * 根据传来的reply对象，保存reply;
@@ -24,8 +24,8 @@ public interface ReplyService {
     /**
      * 根据传来的userId与父Id进行查询replyId
      * @param userId
-     * @param parentId
+     * @param parent
      * @return
      */
-    int getReplyId(int userId, int parentId);
+    int getReplyId(int userId, String parent);
 }

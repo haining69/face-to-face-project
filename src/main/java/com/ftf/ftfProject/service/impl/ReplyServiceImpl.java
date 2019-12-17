@@ -18,8 +18,8 @@ public class ReplyServiceImpl implements ReplyService {
     private UserServiceImpl userService;
 
     @Override
-    public List<ReplyPackClass> getReply(Integer commentId) {
-        List<Reply> replies = replyMapper.getReplys(commentId);  //获取当前评论的所有子评论
+    public List<ReplyPackClass> getReply(String parent) {
+        List<Reply> replies = replyMapper.getReplys(parent);  //获取当前评论的所有子评论
         List<ReplyPackClass> replyPackClassList = new ArrayList<>();
         for (Reply reply : replies) {
             ReplyPackClass replyPackClass = new ReplyPackClass();
@@ -43,8 +43,8 @@ public class ReplyServiceImpl implements ReplyService {
     }
 
     @Override
-    public int getReplyId(int userId, int parentId) {
-        List<Integer> integers =  replyMapper.getReplyId(userId, parentId);
+    public int getReplyId(int userId, String parent) {
+        List<Integer> integers =  replyMapper.getReplyId(userId, parent);
         if (integers.size() > 0){
             return integers.get(0);
         }

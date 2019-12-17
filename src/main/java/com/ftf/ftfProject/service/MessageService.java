@@ -61,7 +61,7 @@ public interface MessageService {
      * 根据messageId进行赞数量加1操作
      * @param messagesId
      */
-    void incAgreenum(String messagesId);
+    void incAgreenum(Integer messagesId);
 
     /**
      * 根据messageId进行收藏数加1操作

@@ -67,6 +67,7 @@ public class MessageController {
 //        System.out.println(userId);
         Message message = PackMessage.PackMessage(info,userId);
         if (messageService.saveMessage(message) ){  //如果存储成功则进行返回消息id
+            System.out.println("存储成功！");
             String messageid = messageService.getMessageId(userId,info);
 //            System.out.println(messageid);
             imgs.add(messageid);   //传回文章Id
@@ -80,6 +81,7 @@ public class MessageController {
             }
         //进行说说记录加一
             userService.incMessageNum(Integer.parseInt(userId));
+            System.out.println("发表成功");
             return imgs;
         }else {
             return null;

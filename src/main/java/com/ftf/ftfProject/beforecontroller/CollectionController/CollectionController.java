@@ -37,7 +37,7 @@ public class CollectionController {
         }else {
             Collections collections = PackCollection.PackCollection(messageId,userId);
             if ("true".equals(collectionsService.saveCollection(collections))){
-                messageService.incCollection(messageId);
+                messageService.incCollection(messageId);  //收藏加一
             }
             System.out.println("收藏成功！");
             return "true";

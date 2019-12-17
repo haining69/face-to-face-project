@@ -22,4 +22,11 @@ public interface ForwardService {
      * @return
      */
     Boolean getForward(Integer messageId, Integer userId);
+
+    /**
+     * 根据传入的messageId进行查询文章图片，并给转发用户进行存储图片
+     * @param messageId
+     * @return
+     */
+    Boolean forwardImg(Integer messageId, Integer userId);
 }

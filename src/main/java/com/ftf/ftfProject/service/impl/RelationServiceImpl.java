@@ -22,6 +22,7 @@ public class RelationServiceImpl implements RelationService {
     @Override
     public Boolean saveRelation(Relation relation) {
         int i = relationMapper.saveRelation(relation);
+        System.out.println(i);
         if (i == 1){
             return true;
         }else {
@@ -32,10 +33,11 @@ public class RelationServiceImpl implements RelationService {
     @Override
     public Boolean selectByUserIdAndUserById(Integer userId, Integer userbyId) {
         Relation relation = relationMapper.selectByUserIdAndUserById(userId, userbyId);
+//        System.out.println("relation::32"+relation);
         if (relation != null){
             return true;
         }else {
-            return true;
+            return false;
         }
     }
 }

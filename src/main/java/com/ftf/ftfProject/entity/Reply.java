@@ -11,7 +11,7 @@ public class Reply implements Serializable {
     private Integer replyUserId;  //回复人
     private Integer replyByUserId;   //被回复人
     private String replyInfo;  //回复内容
-    private Integer commentParentId;   //上一条评论Id
+    private String commentParent;   //上一条评论Id
     private Date replyTime;   //回复时间
 
 
@@ -47,12 +47,12 @@ public class Reply implements Serializable {
         this.replyInfo = replyInfo;
     }
 
-    public Integer getCommentParentId() {
-        return commentParentId;
+    public String getCommentParent() {
+        return commentParent;
     }
 
-    public void setCommentParentId(Integer commentParentId) {
-        this.commentParentId = commentParentId;
+    public void setCommentParent(String commentParent) {
+        this.commentParent = commentParent;
     }
 
     public Date getReplyTime() {
@@ -70,7 +70,7 @@ public class Reply implements Serializable {
                 ", replyUserId=" + replyUserId +
                 ", replyByUserId=" + replyByUserId +
                 ", replyInfo='" + replyInfo + '\'' +
-                ", commentParentId=" + commentParentId +
+                ", commentParent='" + commentParent + '\'' +
                 ", replyTime=" + replyTime +
                 '}';
     }
