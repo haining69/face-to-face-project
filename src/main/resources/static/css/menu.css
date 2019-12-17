@@ -232,12 +232,12 @@
 }
 
 #cssmenu > ul > li:hover > a:after,
-#cssmenu > ul > li.active > a:after {
-    background: #000000;
+#cssmenu > ul > li.active:hover > a:after {
+    background: #ffffff;
 }
 
 #cssmenu > ul > li:hover > a:before,
-#cssmenu > ul > li.active > a:before {
+#cssmenu > ul > li.active > a:after {
     border-top-color: #ffffff;
 }
 
