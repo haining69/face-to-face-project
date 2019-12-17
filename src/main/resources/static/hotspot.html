@@ -4,52 +4,225 @@
     <meta charset="UTF-8">
     <title>hotspot</title>
 
-    <meta name="description" content="Free Responsive Html5 Css3 Templates">
-    <meta name="author" content="">
+    <meta content="Free Responsive Html5 Css3 Templates" name="description">
+    <meta content="" name="author">
 
     <!-- Mobile Specific Metas
     ================================================== -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
 
     <!-- CSS
     ================================================== -->
-    <link rel="stylesheet" href="css/zerogrid.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link href="css/zerogrid.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
 
-    <link rel="stylesheet" href="css/menu.css">
+    <link href="css/menu.css" rel="stylesheet">
     <script src="js/jquery1111.min.js" type="text/javascript"></script>
     <script src="js/script.js"></script>
 
-    <!-- Owl Carousel Assets -->
+
     <link href="owl-carousel/owl.carousel.css" rel="stylesheet">
 
-    <!--[if lt IE 8]>
-    <div style=' clear: both; text-align:center; position: relative;'>
-        <a href="http://windows.microsoft.com/en-US/internet-explorer/Items/ie/home?ocid=ie6_countdown_bannercode">
-            <img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today." />
-        </a>
-    </div>
-    <![endif]-->
-    <!--[if lt IE 9]>
+
     <script src="js/html5.js"></script>
     <script src="js/css3-mediaqueries.js"></script>
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/jquery.cookie.js"></script>
+    <script src="js/jquery.min.js" type="text/javascript"></script>
+    <script src="js/jquery.cookie.js" type="text/javascript"></script>
     <script type="text/javascript">
-        var name;
-        onload=function () {
-            name=$.cookie("userNikename");
-            alert(name);
+
+        onload = function () {
+            var userId = $.cookie("userId");
+            var pagenum = $("#middle").val();
+            $.ajax({
+                get: "collecationgs",
+                data: {userId: userId, pagenum: pagenum},
+                type: "POST",
+                dataType: "JSON",
+                success: function (data) {
+                    var hotcontainer = document.getElementById("hotcontainer");
+                    for (var i = 0; i < data.length; i++) {
+                        var userNikename = data[i]["userNikename"];
+                        var messageId = data[i]["messageId"];
+                        var messageInfo = data[i]["messageInfo"].substr(0, 6);
+                        var a = "<a id='" + messageId + "' href=\"jsvascript:;\" onclick=\"showMessage(this)\">" + userNikename + "" + messageInfo + "</a>";
+                        hotcontainer.append(a);
+                    }
+                }
+            })
+        };
+
+        function showMessage(obj) {
+            // userImg
+            // username
+            // messageinf
+            // qianming
+
+            var mesageId = obj.id;
+            $.ajax({
+                url: "gehtmessage",
+                data: {messageId: mesageId},
+                type: "POST",
+                dataType: "JSON",
+                success: function (data) {
+                    var userImg = data["userImg"];
+                    var userImgs = data[imgs];
+                    var userNikename = data["message"]["userNikename"];
+                    var messageInf = data["message"]["messageInf"];
+                    var userPersonalized = data["message"]["userPersonalized"];
+                    document.getElementById("userImg").src = userImg;
+                    document.getElementById("userNikename").innerText = userNikename;
+                    document.getElementById("userPersonalized").innerText = userPersonalized;
+                    document.getElementById("messageInf").innerText = messageInf;
+
+                    var imgList=document.getElementById("messageImgs");
+                    for (var i=0;i<userImgs;i++){
+                        var url=userImgs[i];
+                        var img=document.createElement("img");
+                        img.src=url;
+                        imgList.append(img);
+                    }
+                }
+            })
         }
     </script>
-    <![endif]-->
+
+
+    <style>
+        .hotModule {
+            width: 100%;
+            height: 600px;
+            /*background-color: yellowgreen;*/
+        }
+
+        .hotModule > .hotlist {
+            width: 29%;
+            height: 100%;
+            float: left;
+            /*background-color: deepskyblue;*/
+        }
+
+        .hotlist > span {
+            width: 100%;
+            height: 70%;
+            display: block;
+            float: left;
+            /*background-color: cornflowerblue;*/
+        }
+
+        .hotlist > footer {
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+            height: 40px;
+            display: block;
+            float: left;
+            /*background-color:red;*/
+        }
+
+        .hotlist > footer > a {
+            width: 33%;
+            height: 40px;
+            line-height: 40px;
+            display: block;
+            float: left;
+        }
+
+        .hotlist > span > a {
+            text-decoration: none;
+            width: 100%;
+            height: 40px;
+            line-height: 20px;
+            font-size: 20px;
+            text-align: left;
+            display: block;
+            float: left;
+        }
+
+
+        .hotModule > .hotshow {
+            width: 69%;
+            height: 100%;
+            float: right;
+            /*background-color: red;*/
+        }
+
+        .hotshow > .top {
+            width: 100%;
+            height: 120px;
+            /*background-color: blue;*/
+            float: left;
+        }
+
+        .top > .head {
+            width: 120px;
+            height: 120px;
+            border-radius: 120px;
+            display: block;
+            /*background-color: green;*/
+            float: left;
+        }
+
+        .top > .simply {
+            width: 570px;
+            height: 120px;
+            margin: 0;
+            padding: 0;
+            display: block;
+            float: right;
+        }
+
+        .simply > span {
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+            height: 60px;
+            font-size: 25px;
+            line-height: 60px;
+            text-align: left;
+            display: block;
+            float: right;
+            /*background-color: yellowgreen;*/
+        }
+
+        .hotshow > .message {
+            width: 100%;
+            height: auto;
+            /*height: 100px;*/
+            font-size: 25px;
+            float: left;
+            /*background-color: #FFFFFF;*/
+        }
+
+        .message > .messagInf {
+            width: 100%;
+            height: auto;
+            word-break: break-all;
+            display: block;
+            font-size: 20px;
+            float: left;
+        }
+
+        .message > .messageImgs {
+            width: 100%;
+            height: auto;
+        }
+
+        .messageImgs > img {
+            margin-left: 2px;
+            padding: 0px;
+            width: 33%;
+            height: 123px;
+            display: block;
+            float: left;
+        }
+    </style>
 </head>
 <body>
-<div class="wrap-body"  style="width: 100%;height: 100%;background:url('images/body_bg.jpg')  100% 100%">
+<div class="wrap-body">
     <header class="main-header">
         <div class="zerogrid">
             <div class="t-center">
@@ -72,13 +245,13 @@
                 </div>
                 <div class="col-1-3">
                     <div class="top-search">
-                        <form id="form-container" action="">
+                        <form action="" id="form-container">
                             <!--<input type="submit" id="searchsubmit" value="" />-->
                             <a class="search-submit-button" href="javascript:void(0)">
                                 <i class="fa fa-search"></i>
                             </a>
                             <div id="searchtext">
-                                <input type="text" id="s" name="s" placeholder="Search">
+                                <input id="s" name="s" placeholder="Search" type="text">
                             </div>
                         </form>
                     </div>
@@ -94,96 +267,64 @@
             <h1 class="entry-title">Face to face</h1>
             <span class="cat-links"><h1><a href="#">热门噢</a></h1></span>
         </div>
-        <div class="post-thumbnail-wrap">
-            <img src="images/14.jpg">
-        </div>
-        <div class="row wrap-post"><!--Start Box-->
-            <h1>热搜榜单</h1>
-            <div class="entry-content">
-
-                <h2>Heading 1</h2>
-                <p><a href="https://m.weibo.cn/"> 我在和時間賽跑 看誰先離開你</a></p>
-                <h2>Heading 2</h2>
-                <p><a href="https://m.weibo.cn/">俄罗斯方块教会我们：如果你合群，就会消失。</a></p>
-                <h2>Heading 3</h2>
-                <p><a href="https://m.weibo.cn/">几米 漫画家，最喜欢他的一句话：每个人都是上帝咬过一口的苹果，都是有缺陷的，有的人缺陷比较大，是因为上帝特别喜欢他的芬芳！</a></p>
-                <h2>Heading 4</h2>
-                <p><a href="https://m.weibo.cn/">我在和時間賽跑 看誰先離開你</a></p>
-                <h2>Heading 5</h2>
-                <p><a href="https://m.weibo.cn/">俄罗斯方块教会我们：如果你合群，就会消失。</a></p>
-                <h2>Heading 6</h2>
-                <p><a href="https://m.weibo.cn/">我是热搜</a></p>
-                <h2>Heading 7</h2>
-                <p><a href="https://m.weibo.cn/">热搜7</a></p>
-                <h2>Heading 8</h2>
-                <p><a href="https://m.weibo.cn/"> 热搜8</a></p>
-                <h2>Heading 9</h2>
-                <p><a href="https://m.weibo.cn/"> 热搜9</a></p>
-                <h2>Heading 10</h2>
-                <p><a href="https://m.weibo.cn/">热搜10</a></p>
-            </div>
-        </div>
+        <div class="post-thumbnail-wrap" style="background:lightskyblue;">
+            <div class="hotModule">
+                <div class="hotlist">
+                <span id="hotcontainer">
+                       <a href="">AAAAAAAAA</a>
+                       <a href="">AAAAAAAAA</a>
+                       <a href="">AAAAAAAAA</a>
+                       <a href="">AAAAAAAAA</a>
+                       <a href="">AAAAAAAAA</a>
 
 
-        <article class="single-post zerogrid">
-            <div class="row wrap-post"><!--Start Box-->
 
-                <div class="entry-content">
-
-                    <p> 村上春树说：你要记得那些大雨中为你撑伞的人，帮你挡住外来之物的人， 黑暗中默默抱紧你的人，逗你笑的人，陪你彻夜聊天的人，坐车来看望你的人，陪你哭过的人
-                        在医院陪你的人，总是以你为重的人，带着你四处游荡的人，说想念你的人。是这些人组成你生命中一点一滴的温暖 是这些温暖使你远离阴霾，</p>
-                    <input class="button button-skin " type="submit" name="SubmitComment" value="点赞">
-                    <input class="button button-skin " type="submit" name="SubmitComment" value="关注">
-                    <input type="text" name="" id="" placeholder="评论" required="required">
-                    <input class="button button-skin " type="submit" name="SubmitComment" value="评论">
-
+                </span>
+                    <footer>
+                        <a href="" id="befor">上一页</a>
+                        <a href="" id="middle">0</a>
+                        <a href="" id="after">下一页</a>
+                    </footer>
 
                 </div>
-            </div>
-        </article>
 
-        <article class="single-post zerogrid">
-            <div class="row wrap-post"><!--Start Box-->
 
-                <div class="entry-content">
+                <div class="hotshow">
+                    <div class="top">
+                        <img class="head" id="userImg" src="images/bg-2.jpg">
 
-                    <h2>Heading 1</h2>
-                    <p> 我在和時間賽跑 看誰先離開你</p>
-                    <h2>Heading 2</h2>
-                    <p> 俄罗斯方块教会我们：如果你合群，就会消失。</p>
-                    <h2>Heading 3</h2>
-                    <p>几米 漫画家，最喜欢他的一句话：每个人都是上帝咬过一口的苹果，都是有缺陷的，有的人缺陷比较大，是因为上帝特别喜欢他的芬芳！ </p>
-                    <input class="button button-skin " type="submit" name="SubmitComment" value="点赞">
-                    <input class="button button-skin " type="submit" name="SubmitComment" value="关注">
-                    <input type="text" name="" id="" placeholder="评论" required="required">
-                    <input class="button button-skin " type="submit" name="SubmitComment" value="评论">
+                        <div class="simply">
+                            <span id="userNikename">用户名</span>
+                            <span id="userPersonalized">qiamming</span>
+                        </div>
 
-                </div>
-            </div>
-        </article>
-        <article class="single-post zerogrid">
-            <div class="row wrap-post"><!--Start Box-->
-
-                <div class="entry-content">
-                    <div class="post-thumbnail-wrap">
-                        <img src="images/16.jpg">
                     </div>
-                    <p>脆弱的人才会四处游说自己的不幸，坚强的人只会不动声色地愈渐强大 </p>
-                    <p> 加油 No one can beat me.</p>
-                    <div class="note">
-                        <ol>
-                            <li>谁都不行</li>
-                        </ol>
-                        <div class="clear"></div>
+                    <div class="message">
+                        <p class="messagInf" id="messageInf">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</p>
+                        <div class="messageImgs" id="messageImgs">
+                            <img alt="" src="images/bg-2.jpg">
+                            <img alt="" src="images/bg-2.jpg">
+                            <img alt="" src="images/bg-2.jpg">
+                            <img alt="" src="images/bg-2.jpg">
+                            <img alt="" src="images/bg-2.jpg">
+                            <img alt="" src="images/bg-2.jpg">
+
+                            <img alt="" src="images/bg-2.jpg">
+                            <img alt="" src="images/bg-2.jpg">
+                            <img alt="" src="images/bg-2.jpg">
+
+                        </div>
+
                     </div>
-                    <input class="button button-skin " type="submit" name="SubmitComment" value="点赞">
-                    <input class="button button-skin " type="submit" name="SubmitComment" value="关注">
-                    <input type="text" name="" id="" placeholder="评论" required="required">
-                    <input class="button button-skin " type="submit" name="SubmitComment" value="评论">
+
+
                 </div>
             </div>
-        </article>
+        </div>
     </article>
+
 
     <footer>
         <div class="zerogrid">
@@ -234,6 +375,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="bottom-footer">
                 <div class="bottom-social">
                     <a href="#"><i class="fa fa-facebook"></i></a>
@@ -251,5 +393,53 @@
         </div>
     </footer>
 </div>
+<script>
+    $("#befor").click(function () {
+        var userId = $.cookie("userId");
+        var pagenum = $("#middle").val();
+        pagenum=parseInt(pagenum)-1;
+        if (pagenum)
+        $.ajax({
+            get: "collecationgs",
+            data: {userId: userId, pagenum: pagenum},
+            type: "POST",
+            dataType: "JSON",
+            success: function (data) {
+                var hotcontainer = document.getElementById("hotcontainer");
+                hotcontainer.innerHTML="";
+                for (var i = 0; i < data.length; i++) {
+                    var userNikename = data[i]["userNikename"];
+                    var messageId = data[i]["messageId"];
+                    var messageInfo = data[i]["messageInfo"].substr(0, 6);
+                    var a = "  <a id='" + messageId + "' href=\"jsvascript:;\" onclick=\"showMessage(this)\">" + userNikename + "" + messageInfo + "</a>";
+                    hotcontainer.append(a);
+                }
+            }
+        })
+    });
+
+    $("#after").click(function () {
+        var userId = $.cookie("userId");
+        var pagenum = $("#middle").val();
+        pagenum=parseInt(pagenum)+1;
+        $.ajax({
+            get: "collecationgs",
+            data: {userId: userId, pagenum: pagenum},
+            type: "POST",
+            dataType: "JSON",
+            success: function (data) {
+                var hotcontainer = document.getElementById("hotcontainer");
+                hotcontainer.innerHTML="";
+                for (var i = 0; i < data.length; i++) {
+                    var userNikename = data[i]["userNikename"];
+                    var messageId = data[i]["messageId"];
+                    var messageInfo = data[i]["messageInfo"].substr(0, 6);
+                    var a = "  <a id='" + messageId + "' href=\"jsvascript:;\" onclick=\"showMessage(this)\">" + userNikename + "" + messageInfo + "</a>";
+                    hotcontainer.append(a);
+                }
+            }
+        })
+    })
+</script>
 </body>
 </html>
