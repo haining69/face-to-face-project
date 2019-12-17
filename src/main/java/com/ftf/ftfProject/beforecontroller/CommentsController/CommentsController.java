@@ -40,6 +40,7 @@ public class CommentsController {
     @ResponseBody
     public String SaveComment(Integer messageId,String commentInfo,Integer userId){
         Comments comments = PackComment.PackComment(commentInfo, userId, messageId);
+        System.out.println(comments.getCommentsTime());
         if (commentsService.saveComments(comments)){  //保存成功
             messageService.incComment(messageId);  //评论数加一
             return String.valueOf(commentsService.getCommentId(messageId, commentInfo, userId));

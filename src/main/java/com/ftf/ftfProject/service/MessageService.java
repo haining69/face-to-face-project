@@ -117,6 +117,13 @@ public interface MessageService {
     int getUserId(Integer messageId);
 
     /**
+     * 根据messageId进行查询message对象
+     * @param messageId
+     * @return
+     */
+    Message getMessageById(Integer messageId);
+
+    /**
      * 根据传入的消息内容与用户Id进行查询消息对象
      * @param info
      * @param userId

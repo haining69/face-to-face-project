@@ -1,12 +1,13 @@
 package com.ftf.ftfProject.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ftf.ftfProject.entity.Collections;
+import com.ftf.ftfProject.metaclass.MessageAndUsers;
 
 import java.util.List;
 
 public interface CollectionsService {
 
-    List<Collections> getCollections();
 
     /**
      * 保存收藏
@@ -21,4 +22,18 @@ public interface CollectionsService {
      * @return
      */
     Boolean selectByUserIdAndMessageId(Integer messageId,Integer userId);
+
+    /**
+     * 根据传入的用户Id继续查询用户收藏信息，并返回包装类
+     * @param userId
+     * @return
+     */
+    List<MessageAndUsers> getCollection(Integer userId,Integer pagenum);
+
+    /**
+     * 根据messageId进行查询user与message和imgs
+     * @param messageId
+     * @return
+     */
+    String getCollectionMessage(Integer messageId) throws JsonProcessingException;
 }

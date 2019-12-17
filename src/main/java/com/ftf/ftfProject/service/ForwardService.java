@@ -28,5 +28,5 @@ public interface ForwardService {
      * @param messageId
      * @return
      */
-    Boolean forwardImg(Integer messageId, Integer userId);
+    Boolean forwardImg(Integer messageId, Integer messageId1);
 }

@@ -84,10 +84,7 @@ public class TestController {
         return userService.selectAll();
     }
 
-    @RequestMapping("collection")
-    public List<Collections> getAllCollection() {
-        return collectionsService.getCollections();
-    }
+
 
     @RequestMapping("comment")
     public List<Comments> getAllComment() {

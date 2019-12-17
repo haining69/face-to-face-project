@@ -130,12 +130,17 @@ public class MessageServiceImpl implements MessageService {
         String info = messageMapper.getinfo(Integer.parseInt(messageId));
         String username = messageMapper.getusername(Integer.parseInt(messageId));
 //        System.out.println("转发自："+username+"\n"+info);
-        return "转发自："+username+"\n"+info;
+        return "转发自："+username+"<br>"+info;
     }
 
     @Override
     public int getUserId(Integer messageId) {
         return messageMapper.getUserId(messageId);
+    }
+
+    @Override
+    public Message getMessageById(Integer messageId) {
+        return messageMapper.getMessageById(messageId);
     }
 
     @Override

@@ -29,8 +29,8 @@ public interface CollectionsMapper {
 
 
     //分页进行查询收藏表数据   后期补
-    @Select("select * from collections")
-    List<Collections> getCollections();
+    @Select("select * from collections where user_id = #{userId} limit #{number},5")
+    List<Collections> getCollections(Integer userId, Integer number);
 
 
     //删除收藏

@@ -1,13 +1,17 @@
 package com.ftf.ftfProject.beforecontroller.CollectionController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ftf.ftfProject.Tools.Pack;
 import com.ftf.ftfProject.entity.Collections;
+import com.ftf.ftfProject.metaclass.MessageAndUsers;
 import com.ftf.ftfProject.service.CollectionsService;
 import com.ftf.ftfProject.service.impl.MessageServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 
 /**
@@ -42,5 +46,29 @@ public class CollectionController {
             System.out.println("收藏成功！");
             return "true";
         }
+    }
+
+
+    /**
+     * 根据传入的用户Id进行查询用户收藏，并返回收藏内容与用户内容
+     * @param userId
+     * @return
+     */
+    @RequestMapping("/getcollection")
+    @ResponseBody
+    public List<MessageAndUsers> getCollection(Integer userId, Integer pagenum){
+        System.out.println(userId+":"+pagenum);
+//        int userId = 26;
+//        int pagenum = 1;
+        return collectionsService.getCollection(userId, pagenum);
+    }
+
+    @RequestMapping("/getcollectionmessage")
+    @ResponseBody
+    public String getCollectionMessage(Integer messageId) throws JsonProcessingException {  //
+//        int messageId = 107;
+        String haha = collectionsService.getCollectionMessage(messageId);
+        System.out.println("haha:"+haha);
+        return haha;
     }
 }

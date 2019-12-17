@@ -44,12 +44,14 @@ public class ForwardController {
             }else {
                 String info = messageService.getnameandinfo(String.valueOf(messageId));  //获得消息
                 Message message = PackMessage.PackMessage(info,String.valueOf(userId));  //包装
+                message.setMessagestate(1);
+                System.out.println(message.getMessagesTime());
                 Forward forward = PackForward.PackForward(messageId, userId);  //转发表记录数据
                 if (messageService.saveMessage(message) && forwardService.saveForward(forward)){  //如果存储成功则进行返回消息id
                     //查询转发messageId
                     String str = messageService.getMessageId(String.valueOf(userId), info);
                     //查询文章图片,并进行保存
-                    forwardService.forwardImg(Integer.parseInt(str),userId);
+                    forwardService.forwardImg(messageId, Integer.parseInt(str));
                     //转发加一
                     messageService.incTranspond(messageId);
                     System.out.println("转发成功！");

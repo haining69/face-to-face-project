@@ -36,21 +36,27 @@
 
         onload = function () {
             var userId = $.cookie("userId");
-            var pagenum = $("#middle").val();
+            alert(userId);
+            var pagenum = document.getElementById("middle").innerText;
+           pagenum=parseInt(pagenum)+1;
+           alert(pagenum);
             $.ajax({
-                get: "collecationgs",
+                url: "collection/getcollection",
                 data: {userId: userId, pagenum: pagenum},
                 type: "POST",
                 dataType: "JSON",
                 success: function (data) {
+                    // console.log(data);
                     var hotcontainer = document.getElementById("hotcontainer");
                     for (var i = 0; i < data.length; i++) {
-                        var userNikename = data[i]["userNikename"];
-                        var messageId = data[i]["messageId"];
-                        var messageInfo = data[i]["messageInfo"].substr(0, 6);
-                        var a = "<a id='" + messageId + "' href=\"jsvascript:;\" onclick=\"showMessage(this)\">" + userNikename + "" + messageInfo + "</a>";
-                        hotcontainer.append(a);
+                        var userNikename = data[i]["users"]["userNikename"];
+                        var messageId = data[i]["message"]["messagesId"];
+                        // alert(messageId);
+                        var messageInfo = data[i]["message"]["messagesInfo"].substr(0, 6);
+
+                        $(hotcontainer).append( "<a id='" + messageId + "' onclick=\"showMessage(this)\">" + userNikename + "" + messageInfo + "</a>");
                     }
+                    document.getElementById("middle").innerText=pagenum;
                 }
             })
         };
@@ -63,27 +69,33 @@
 
             var mesageId = obj.id;
             $.ajax({
-                url: "gehtmessage",
+                url: "collection/getcollectionmessage",
                 data: {messageId: mesageId},
                 type: "POST",
-                dataType: "JSON",
+                dataType: "text",
                 success: function (data) {
-                    var userImg = data["userImg"];
-                    var userImgs = data[imgs];
-                    var userNikename = data["message"]["userNikename"];
-                    var messageInf = data["message"]["messageInf"];
-                    var userPersonalized = data["message"]["userPersonalized"];
+                    var jsobj=JSON.parse(data);
+                    // console.log(jsobj);
+                    var userImg = jsobj[1]["userImg"];
+                    var messageImgs = jsobj[0]["imgs"];
+                    var userNikename = jsobj[1]["userNikename"];
+                    var messageInf = jsobj[0]["message"]["messagesInfo"];
+                    var userPersonalized = jsobj[1]["userPersonalized"];
                     document.getElementById("userImg").src = userImg;
                     document.getElementById("userNikename").innerText = userNikename;
                     document.getElementById("userPersonalized").innerText = userPersonalized;
                     document.getElementById("messageInf").innerText = messageInf;
 
                     var imgList=document.getElementById("messageImgs");
-                    for (var i=0;i<userImgs;i++){
-                        var url=userImgs[i];
-                        var img=document.createElement("img");
-                        img.src=url;
-                        imgList.append(img);
+                    console.log(messageImgs);
+                    imgList.innerHTML = "";
+                    if ( messageImgs != null)
+                         for (var i=0;i<messageImgs.length;i++){
+                            var url=messageImgs[i]["imgUrl"];
+                            // console.log(url);
+                            var img=document.createElement("img");
+                            img.src=url;
+                            imgList.append(img);
                     }
                 }
             })
@@ -239,7 +251,7 @@
                             <li><a href='mystory.html'><span>我的故事</span></a></li>
                             <li><a href='friend.html'><span>关注</span></a></li>
                             <li><a href='hotspot.html'><span>热门</span></a></li>
-                            <li class='last'><a href='contacts.html'><span>个人信息</span></a></li>
+                            <li class='last'><a href='myInformation.html'><span>个人信息</span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -271,19 +283,13 @@
             <div class="hotModule">
                 <div class="hotlist">
                 <span id="hotcontainer">
-                       <a href="">AAAAAAAAA</a>
-                       <a href="">AAAAAAAAA</a>
-                       <a href="">AAAAAAAAA</a>
-                       <a href="">AAAAAAAAA</a>
-                       <a href="">AAAAAAAAA</a>
-
 
 
                 </span>
                     <footer>
-                        <a href="" id="befor">上一页</a>
-                        <a href="" id="middle">0</a>
-                        <a href="" id="after">下一页</a>
+                        <a  id="befor">上一页</a>
+                        <a  id="middle">0</a>
+                        <a  id="after">下一页</a>
                     </footer>
 
                 </div>
@@ -291,29 +297,17 @@
 
                 <div class="hotshow">
                     <div class="top">
-                        <img class="head" id="userImg" src="images/bg-2.jpg">
+                        <img class="head" id="userImg" >
 
                         <div class="simply">
-                            <span id="userNikename">用户名</span>
-                            <span id="userPersonalized">qiamming</span>
+                            <span id="userNikename"></span>
+                            <span id="userPersonalized"></span>
                         </div>
 
                     </div>
                     <div class="message">
-                        <p class="messagInf" id="messageInf">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-                            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-                            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</p>
+                        <p class="messagInf" id="messageInf"></p>
                         <div class="messageImgs" id="messageImgs">
-                            <img alt="" src="images/bg-2.jpg">
-                            <img alt="" src="images/bg-2.jpg">
-                            <img alt="" src="images/bg-2.jpg">
-                            <img alt="" src="images/bg-2.jpg">
-                            <img alt="" src="images/bg-2.jpg">
-                            <img alt="" src="images/bg-2.jpg">
-
-                            <img alt="" src="images/bg-2.jpg">
-                            <img alt="" src="images/bg-2.jpg">
-                            <img alt="" src="images/bg-2.jpg">
 
                         </div>
 
@@ -396,11 +390,11 @@
 <script>
     $("#befor").click(function () {
         var userId = $.cookie("userId");
-        var pagenum = $("#middle").val();
+        var pagenum = $("#middle").html();
         pagenum=parseInt(pagenum)-1;
-        if (pagenum)
+        if (pagenum!=-1)
         $.ajax({
-            get: "collecationgs",
+            url:"collection/getcollection",
             data: {userId: userId, pagenum: pagenum},
             type: "POST",
             dataType: "JSON",
@@ -409,21 +403,25 @@
                 hotcontainer.innerHTML="";
                 for (var i = 0; i < data.length; i++) {
                     var userNikename = data[i]["userNikename"];
-                    var messageId = data[i]["messageId"];
-                    var messageInfo = data[i]["messageInfo"].substr(0, 6);
-                    var a = "  <a id='" + messageId + "' href=\"jsvascript:;\" onclick=\"showMessage(this)\">" + userNikename + "" + messageInfo + "</a>";
-                    hotcontainer.append(a);
+                    var messageId = data[i]["messagesId"];
+                    var messageInfo = data[i]["messagesInfo"].substr(0, 6);
+                    $(hotcontainer).append( "<a id='" + messageId + "' onclick=\"showMessage(this)\">" + userNikename + "" + messageInfo + "</a>");
                 }
+                alert(pagenum);
+               document.getElementById("middle").innerText=pagenum;
             }
         })
     });
 
     $("#after").click(function () {
         var userId = $.cookie("userId");
-        var pagenum = $("#middle").val();
-        pagenum=parseInt(pagenum)+1;
+        var pagenum = $("#middle").html();
+        alert(pagenum);
+        pagenum=parseInt(pagenum);
+        pagenum=pagenum+1;
+        alert(pagenum);
         $.ajax({
-            get: "collecationgs",
+            url: "collection/getcollection",
             data: {userId: userId, pagenum: pagenum},
             type: "POST",
             dataType: "JSON",
@@ -431,12 +429,13 @@
                 var hotcontainer = document.getElementById("hotcontainer");
                 hotcontainer.innerHTML="";
                 for (var i = 0; i < data.length; i++) {
-                    var userNikename = data[i]["userNikename"];
-                    var messageId = data[i]["messageId"];
-                    var messageInfo = data[i]["messageInfo"].substr(0, 6);
-                    var a = "  <a id='" + messageId + "' href=\"jsvascript:;\" onclick=\"showMessage(this)\">" + userNikename + "" + messageInfo + "</a>";
-                    hotcontainer.append(a);
+                    var userNikename = data[i]["users"]["userNikename"];
+                    var messageId = data[i]["message"]["messagesId"];
+                    var messageInfo = data[i]["message"]["messagesInfo"].substr(0, 6);
+                    $(hotcontainer).append( "<a id='" + messageId + "' onclick=\"showMessage(this)\">" + userNikename + "" + messageInfo + "</a>");
                 }
+                alert(pagenum);
+                document.getElementById("middle").innerText=pagenum+"";
             }
         })
     })

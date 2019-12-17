@@ -19,6 +19,10 @@ public interface RelationMapper {
     @Select("select * from relation")
     List<Relation> getAllRelation();
 
+    //根据传入的userId进行查询该用户的关注列表
+    @Select("select * from relation where user_id=#{userId}")
+    List<Relation> getRelation(Integer usersId);
+
     //根据UserId查询关系表数据
     @Select("select * from relation where user_id=#{userId} and user_byid=#{userbyId}")
     Relation selectByUserIdAndUserById(Integer userId, Integer userbyId);

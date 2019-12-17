@@ -82,7 +82,7 @@
                             <li><a href='mystory.html'><span>我的故事</span></a></li>
                             <li><a href='friend.html'><span>关注</span></a></li>
                             <li><a href='hotspot.html'><span>热门</span></a></li>
-                            <li class="active" class='last'><a href='contacts.html'><span>个人信息</span></a></li>
+                            <li class="active" class='last'><a href='myInformation.html'><span>个人信息</span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -114,9 +114,7 @@
                 <div class="row wrap-box" >
                     <div class="contact-form"  style="width:100%;height:450px;display: flex;align-items: center;justify-content: center;">
 
-                        <div style="width:100px; height:100px; border-radius:100%; overflow:hidden;align-content: center" id="head">
-                            <img src="images/head1.jpg" alt="圆形图片" id="realHead" />
-                        </div>
+                        <img style="width:100px; height:100px; border-radius:100%; overflow:hidden;align-content: center"  src="images/head1.jpg" alt="圆形图片" id="realHead" >
                         <form action="" method="post"   style="display: none" enctype="multipart/form-data" id="headimgfile">
                             <input type="file" name ="file" id="file">
                             <input type="button" id="upload" value="点击上传">
@@ -237,7 +235,7 @@
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery.cookie.js"></script>
 <script>
-    $("#head").click(function () {
+    $("#realHead").click(function () {
         $("#headimgfile").get(0).style.display="block";
         $("#upload").click(function () {
             var formData=new FormData(($("#headimgfile")[0]));

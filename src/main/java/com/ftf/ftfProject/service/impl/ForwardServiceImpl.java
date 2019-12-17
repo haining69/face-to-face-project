@@ -40,12 +40,13 @@ public class ForwardServiceImpl implements ForwardService {
     }
 
     @Override
-    public Boolean forwardImg(Integer messageId, Integer userId) {
+    public Boolean forwardImg(Integer messageId, Integer messageId1) {
         List<Img> imgList = imgService.getImgs(messageId);
         if (imgList != null){
             for (Img img : imgList) {
+                System.out.println(img.toString());
                 String url = img.getImgUrl();  //获取url
-                Img img1 = PackImg.PackImg(messageId, url);  //封装实体类
+                Img img1 = PackImg.PackImg(messageId1, url);  //封装实体类
                 imgService.saveImg(img1);   //进行保存图片
             }
         }
